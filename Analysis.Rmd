@@ -1,0 +1,286 @@
+---
+title: "DSPP - Hurricane Prediction"
+author: "Evelyn"
+date: "2/26/2020"
+output:
+  pdf_document: default
+  html_document:
+    code_folding: hide
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Processing
+
+```{r message=FALSE}
+# load packages
+library(HURDAT)
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(plotly)
+library(ggthemes)
+```
+
+### All Hurricanes Dataset
+This is a dataset of 1873 hurricanes that have been recorded since 1851.
+```{r paged.print=TRUE}
+# get hurricanes data using hurdat package
+hurs_all <- get_hurdat("AL")
+write_csv(hurs_all, "hurricanes_raw.csv")
+
+# examine data
+print("Here's a summary of each variable")
+summary(hurs_all) # there are lots of NAs for everything after "Pressure" variable
+hurs_all <- hurs_all %>% arrange(Key)
+
+# get separate date, year, month, day, and hour variables
+hurs_all$Date <- date(hurs_all$DateTime)
+hurs_all$Year <- year(hurs_all$DateTime)
+hurs_all$Month <- month(hurs_all$DateTime)
+hurs_all$Day <- day(hurs_all$DateTime)
+hurs_all$Hour <- hour(hurs_all$DateTime)
+
+hurs_all <- hurs_all[, c(1:3, 22:26, 4:21)]
+
+# recode Record and Status variables
+hurs_all <- hurs_all %>%
+  mutate(Record = recode(Record, "L" = "Landfall")) %>%
+  mutate(Status = recode(Status,
+                         "TD" = "Tropical depression (<34 knots)",
+                         "TS" = "Tropical storm (34-63 knots)",
+                         "HU" = "Tropical Hurricane (>= 64 knots)",
+                         "EX" = "Extratropical cyclone",
+                         "SD" = "Subtropical depression (<34 knots)",
+                         "SS" = "Subtropical storm (>= 34 knots)",
+                         "LO" = "Low",
+                         "WV" = "Tropical Wave",
+                         "DB" = "Disturbance"
+                         ))
+
+# tabulate Record and Status variables
+print("Tabulation of Record and Status variables")
+table(hurs_all$Record, useNA="always")
+table(hurs_all$Status, useNA="always")
+
+# view final dataset
+head(hurs_all, 10)
+
+# save data with all hurricanes
+write_csv(hurs_all, "hurricanes.csv")
+```
+
+### Landfall Hurricanes Dataset
+This is a dataset of 642 hurricanes that have reached land (center of system crossing a coastline)
+```{r paged.print=TRUE}
+# create dataset with hurricanes that reached land
+landfall_list <- hurs_all[hurs_all$Record=="Landfall", 1]
+hurs_landfall <- hurs_all[hurs_all$Key %in% landfall_list, ]
+head(hurs_landfall, 10)
+
+# save data with hurricanes that reached land
+write_csv(hurs_landfall, "landfall_hurricanes.csv")
+```
+
+### Hurricane Dataset with Select Variables
+This is a dataset that does not include variables that are mostly missing, with the exception of the "Pressure" variable, which is mostly non-missing starting at around 1980, and the "Record" variable, which flags hurricanes that have reached land.
+```{r paged.print=TRUE}
+# how many NA's are there for each variable?
+print("for all data")
+dim(hurs_all)
+apply(hurs_all, 2, function(x) sum(is.na(x)))
+
+print("for all data since 1980")
+hurs_since_1980 <- hurs_all %>% filter(DateTime > "1980-01-01 12:00:00") 
+dim(hurs_since_1980)
+apply(hurs_since_1980, 2, function(x) sum(is.na(x)))
+```
+
+```{r paged.print=TRUE}
+# create dataset that excludes variables with majority missing data
+# keep "Pressure", which has missing values mostly for dates before 1980
+# keep "Record" in case we want to do analysis regarding landfall
+
+hurs_select_vars <- hurs_all[,c(1:14)]
+head(hurs_select_vars, 10)
+write_csv(hurs_select_vars, "hurricanes_select_vars.csv")
+```
+
+## Hurricane Sandy (AL182012)
+Here's the data related to hurricane Sandy
+```{r paged.print=TRUE}
+# get data related to hurricane Sandy
+hur_sandy <- hurs_all %>% filter(Year ==2012, Name == "SANDY")
+head(hur_sandy, 10)
+max(hur_sandy$Wind, na.rm=TRUE)
+min(hur_sandy$Pressure, na.rm=TRUE)
+```
+
+Hurricane Sandy lasted 10 days at the end of October 2012, peaking in wind speed on October 25th, at 100 knots, with a second peak on the 29th at 85 knots.
+
+The pattern for wind pressure looks similar to the wind speed, where low pressure is an indicator of an intense hurricane. The lowest pressure of the hurricane occured October 29th, at 940 millibars of pressure. The second lowest occured October 25th, at 954 millibars.
+
+```{r paged.print=TRUE}
+graph <- ggplot(hur_sandy, aes(x = DateTime, y = Wind)) + 
+  geom_line(color="black") +
+  geom_point(size = 1.8, shape = 19, color = "black", alpha = 0.7) +
+  theme(legend.position = "top") +
+  labs(x="Date", y="Wind Speed (Knots)") + 
+  ggtitle("Hurricane Sandy - Wind Speed Over Time") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
+
+graph <- ggplot(hur_sandy, aes(x = DateTime, y = Pressure)) + 
+  geom_line(color="black") +
+  geom_point(size = 1.8, shape = 19, color = "black", alpha = 0.7) +
+  theme(legend.position = "top") +
+  labs(x="Date", y="Pressure (Millibars)") + 
+  ggtitle("Hurricane Sandy - Pressure Over Time") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
+```
+
+## Longest-Lasting Hurricane (AL031899)
+
+AL031899 is the longest-lasting hurricane. It lasted a month on August 1899. It had a peak wind speed of 130.
+```{r paged.print=TRUE}
+# find the longest-lasting hurricane
+head(hurs_all %>% group_by(Key, Year) %>% summarise(count=n()) %>% arrange(-count), 10)
+
+# get data related to this hurricane (AL031899)
+hur_AL031899 <- hurs_all %>% filter(Key == "AL031899")
+print("Max Wind:")
+max(hur_AL031899$Wind, na.rm=TRUE)
+print("Min Pressure:")
+min(hur_AL031899$Pressure, na.rm=TRUE)
+head(hur_AL031899, 10)
+```
+
+```{r paged.print=TRUE}
+# plot wind and pressure over time
+graph <- ggplot(hur_AL031899, aes(x = DateTime, y = Wind)) + 
+  geom_line(color="black") +
+  geom_point(size = 1.8, shape = 19, color = "black", alpha = 0.7) +
+  theme(legend.position = "top") +
+  labs(x="Date", y="Wind Speed (Knots)") + 
+  ggtitle("Unnamed Hurricane (3rd in 1899) - Wind Speed Over Time") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
+
+# pressure data is mostly missing for this hurricane
+graph <- ggplot(hur_AL031899, aes(x = DateTime, y = Pressure)) + 
+  geom_line(color="black") +
+  geom_point(size = 1.8, shape = 19, color = "black", alpha = 0.7) +
+  theme(legend.position = "top") +
+  labs(x="Date", y="Pressure (Millibars)") + 
+  ggtitle("Unnamed Hurricane (3rd in 1899) - Pressure Over Time") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
+
+```
+
+## Hurricane with the Highest Wind Speed (Allen - AL041980)
+
+AL041980 had the highest wind speed. It lasted 12 days in August 1980, clearly peaking 3 times. It had a peak wind speed of 165 knots and a min pressure of 899 millibars.
+```{r paged.print=TRUE}
+head(hurs_all %>% arrange(-Wind), 10)
+
+# get data related to this hurricane (AL031899)
+hur_AL041980 <- hurs_all %>% filter(Key == "AL041980")
+print("Max Wind:")
+max(hur_AL041980$Wind, na.rm=TRUE)
+print("Min Pressure:")
+min(hur_AL041980$Pressure, na.rm=TRUE)
+head(hur_AL041980, 10)
+
+```
+
+```{r paged.print=TRUE}
+# plot wind and pressure over time
+graph <- ggplot(hur_AL041980, aes(x = DateTime, y = Wind)) + 
+  geom_line(color="black") +
+  geom_point(size = 1.8, shape = 19, color = "black", alpha = 0.7) +
+  theme(legend.position = "top") +
+  labs(x="Date", y="Wind Speed (Knots)") + 
+  ggtitle("Hurricane Allen (1980) - Wind Speed Over Time") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
+
+graph <- ggplot(hur_AL041980, aes(x = DateTime, y = Pressure)) + 
+  geom_line(color="black") +
+  geom_point(size = 1.8, shape = 19, color = "black", alpha = 0.7) +
+  theme(legend.position = "top") +
+  labs(x="Date", y="Pressure (Millibars)") + 
+  ggtitle("Hurricane Allen (1980) - Pressure Over Time") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
+
+```
+
+## Hurricane with the Lowest Pressure (AL252005)
+
+AL252005 (Wilma) had the lowest min pressure. It lasted 12 days in October 2005, clearly peaking 3 times. It had a peak wind speed of 160 knots and a min pressure of 882 millibars.
+
+```{r}
+head(hurs_all %>% arrange(Pressure), 10)
+
+# get data related to this hurricane (AL031899)
+hur_AL252005 <- hurs_all %>% filter(Key == "AL252005")
+print("Max Wind:")
+max(hur_AL252005$Wind, na.rm=TRUE)
+print("Min Pressure:")
+min(hur_AL252005$Pressure, na.rm=TRUE)
+head(hur_AL252005, 10)
+```
+
+```{r}
+# plot wind and pressure over time
+graph <- ggplot(hur_AL252005, aes(x = DateTime, y = Wind)) + 
+  geom_line(color="black") +
+  geom_point(size = 1.8, shape = 19, color = "black", alpha = 0.7) +
+  theme(legend.position = "top") +
+  labs(x="Date", y="Wind Speed (Knots)") + 
+  ggtitle("Hurricane AL031899 - Wind Speed Over Time") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
+
+graph <- ggplot(hur_AL252005, aes(x = DateTime, y = Pressure)) + 
+  geom_line(color="black") +
+  geom_point(size = 1.8, shape = 19, color = "black", alpha = 0.7) +
+  theme(legend.position = "top") +
+  labs(x="Date", y="Pressure (Millibars)") + 
+  ggtitle("Hurricane Wilma (2005) - Pressure Over Time") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
+
+```
+
+## Are Hurricanes More or Less Severe Over Time?
+
+### How many "Tropical Hurricanes" have there been per decade?
+```{r}
+
+
+```
+
+
+### How many hurricanes with wind speeds higher or equal to Sandy have there been per decade?
+```{r}
+
+
+```
+
+
+
+
