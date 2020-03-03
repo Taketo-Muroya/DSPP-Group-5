@@ -1,0 +1,837 @@
+---
+title: "DSPP Assignment 1_UK"
+author: "Evelyn"
+date: "2/9/2020"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    toc: yes
+---
+
+# Loading and Viewing Data
+
+```{r, warnings=FALSE, messages=FALSE}
+# load packages
+library(geosphere)
+library(ggplot2)
+library(plotly)
+library(ggthemes)
+library(RColorBrewer) 
+library(sp)
+library(maptools)
+library(maps)
+library(data.table)
+library(tidyverse)
+library(DT)
+library(ggmap)
+library(mapproj)
+library(rgdal)
+library(leaflet)
+library(ggrepel)
+
+# set working directory
+setwd("C:/Users/ydeng.AIR/Desktop/Evelyn/1. Columbia/04. DSPP/Presentation 1 - Crime")
+
+```
+
+
+```{r}
+# load data 
+base::load("police_incidents_df.rdata")
+#base::load("uk_aggregated.rdata")
+#base::load("uk_aggregated_anti_social.rdata")
+
+# view data
+head(police_incidents,10)
+#head(uk_aggregated,1000)              
+#head(uk_aggregated_anti_social, 1000) 
+
+```
+
+# Analysis of Crime by Crime Type
+
+## Data Cleaning and Restructuring
+
+```{r}
+# choose only necessary variables
+crime <- police_incidents[c(2,4,5,6,10)]
+crime
+table(crime$Crime.type)
+
+```
+
+```{r}
+# create dataset with aggregated crime by month by type
+crime_freq_by_month <- crime %>%
+  group_by(Month, Crime.type) %>%
+  summarise(frequency = n())
+
+crime_freq_by_month
+
+```
+
+## Visualize Data: Crime by Month and Type
+
+```{r}
+
+graph <- ggplot(crime_freq_by_month, aes(x = Month, y = frequency)) + 
+  geom_line(aes(group=Crime.type, color = Crime.type)) +
+  #geom_point(size = 2, shape = 21, fill = "lightblue") +
+  theme(legend.position = "top") +
+  labs(x="Month", y="Number of Crimes") + 
+  ggtitle("Monthly Crime Frequency in the UK") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y", "group"), dynamicTicks=TRUE)
+
+
+```
+
+## Insights
+
+ASB is the most frequent crime, followed by violent and sexual offenses
+
+seasonal crime peaks:
+  - anti-social behavior(ASB)    summer
+  - violent and sexual offences  summer
+  - other theft                  summer
+  - bicycle theft                summer
+  - public order                 summer
+  - burglary                     fall to early winter
+  - theft from the person        early winter (December)
+  
+the seasonality of crime is most notable for:
+  - ASB         (approx 45%  more crime during peak season)
+  - bike theft  (approx 100% more crime during peak season)
+
+
+Note: Increase in crime is not a reflection of increase in population, which was only about 2% from 2014 to 2017 (office for national statistics: https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/overviewoftheukpopulation/august2019)
+
+
+## Data Table of Change in Crime by Crime Type
+
+```{r}
+# TODO: reshape data so that columns are "Crime Type" "Change Y1" "Change Y2" "Change Y3", "Change Overall". create a data table or line graph showing crimes that have an overall % change of more than 10%, include "all"
+
+# export data to excel, where % change per crime type is calculated 
+# for year-to-year and over the three years and new dataset is read in
+write_csv(crime_freq_by_month, "crime_freq_by_month.csv")
+crime_change_by_type <- read_csv("crime_change_by_type.csv")
+
+# reduce dataset down to relevant variables and only 8 types with largest absolute change in crime
+crime_change_by_type <- crime_change_by_type %>%
+  .[,c(1,4,6)] 
+
+top_change_types <- crime_change_by_type$`Crime Type`[1:8]
+
+top_change_tbl <- crime_change_by_type[crime_change_by_type$`Crime Type` %in% top_change_types, ] 
+
+# make "Crime Type" an ordered factor variable for graphing
+top_change_tbl$`Crime Type` <- factor(top_change_tbl$`Crime Type`, levels= top_change_tbl$`Crime Type`[1:8])
+
+top_change_tbl
+```
+
+```{r, fig.width=9, fig.height=7}
+library(scales)
+
+p <- ggplot(top_change_tbl, aes(x=fct_rev(`Crime Type`), y=`% Change`, fill=`Time Period`)) + 
+  geom_bar(position="dodge", stat="identity") + coord_flip() +
+  scale_fill_manual(values=c( "#c5eb7f","#9ACA3C", "#71a803", "#003F5D")) + 
+  theme_tufte() + guides(fill = guide_legend(reverse=TRUE)) +
+  scale_y_continuous(limits = c(-0.25, 1.2), labels = percent, 
+                     breaks = c(-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2)) +  
+  labs(fill = NULL, x = NULL, y = "Percent Increase", title = "Top Changes in Crime (2014-2017)") +
+  theme(axis.ticks = element_blank(), panel.grid.major.x = element_line(color = "light grey"),
+        legend.position = "bottom", legend.text=element_text(size=12), axis.text=element_text(size=12))
+
+p
+
+```
+
+
+# Analysis of Crime by Location
+
+```{r}
+# TODO:
+# similar analysis of data as for crime by type above
+
+```
+
+```{r}
+# TODO: 
+# chose a subset of data
+# map data
+#   - heat map of all data (one or across time? show seasonality for certain crime types?)
+#   - map with pins of subsetted data
+
+```
+
+```{r}
+library(rgdal)
+ukpp_original <- readOGR(getwd(),"ukpp") 
+ukpp_transformed <- spTransform(ukpp_original, CRS("+proj=longlat +datum=WGS84")) 
+ukpp <- fortify(ukpp_transformed)
+unique(ukpp$id)
+```
+
+
+```{r}
+# find centers of counties
+county_labels <- ukpp %>%
+  group_by(id) %>%
+  summarise(lat_center = mean(lat), long_center=mean(long))
+county_labels
+
+county_labels <- county_labels %>%
+  mutate(county = case_when(
+    id==0~'Surrey ',
+    id==1~'Cumbria ', 	id==2~'Lancashire ', 	
+    id==3~'Merseyside ', 	id==4~'Greater Manchester ', 		
+    id==5~'Cheshire ', 	
+    id==6~'Northumbria ', 	id==7~'Durham ', 		
+    id==8~'North Yorkshire ', 	id==9~'West Yorkshire ', 	
+    id==10~'South Yorkshire ', 	id==11~'Humberside ', 		
+    id==12~'Cleveland ', 	id==13~'West Midlands ', 	
+    id==14~'Staffordshire ', 	id==15~'West Mercia ', 		
+    id==16~'Warwickshire ', 	id==17~'Derbyshire ', 	
+    id==18~'Nottinghamshire ', 	id==19~'Lincolnshire ', 		
+    id==20~'Leicestershire ', 	id==21~'Northamptonshire ', 	
+    id==22~'Cambridgeshire ', 	id==23~'Norfolk ', 	
+    id==24~'Suffolk ', 	id==25~'Bedfordshire ', 	
+    id==26~'Hertfordshire ', 	id==27~'Essex ', 		
+    id==28~'Thames Valley ', 	id==29~'Hampshire ', 	
+    id==30~'Metropolitan ', id==31~'Kent ', 
+    id==32~'Sussex ', id==33~'City of London ',
+    id==34~'Devon & Cornwall ', id==35 ~'Avon and Somerset ',
+    id==36~'Gloucestershire ', id==37~'Wiltshire ',
+    id==38~'North Wales ', 	id==39~'North Wales ', 		
+    id==40~'Gwent ', 	id==41~'South Wales ',
+    id==42~'Dyfed-Powys '))
+
+county_labels$id <- NULL
+county_labels
+
+```  
+
+```{r}
+ukpp$id <-as.numeric(ukpp$id)
+```
+
+
+Recode id in the nypp dataset to reflect precinct numbers.
+```{r}
+# shape file does not include two police forces listed in data: "British Transport Police" and "Police Service of Nothern Ireland"
+# replace ids with police force names
+
+ukpp2 <- ukpp %>%
+  mutate(county = case_when(
+    id==0~'Surrey Police',
+    id==1~'Cumbria Constabulary', 	id==2~'Lancashire Constabulary', 	
+    id==3~'Merseyside Police', 	id==4~'Greater Manchester Police', 		
+    id==5~'Cheshire Constabulary', 	
+    id==6~'Northumbria Police', 	id==7~'Durham Constabulary', 		
+    id==8~'North Yorkshire Police', 	id==9~'West Yorkshire Police', 	
+    id==10~'South Yorkshire Police', 	id==11~'Humberside Police', 		
+    id==12~'Cleveland Police', 	id==13~'West Midlands Police', 	
+    id==14~'Staffordshire Police', 	id==15~'West Mercia Police', 		
+    id==16~'Warwickshire Police', 	id==17~'Derbyshire Constabulary', 	
+    id==18~'Nottinghamshire Police', 	id==19~'Lincolnshire Police', 		
+    id==20~'Leicestershire Police', 	id==21~'Northamptonshire Police', 	
+    id==22~'Cambridgeshire Constabulary', 	id==23~'Norfolk Constabulary', 	
+    id==24~'Suffolk Constabulary', 	id==25~'Bedfordshire Police', 	
+    id==26~'Hertfordshire Constabulary', 	id==27~'Essex Police', 		
+    id==28~'Thames Valley Police', 	id==29~'Hampshire Constabulary', 	
+    id==30~'Metropolitan Police', id==31~'Kent Police', 
+    id==32~'Sussex Police', id==33~'City of London Police',
+    id==34~'Devon & Cornwall Police', id==35 ~'Avon and Somerset Constabulary',
+    id==36~'Gloucestershire Constabulary', id==37~'Wiltshire Police',
+    id==38~'North Wales Police', 	id==39~'North Wales Police', 		
+    id==40~'Gwent Police', 	id==41~'South Wales Police',
+    id==42~'Dyfed-Powys Police'))
+    
+ukpp2$id <- NULL
+ukpp2
+```
+
+
+```{r}
+# create dataset with aggregated crime by month by type by region
+`%notin%` <- Negate(`%in%`)
+
+crime$Falls.within <- as.character(crime$Falls.within)
+crime[!is.na(crime$Falls.within) & crime$Falls.within=="Metropolitan Police Service", 2] <- "Metropolitan Police"
+
+crime_by_region <- crime %>%
+  filter(Falls.within %notin% c("Police Service of Nothern Ireland")) %>% #not in shape file
+  group_by(Month, Crime.type, Falls.within) %>%
+  summarise(frequency = n()) %>%
+  spread(Crime.type, frequency) 
+
+crime_by_region$all = rowSums(subset(crime_by_region, select=`Anti-social behaviour`:`Violence and sexual offences`))
+
+crime_by_region <- crime_by_region %>% filter(Falls.within!="City of London Police")
+```
+
+### Seasonal Analysis of ASB
+```{r}
+# read in population data
+pop <- read_csv("Population by year.csv")
+ukpp_year14 <- left_join(pop, ukpp2, by = "county")[,c(1,2,5:10)]
+ukpp_year14
+ukpp_year15 <- left_join(pop, ukpp2, by = "county")[,c(1,3,5:10)]
+ukpp_year15$pop2015 <- as.numeric(ukpp_year15$pop2015)
+ukpp_year16 <- left_join(pop, ukpp2, by = "county")[,c(1,4,5:10)]
+ukpp_year16
+```
+
+```{r}
+
+#ASB 2015-07
+crime_by_region_201501 <- crime_by_region %>%
+  filter(Month=="2015-01")
+ukpp_crime_201501 <- left_join(crime_by_region_201501, ukpp_year15, by = c("Falls.within" = "county"))
+ukpp_crime_201501 <- transform(ukpp_crime_201501, ABS_Crime_Rate = `Anti-social behaviour`*1000 / pop2015)
+ukpp_crime_201501 <- ukpp_crime_201501[,c(1,2,3,18:25)]
+ukpp_crime_201501
+
+#ASB 2015-07
+crime_by_region_201507 <- crime_by_region %>%
+  filter(Month=="2015-07")
+ukpp_crime_201507 <- left_join(crime_by_region_201507, ukpp_year15, by = c("Falls.within" = "county"))
+ukpp_crime_201507 <- transform(ukpp_crime_201507, ABS_Crime_Rate = `Anti-social behaviour`*1000 / pop2015)
+ukpp_crime_201507 <- ukpp_crime_201507[,c(1,2,3,18:25)]
+ukpp_crime_201507
+
+#ASB 2016-01
+crime_by_region_201601 <- crime_by_region %>%
+  filter(Month=="2016-01")
+ukpp_crime_201601 <- left_join(crime_by_region_201601, ukpp_year16, by = c("Falls.within" = "county"))
+ukpp_crime_201601 <- transform(ukpp_crime_201601, ABS_Crime_Rate = `Anti-social behaviour`*1000 / pop2016)
+ukpp_crime_201601 <- ukpp_crime_201601[,c(1,2,3,18:25)]
+ukpp_crime_201601
+
+#ASB 2016-07
+crime_by_region_201607 <- crime_by_region %>%
+  filter(Month=="2016-07")
+ukpp_crime_201607 <- left_join(crime_by_region_201607, ukpp_year16, by = c("Falls.within" = "county"))
+ukpp_crime_201607 <- transform(ukpp_crime_201607, ABS_Crime_Rate = `Anti-social behaviour`*1000 / pop2016)
+ukpp_crime_201607 <- ukpp_crime_201607[,c(1,2,3,18:25)]
+ukpp_crime_201607
+```
+
+Plot ASB in UK for Winters and Summers 2015-2016 (not including London)
+```{r, fig.height=10, fig.width=10}
+#winter 2015
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201501, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201501$ABS_Crime_Rate)) +
+  scale_fill_gradient(name="Crimes per Thousand", breaks=c(0, 2,4,6,8,10), limits = c(0, 10),
+                      low = "#008cff", high = "#ff1414") +theme_bw() 
+
+#summer2015
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201507, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201507$ABS_Crime_Rate)) +
+  scale_fill_gradient(name="Crimes per Thousand", breaks=c(0, 2,4,6,8,10), limits = c(0, 10),
+                      low = "#008cff", high = "#ff1414") +theme_bw() 
+
+#winter 2016
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201601, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201601$ABS_Crime_Rate)) +
+  scale_fill_gradient(name="Crimes per Thousand", breaks=c(0, 2,4,6,8,10), limits = c(0, 10),
+                      low = "#008cff", high = "#ff1414") +theme_bw() 
+
+#summer 2016
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201607, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201607$ABS_Crime_Rate)) +
+  scale_fill_gradient(name="Crimes per Thousand", breaks=c(0, 2,4,6,8,10), limits = c(0, 10),
+                      low = "#008cff", high = "#ff1414")  +theme_bw() 
+```
+
+
+### Seasonal Analysis of Bike Theft
+
+```{r}
+
+#Bicycle theft 2015-07
+crime_by_region_201501 <- crime_by_region %>%
+  filter(Month=="2015-01")
+ukpp_crime_201501 <- left_join(crime_by_region_201501, ukpp_year15, by = c("Falls.within" = "county"))
+ukpp_crime_201501 <- transform(ukpp_crime_201501, BT_Crime_Rate = `Bicycle theft`*1000 / pop2015)
+ukpp_crime_201501 <- ukpp_crime_201501[,c(1,2,4,18:25)]
+ukpp_crime_201501
+
+#Bicycle theft 2015-07
+crime_by_region_201507 <- crime_by_region %>%
+  filter(Month=="2015-07")
+ukpp_crime_201507 <- left_join(crime_by_region_201507, ukpp_year15, by = c("Falls.within" = "county"))
+ukpp_crime_201507 <- transform(ukpp_crime_201507, BT_Crime_Rate = `Bicycle theft`*1000 / pop2015)
+ukpp_crime_201507 <- ukpp_crime_201507[,c(1,2,4,18:25)]
+ukpp_crime_201507
+
+#Bicycle theft 2016-01
+crime_by_region_201601 <- crime_by_region %>%
+  filter(Month=="2016-01")
+ukpp_crime_201601 <- left_join(crime_by_region_201601, ukpp_year16, by = c("Falls.within" = "county"))
+ukpp_crime_201601 <- transform(ukpp_crime_201601, BT_Crime_Rate = `Bicycle theft`*1000 / pop2016)
+ukpp_crime_201601 <- ukpp_crime_201601[,c(1,2,4,18:25)]
+ukpp_crime_201601
+
+#Bicycle theft 2016-07
+crime_by_region_201607 <- crime_by_region %>%
+  filter(Month=="2016-07")
+ukpp_crime_201607 <- left_join(crime_by_region_201607, ukpp_year16, by = c("Falls.within" = "county"))
+ukpp_crime_201607 <- transform(ukpp_crime_201607, BT_Crime_Rate = `Bicycle theft`*1000 / pop2016)
+ukpp_crime_201607 <- ukpp_crime_201607[,c(1,2,4,18:25)]
+ukpp_crime_201607
+```
+
+Plot Bike theft in UK for Winters and Summers 2015-2016 (not including London)
+```{r, fig.height=10, fig.width=10}
+#winter 2015
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201501, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201501$BT_Crime_Rate)) +
+  scale_fill_gradient(name="Crimes per Thousand", limits = c(0, 0.43),
+                      low = "#008cff", high = "#ff1414") +theme_bw() 
+```
+
+```{r, fig.height=10, fig.width=10}
+
+#summer2015
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201507, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201507$BT_Crime_Rate)) +
+  scale_fill_gradient(name="Crimes per Thousand", limits = c(0, 0.43),
+                      low = "#008cff", high = "#ff1414") +theme_bw() 
+```
+
+```{r, fig.height=10, fig.width=10}
+#winter 2016
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201601, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201601$BT_Crime_Rate)) +
+  scale_fill_gradient(name="Crimes per Thousand", limits = c(0, 0.43),
+                      low = "#008cff", high = "#ff1414") +theme_bw() 
+```
+
+```{r, fig.height=10, fig.width=10}
+#summer 2016
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201607, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201607$BT_Crime_Rate)) +
+  scale_fill_gradient(name="Crimes per Thousand", limits = c(0, 0.43),
+                      low = "#008cff", high = "#ff1414")  +theme_bw() 
+```
+
+
+
+
+
+
+### Analysis of Top Changes in Crime
+
+```{r}
+#no major changes in population in any PFA (most change was 3% from 2014 to 2016), so I'll just use the raw counts.
+#Public order 2014-10
+crime_by_region_201410 <- crime_by_region %>%
+  filter(Month=="2014-10")
+ukpp_crime_201410 <- left_join(crime_by_region_201410, ukpp2, by = c("Falls.within" = "county"))
+ukpp_crime_201410 <- ukpp_crime_201410[,c(1,2,11,18:23)]
+ukpp_crime_201410
+
+#Public order 2017-09
+crime_by_region_201709 <- crime_by_region %>%
+  filter(Month=="2017-09")
+ukpp_crime_201709 <- left_join(crime_by_region_201709, ukpp2, by = c("Falls.within" = "county"))
+ukpp_crime_201709 <- ukpp_crime_201709[,c(1,2,11,18:23)]
+ukpp_crime_201709
+```
+
+
+```{r}
+#Posession of weapons 2014-10
+crime_by_region_201410 <- crime_by_region %>%
+  filter(Month=="2014-10")
+ukpp_weapons_201410 <- left_join(crime_by_region_201410, ukpp2, by = c("Falls.within" = "county"))
+ukpp_weapons_201410 <- ukpp_weapons_201410[,c(1,2,10,18:23)]
+ukpp_weapons_201410
+
+#Posession of weapons 2017-09
+crime_by_region_201709 <- crime_by_region %>%
+  filter(Month=="2017-09")
+ukpp_weapons_201709 <- left_join(crime_by_region_201709, ukpp2, by = c("Falls.within" = "county"))
+ukpp_weapons_201709 <- ukpp_weapons_201709[,c(1,2,10,18:23)]
+ukpp_weapons_201709
+```
+
+
+Plot public order in the UK for October 2014 and September 2017 (not including London)
+```{r, fig.height=10, fig.width=10}
+# 2014-10
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201410, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201410$`Public order`)) +
+  scale_fill_gradient(name="Number of Crimes", limits = c(0, 4500),
+                      low = "#ffffff", high = "firebrick") +theme_bw() 
+
+# 2017-09
+ggplot() + 
+  geom_polygon(data = ukpp_crime_201709, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201709$`Public order`)) +
+  scale_fill_gradient(name="Number of Crimes", limits = c(0, 4500),
+                      low = "#ffffff", high = "firebrick") +theme_bw() 
+```
+
+
+Plot public order in the UK for October 2014 and September 2017 (not including London)
+```{r, fig.height=10, fig.width=10}
+# 2014-10
+ggplot() + 
+  geom_polygon(data = ukpp_weapons_201410, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_weapons_201410$`Possession of weapons`)) +
+  scale_fill_gradient(name="Number of Crimes", limits = c(0, 600),
+                      low = "#ffffff", high = "firebrick") +theme_bw() 
+
+# 2017-09
+ggplot() + 
+  geom_polygon(data = ukpp_weapons_201709, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_weapons_201709$`Possession of weapons`)) +
+  scale_fill_gradient(name="Number of Crimes", limits = c(0, 600),
+                      low = "#ffffff", high = "firebrick") +theme_bw() 
+```
+
+
+
+### Westminster Attacks Analysis
+```{r}
+#2016-02
+crime_by_region_201602 <- crime_by_region %>%
+  filter(Month=="2016-02")
+crime_by_region_201602
+
+ukpp_crime_201602 <- left_join(crime_by_region_201602, ukpp2, by = c("Falls.within" = "county"))
+
+#2016-03
+crime_by_region_201603 <- crime_by_region %>%
+  filter(Month=="2016-03")
+crime_by_region_201603
+
+ukpp_crime_201603 <- left_join(crime_by_region_201603, ukpp2, by = c("Falls.within" = "county"))
+
+#====================================  2017 Feb-March =======================================
+#2017-02
+crime_by_region_201702 <- crime_by_region %>%
+  filter(Month=="2017-02")
+crime_by_region_201702
+
+ukpp_crime_201702 <- left_join(crime_by_region_201702, ukpp2, by = c("Falls.within" = "county"))
+
+#2017-03
+crime_by_region_201703 <- crime_by_region %>%
+  filter(Month=="2017-03")
+crime_by_region_201703
+
+ukpp_crime_201703 <- left_join(crime_by_region_201703, ukpp2, by = c("Falls.within" = "county"))
+```
+
+  
+Get the raster map background for UK
+```{r}
+UK_map <- get_map(c(left = -6.5, bottom = 49.5, right = 3, top = 56), 
+                  source = "stamen", maptype="toner-lite")
+background_UK <- ggmap(UK_map)
+background_UK
+```
+
+Plot ASB in UK 2016-02
+```{r, fig.height=12, fig.width=12}
+library(ggrepel)
+background_UK + 
+  geom_polygon(data = ukpp_crime_201602, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201602$`Anti-social behaviour`)) +
+  scale_fill_gradient(name="Number of Crimes",
+                      low = "#fff7f7", high = "firebrick") +
+  geom_text_repel(data = county_labels, inherit.aes = FALSE, size = 3,
+            aes(label=county, x = long_center, y = lat_center))
+
+```
+
+Plot ASB in UK 2016-03
+```{r, fig.height=12, fig.width=12}
+library(ggrepel)
+background_UK + 
+  geom_polygon(data = ukpp_crime_201603, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201603$`Anti-social behaviour`)) +
+  scale_fill_gradient(name="Number of Crimes",
+                      low = "#fff7f7", high = "firebrick") +
+  geom_text_repel(data = county_labels, inherit.aes = FALSE, size = 3,
+            aes(label=county, x = long_center, y = lat_center))
+
+```
+
+
+Plot ASB in UK 2017-02
+```{r, fig.height=12, fig.width=12}
+library(ggrepel)
+background_UK + 
+  geom_polygon(data = ukpp_crime_201702, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201702$`Anti-social behaviour`)) +
+  scale_fill_gradient(name="Number of Crimes",
+                      low = "#fff7f7", high = "firebrick") +
+  geom_text_repel(data = county_labels, inherit.aes = FALSE, size = 3,
+            aes(label=county, x = long_center, y = lat_center))
+
+```
+
+
+Plot ASB in UK 2017-03
+```{r, fig.height=12, fig.width=12}
+library(ggrepel)
+background_UK + 
+  geom_polygon(data = ukpp_crime_201703, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_201703$`Anti-social behaviour`)) +
+  scale_fill_gradient(name="Number of Crimes",
+                      low = "#fff7f7", high = "firebrick") +
+  geom_text_repel(data = county_labels, inherit.aes = FALSE, size = 3,
+            aes(label=county, x = long_center, y = lat_center))
+
+```
+
+
+### Crime Rate by Police Force Area
+
+```{r}
+crime_rate <- read_csv("Crime rate by region.csv")
+ukpp_crime_rate <- left_join(ukpp2, crime_rate, by = c("county" = "County"))
+ukpp_crime_rate
+london_crime <- ukpp_crime_rate[ukpp_crime_rate$county == "City of London Police",]
+london_crime
+```
+
+
+Plot Crime Rate in UK 2016
+```{r, fig.height=11, fig.width=10}
+library(ggrepel)
+
+ggplot() +
+  geom_polygon(data = ukpp_crime_rate, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =ukpp_crime_rate$CrimeRate)) +
+  scale_fill_gradient(name="Crime Rate per Thousand",
+                      low = "#fff7f7", high = "firebrick") +
+  geom_text_repel(data = county_labels, inherit.aes = FALSE, size = 5,
+            aes(label=county, x = long_center, y = lat_center)) + theme_bw()
+
+```
+
+```{r, fig.height = 11, fig.width=10}
+no_london_crime <- ukpp_crime_rate[ukpp_crime_rate$county != "City of London Police",]
+
+ggplot() +
+  geom_polygon(data = no_london_crime, color = "dark grey", size = 0.4,
+               aes(x = long, y = lat, group=group, fill =no_london_crime$CrimeRate)) +
+  scale_fill_gradient(name="Crime Rate per Thousand",
+                      low = "#fff7f7", high = "firebrick") +
+  geom_text_repel(data = county_labels, inherit.aes = FALSE, size = 5,
+            aes(label=county, x = long_center, y = lat_center)) +theme_bw()
+```
+
+
+### Interactive Maps of London Crimes
+
+```{r}
+# filter all London crimes by month and get rid of "other crime" category
+London_201709_df <- police_incidents %>%
+  filter(Month=="2017-09", Falls.within=="City of London Police", Crime.type != "Other crime") %>%
+  .[, c(2,4,5,6,10)] %>%
+  mutate(agg.crime.type = case_when(
+    Crime.type %in% c("Bicycle theft", "Other theft", "Shoplifting", "Theft from the person") ~'Theft',
+    Crime.type=="Burglary"~'Burglary',
+    Crime.type=="Criminal damage and arson"~'Criminal damage and arson',
+    Crime.type=="Vehicle crime"~'Vehicle crime',
+    Crime.type=="Violence and sexual offences"~'Violence and sexual offences',
+    Crime.type %in% c("Drugs", "Possession of weapons") ~'Drugs or weapon possession',
+    Crime.type=="Public order"~'Public order',
+    Crime.type=="Robbery"~'Robbery')) %>%
+  arrange(Longitude)
+
+London_201709_df$Crime.type <- as.character(London_201709_df$Crime.type)
+London_201709_df
+```
+
+
+
+London 2017-09 Interactive Map
+```{r}
+# make color palette
+library(RColorBrewer)
+palette = colorFactor("Accent", domain = London_201709_df$agg.crime.type) # Grab a palette
+color_crime_type = palette(London_201709_df$agg.crime.type)
+
+# make up popup content
+content <- paste("Type of Crime: ", London_201709_df$agg.crime.type, "<br/>",
+                 "Month of Incident: ", London_201709_df$Month)
+
+# create map for London crimes in 2017-09
+London_201709_map <- leaflet(London_201709_df) %>%
+  addProviderTiles("Stamen.TonerLite") %>%   
+  addCircles(col= rev(color_crime_type), opacity=0.3, 
+             popup = content,
+             highlightOptions = highlightOptions(
+               color='#0061ff', weight = 5,
+               bringToFront = TRUE, sendToBack = TRUE)) %>%
+  setView(lng = -0.095, lat = 51.515, zoom = 15)
+  
+London_201709_map 
+```
+
+
+
+```{r}
+# filter to London thefts in all of 2016
+London_theft_2016_df <- police_incidents %>%
+  filter(Falls.within=="City of London Police", 
+         Crime.type %in% c("Public order"),
+         Month %in% c("2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", 
+                     "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12")
+         ) %>%
+  .[, c(2,4,5,6,10)] %>%
+  arrange(Crime.type)
+
+London_theft_2016_df$Crime.type <- as.character(London_theft_2016_df$Crime.type)
+London_theft_2016_df
+```
+
+
+London 2016 Theft Interactive Map
+```{r}
+# make color palette
+library(RColorBrewer)
+palette = colorFactor("Set1", domain = London_theft_2016_df$Crime.type) # Grab a palette
+color_crime_type = palette(London_theft_2016_df$Crime.type)
+
+# make up popup content
+content <- paste("Type of Crime: ", London_theft_2016_df$Crime.type, "<br/>",
+                 "Month of Incident: ", London_theft_2016_df$Month)
+
+# create map for London thefts in 2016
+London_theft_2016_map <- leaflet(London_theft_2016_df) %>%
+  addProviderTiles("Stamen.TonerLite") %>%   
+  addCircles(col= color_crime_type, opacity=0.1, 
+             popup = content,
+             highlightOptions = highlightOptions(
+               color='#0061ff', weight = 5,
+               bringToFront = TRUE, sendToBack = TRUE)) %>%
+  setView(lng = -0.095, lat = 51.515, zoom = 15)
+  
+London_theft_2016_map 
+```
+
+
+```{r}
+# filter to London crimes before and after Westminster attacks
+Westminster_feb_df <- police_incidents %>%
+  filter(Falls.within=="Metropolitan Police Service", 
+         Crime.type %in% c("Anti-social behaviour"),
+         Month == "2017-02"
+         ) %>%
+  .[, c(2,4,5,6,10)] %>%
+  arrange(Crime.type)
+
+Westminster_feb_df$Crime.type <- as.character(Westminster_feb_df$Crime.type)
+Westminster_feb_df
+```
+
+Westminster Interactive Map
+```{r}
+# make up popup content
+content <- paste("Type of Crime: ", Westminster_feb_df$Crime.type, "<br/>",
+                 "Month of Incident: ", Westminster_feb_df$Month)
+
+# create map for London thefts in 2016
+Westminster_feb_map <- leaflet(Westminster_feb_df) %>%
+  addProviderTiles("Stamen.TonerLite") %>%   
+  addCircles(col= "red", opacity=0.2, 
+             popup = content,
+             highlightOptions = highlightOptions(
+               color='#0061ff', weight = 5,
+               bringToFront = TRUE, sendToBack = TRUE)) %>%
+  setView(lng = -0.129, lat = 51.4994827, zoom = 15)
+  
+Westminster_feb_map 
+```
+
+
+```{r}
+# filter to London crimes before and after Westminster attacks
+Westminster_mar_df <- police_incidents %>%
+  filter(Falls.within=="Metropolitan Police Service", 
+         Crime.type %in% c("Anti-social behaviour"),
+         Month == "2017-03"
+         ) %>%
+  .[, c(2,4,5,6,10)] %>%
+  arrange(Crime.type)
+
+Westminster_mar_df$Crime.type <- as.character(Westminster_mar_df$Crime.type)
+Westminster_mar_df
+```
+
+Westminster Interactive Map - March
+```{r}
+# make up popup content
+content <- paste("Type of Crime: ", Westminster_mar_df$Crime.type, "<br/>",
+                 "Month of Incident: ", Westminster_mar_df$Month)
+
+# create map for London thefts in 2016
+Westminster_mar_map <- leaflet(Westminster_mar_df) %>%
+  addProviderTiles("Stamen.TonerLite") %>%   
+  addCircles(col= "red", opacity=0.2, 
+             popup = content,
+             highlightOptions = highlightOptions(
+               color='#0061ff', weight = 5,
+               bringToFront = TRUE, sendToBack = TRUE)) %>%
+  setView(lng = -0.129, lat = 51.4994827, zoom = 15)
+  
+Westminster_mar_map 
+```
+
+
+```{r}
+# filter to London crimes before and after Westminster attacks
+Westminster_apr_df <- police_incidents %>%
+  filter(Falls.within=="Metropolitan Police Service", 
+         Crime.type %in% c("Anti-social behaviour"),
+         Month == "2017-04"
+         ) %>%
+  .[, c(2,4,5,6,10)] %>%
+  arrange(Crime.type)
+
+Westminster_apr_df$Crime.type <- as.character(Westminster_apr_df$Crime.type)
+Westminster_apr_df
+```
+
+Westminster Interactive Map - April
+```{r}
+# make up popup content
+content <- paste("Type of Crime: ", Westminster_apr_df$Crime.type, "<br/>",
+                 "Month of Incident: ", Westminster_apr_df$Month)
+
+# create map for London thefts in 2016
+Westminster_apr_map <- leaflet(Westminster_apr_df) %>%
+  addProviderTiles("Stamen.TonerLite") %>%   
+  addCircles(col= "red", opacity=0.2, 
+             popup = content,
+             highlightOptions = highlightOptions(
+               color='#0061ff', weight = 5,
+               bringToFront = TRUE, sendToBack = TRUE)) %>%
+  setView(lng = -0.129, lat = 51.4994827, zoom = 15)
+  
+Westminster_apr_map 
+```
+
+
+

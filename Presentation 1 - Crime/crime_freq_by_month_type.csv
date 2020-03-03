@@ -1,0 +1,505 @@
+Month,Crime.type,frequency
+2014-10,Anti-social behaviour,173188
+2014-10,Bicycle theft,9904
+2014-10,Burglary,36759
+2014-10,Criminal damage and arson,45688
+2014-10,Drugs,14266
+2014-10,Other crime,4898
+2014-10,Other theft,43501
+2014-10,Possession of weapons,1993
+2014-10,Public order,14438
+2014-10,Robbery,4517
+2014-10,Shoplifting,28341
+2014-10,Theft from the person,6605
+2014-10,Vehicle crime,32280
+2014-10,Violence and sexual offences,76379
+2014-11,Anti-social behaviour,149362
+2014-11,Bicycle theft,7583
+2014-11,Burglary,38012
+2014-11,Criminal damage and arson,44978
+2014-11,Drugs,13987
+2014-11,Other crime,4813
+2014-11,Other theft,41682
+2014-11,Possession of weapons,1773
+2014-11,Public order,13344
+2014-11,Robbery,4625
+2014-11,Shoplifting,28267
+2014-11,Theft from the person,7416
+2014-11,Vehicle crime,30778
+2014-11,Violence and sexual offences,76315
+2014-12,Anti-social behaviour,130105
+2014-12,Bicycle theft,5582
+2014-12,Burglary,36275
+2014-12,Criminal damage and arson,41328
+2014-12,Drugs,13453
+2014-12,Other crime,4411
+2014-12,Other theft,40524
+2014-12,Possession of weapons,1643
+2014-12,Public order,12470
+2014-12,Robbery,4328
+2014-12,Shoplifting,26658
+2014-12,Theft from the person,7891
+2014-12,Vehicle crime,28762
+2014-12,Violence and sexual offences,74811
+2015-01,Anti-social behaviour,130931
+2015-01,Bicycle theft,5505
+2015-01,Burglary,36045
+2015-01,Criminal damage and arson,41390
+2015-01,Drugs,13421
+2015-01,Other crime,4870
+2015-01,Other theft,38433
+2015-01,Possession of weapons,1748
+2015-01,Public order,12290
+2015-01,Robbery,4330
+2015-01,Shoplifting,26177
+2015-01,Theft from the person,6749
+2015-01,Vehicle crime,30269
+2015-01,Violence and sexual offences,73489
+2015-02,Anti-social behaviour,130706
+2015-02,Bicycle theft,5395
+2015-02,Burglary,33033
+2015-02,Criminal damage and arson,39818
+2015-02,Drugs,12400
+2015-02,Other crime,4791
+2015-02,Other theft,37061
+2015-02,Possession of weapons,1708
+2015-02,Public order,12509
+2015-02,Robbery,3982
+2015-02,Shoplifting,27070
+2015-02,Theft from the person,6265
+2015-02,Vehicle crime,27878
+2015-02,Violence and sexual offences,70363
+2015-03,Anti-social behaviour,150826
+2015-03,Bicycle theft,6549
+2015-03,Burglary,35512
+2015-03,Criminal damage and arson,46998
+2015-03,Drugs,12836
+2015-03,Other crime,5558
+2015-03,Other theft,43123
+2015-03,Possession of weapons,1970
+2015-03,Public order,15202
+2015-03,Robbery,4458
+2015-03,Shoplifting,30204
+2015-03,Theft from the person,6793
+2015-03,Vehicle crime,31031
+2015-03,Violence and sexual offences,83179
+2015-04,Anti-social behaviour,166031
+2015-04,Bicycle theft,7307
+2015-04,Burglary,33240
+2015-04,Criminal damage and arson,46463
+2015-04,Drugs,12074
+2015-04,Other crime,5085
+2015-04,Other theft,42449
+2015-04,Possession of weapons,1931
+2015-04,Public order,15743
+2015-04,Robbery,4153
+2015-04,Shoplifting,29226
+2015-04,Theft from the person,6667
+2015-04,Vehicle crime,29487
+2015-04,Violence and sexual offences,80372
+2015-05,Anti-social behaviour,166826
+2015-05,Bicycle theft,7660
+2015-05,Burglary,33147
+2015-05,Criminal damage and arson,47120
+2015-05,Drugs,12621
+2015-05,Other crime,5047
+2015-05,Other theft,43952
+2015-05,Possession of weapons,2035
+2015-05,Public order,16278
+2015-05,Robbery,4317
+2015-05,Shoplifting,29631
+2015-05,Theft from the person,7161
+2015-05,Vehicle crime,31113
+2015-05,Violence and sexual offences,88445
+2015-06,Anti-social behaviour,175341
+2015-06,Bicycle theft,8477
+2015-06,Burglary,32517
+2015-06,Criminal damage and arson,46623
+2015-06,Drugs,12995
+2015-06,Other crime,5376
+2015-06,Other theft,45062
+2015-06,Possession of weapons,2228
+2015-06,Public order,17726
+2015-06,Robbery,4051
+2015-06,Shoplifting,28429
+2015-06,Theft from the person,6376
+2015-06,Vehicle crime,30722
+2015-06,Violence and sexual offences,91839
+2015-07,Anti-social behaviour,185445
+2015-07,Bicycle theft,8747
+2015-07,Burglary,32785
+2015-07,Criminal damage and arson,47184
+2015-07,Drugs,12923
+2015-07,Other crime,5494
+2015-07,Other theft,46519
+2015-07,Possession of weapons,2275
+2015-07,Public order,18805
+2015-07,Robbery,4318
+2015-07,Shoplifting,28652
+2015-07,Theft from the person,6684
+2015-07,Vehicle crime,30082
+2015-07,Violence and sexual offences,97623
+2015-08,Anti-social behaviour,181476
+2015-08,Bicycle theft,8273
+2015-08,Burglary,32651
+2015-08,Criminal damage and arson,46672
+2015-08,Drugs,12881
+2015-08,Other crime,4965
+2015-08,Other theft,43613
+2015-08,Possession of weapons,2281
+2015-08,Public order,17202
+2015-08,Robbery,4305
+2015-08,Shoplifting,27960
+2015-08,Theft from the person,6630
+2015-08,Vehicle crime,30265
+2015-08,Violence and sexual offences,91366
+2015-09,Anti-social behaviour,155068
+2015-09,Bicycle theft,8618
+2015-09,Burglary,32440
+2015-09,Criminal damage and arson,44427
+2015-09,Drugs,12018
+2015-09,Other crime,5377
+2015-09,Other theft,41531
+2015-09,Possession of weapons,2100
+2015-09,Public order,16962
+2015-09,Robbery,4198
+2015-09,Shoplifting,27222
+2015-09,Theft from the person,6440
+2015-09,Vehicle crime,30568
+2015-09,Violence and sexual offences,89500
+2015-10,Anti-social behaviour,167857
+2015-10,Bicycle theft,9010
+2015-10,Burglary,35257
+2015-10,Criminal damage and arson,49046
+2015-10,Drugs,12991
+2015-10,Other crime,5730
+2015-10,Other theft,42647
+2015-10,Possession of weapons,2437
+2015-10,Public order,17474
+2015-10,Robbery,4582
+2015-10,Shoplifting,29403
+2015-10,Theft from the person,7452
+2015-10,Vehicle crime,32798
+2015-10,Violence and sexual offences,94663
+2015-11,Anti-social behaviour,135846
+2015-11,Bicycle theft,7281
+2015-11,Burglary,37967
+2015-11,Criminal damage and arson,46520
+2015-11,Drugs,12264
+2015-11,Other crime,5589
+2015-11,Other theft,41338
+2015-11,Possession of weapons,2295
+2015-11,Public order,16957
+2015-11,Robbery,4479
+2015-11,Shoplifting,28326
+2015-11,Theft from the person,7832
+2015-11,Vehicle crime,32931
+2015-11,Violence and sexual offences,92996
+2015-12,Anti-social behaviour,128898
+2015-12,Bicycle theft,5320
+2015-12,Burglary,35805
+2015-12,Criminal damage and arson,46808
+2015-12,Drugs,11872
+2015-12,Other crime,5363
+2015-12,Other theft,39641
+2015-12,Possession of weapons,2147
+2015-12,Public order,16934
+2015-12,Robbery,4456
+2015-12,Shoplifting,26787
+2015-12,Theft from the person,7991
+2015-12,Vehicle crime,31320
+2015-12,Violence and sexual offences,95685
+2016-01,Anti-social behaviour,128094
+2016-01,Bicycle theft,5362
+2016-01,Burglary,35590
+2016-01,Criminal damage and arson,44280
+2016-01,Drugs,12328
+2016-01,Other crime,5804
+2016-01,Other theft,36566
+2016-01,Possession of weapons,2218
+2016-01,Public order,16500
+2016-01,Robbery,4595
+2016-01,Shoplifting,27095
+2016-01,Theft from the person,6942
+2016-01,Vehicle crime,31273
+2016-01,Violence and sexual offences,94278
+2016-02,Anti-social behaviour,126774
+2016-02,Bicycle theft,4819
+2016-02,Burglary,33532
+2016-02,Criminal damage and arson,44405
+2016-02,Drugs,11323
+2016-02,Other crime,5777
+2016-02,Other theft,36872
+2016-02,Possession of weapons,2208
+2016-02,Public order,16002
+2016-02,Robbery,4132
+2016-02,Shoplifting,29207
+2016-02,Theft from the person,6505
+2016-02,Vehicle crime,29906
+2016-02,Violence and sexual offences,89779
+2016-03,Anti-social behaviour,144795
+2016-03,Bicycle theft,5537
+2016-03,Burglary,34350
+2016-03,Criminal damage and arson,47819
+2016-03,Drugs,11898
+2016-03,Other crime,6035
+2016-03,Other theft,38939
+2016-03,Possession of weapons,2380
+2016-03,Public order,18301
+2016-03,Robbery,4300
+2016-03,Shoplifting,30055
+2016-03,Theft from the person,6755
+2016-03,Vehicle crime,31161
+2016-03,Violence and sexual offences,98294
+2016-04,Anti-social behaviour,147211
+2016-04,Bicycle theft,5960
+2016-04,Burglary,31706
+2016-04,Criminal damage and arson,45852
+2016-04,Drugs,11873
+2016-04,Other crime,6071
+2016-04,Other theft,39533
+2016-04,Possession of weapons,2400
+2016-04,Public order,18815
+2016-04,Robbery,4031
+2016-04,Shoplifting,30956
+2016-04,Theft from the person,6103
+2016-04,Vehicle crime,30229
+2016-04,Violence and sexual offences,96094
+2016-05,Anti-social behaviour,169388
+2016-05,Bicycle theft,7237
+2016-05,Burglary,32089
+2016-05,Criminal damage and arson,49187
+2016-05,Drugs,12092
+2016-05,Other crime,6358
+2016-05,Other theft,42599
+2016-05,Possession of weapons,2628
+2016-05,Public order,21472
+2016-05,Robbery,4372
+2016-05,Shoplifting,30018
+2016-05,Theft from the person,6565
+2016-05,Vehicle crime,31287
+2016-05,Violence and sexual offences,106471
+2016-06,Anti-social behaviour,167809
+2016-06,Bicycle theft,7415
+2016-06,Burglary,31588
+2016-06,Criminal damage and arson,46065
+2016-06,Drugs,10907
+2016-06,Other crime,6173
+2016-06,Other theft,42390
+2016-06,Possession of weapons,2675
+2016-06,Public order,22370
+2016-06,Robbery,4365
+2016-06,Shoplifting,30160
+2016-06,Theft from the person,6653
+2016-06,Vehicle crime,30430
+2016-06,Violence and sexual offences,104144
+2016-07,Anti-social behaviour,187870
+2016-07,Bicycle theft,8374
+2016-07,Burglary,32318
+2016-07,Criminal damage and arson,48759
+2016-07,Drugs,11820
+2016-07,Other crime,6042
+2016-07,Other theft,44024
+2016-07,Possession of weapons,2896
+2016-07,Public order,24453
+2016-07,Robbery,4759
+2016-07,Shoplifting,29934
+2016-07,Theft from the person,7058
+2016-07,Vehicle crime,31935
+2016-07,Violence and sexual offences,108641
+2016-08,Anti-social behaviour,182735
+2016-08,Bicycle theft,8979
+2016-08,Burglary,34051
+2016-08,Criminal damage and arson,48832
+2016-08,Drugs,11285
+2016-08,Other crime,5707
+2016-08,Other theft,45029
+2016-08,Possession of weapons,2733
+2016-08,Public order,23093
+2016-08,Robbery,4832
+2016-08,Shoplifting,30945
+2016-08,Theft from the person,6810
+2016-08,Vehicle crime,33632
+2016-08,Violence and sexual offences,103303
+2016-09,Anti-social behaviour,167201
+2016-09,Bicycle theft,9262
+2016-09,Burglary,33862
+2016-09,Criminal damage and arson,46996
+2016-09,Drugs,10624
+2016-09,Other crime,6305
+2016-09,Other theft,43240
+2016-09,Possession of weapons,2787
+2016-09,Public order,23897
+2016-09,Robbery,4882
+2016-09,Shoplifting,30712
+2016-09,Theft from the person,6599
+2016-09,Vehicle crime,34754
+2016-09,Violence and sexual offences,106857
+2016-10,Anti-social behaviour,169862
+2016-10,Bicycle theft,9958
+2016-10,Burglary,35156
+2016-10,Criminal damage and arson,52134
+2016-10,Drugs,11521
+2016-10,Other crime,6543
+2016-10,Other theft,43310
+2016-10,Possession of weapons,3002
+2016-10,Public order,24872
+2016-10,Robbery,5358
+2016-10,Shoplifting,31152
+2016-10,Theft from the person,7191
+2016-10,Vehicle crime,36975
+2016-10,Violence and sexual offences,110247
+2016-11,Anti-social behaviour,130866
+2016-11,Bicycle theft,7837
+2016-11,Burglary,37405
+2016-11,Criminal damage and arson,48054
+2016-11,Drugs,10921
+2016-11,Other crime,6814
+2016-11,Other theft,42521
+2016-11,Possession of weapons,2683
+2016-11,Public order,22127
+2016-11,Robbery,5068
+2016-11,Shoplifting,31615
+2016-11,Theft from the person,7889
+2016-11,Vehicle crime,37520
+2016-11,Violence and sexual offences,104457
+2016-12,Anti-social behaviour,127792
+2016-12,Bicycle theft,5928
+2016-12,Burglary,37517
+2016-12,Criminal damage and arson,48286
+2016-12,Drugs,11125
+2016-12,Other crime,6515
+2016-12,Other theft,41624
+2016-12,Possession of weapons,2595
+2016-12,Public order,22202
+2016-12,Robbery,5349
+2016-12,Shoplifting,30102
+2016-12,Theft from the person,8401
+2016-12,Vehicle crime,34977
+2016-12,Violence and sexual offences,109527
+2017-01,Anti-social behaviour,124267
+2017-01,Bicycle theft,5885
+2017-01,Burglary,38366
+2017-01,Criminal damage and arson,46891
+2017-01,Drugs,10893
+2017-01,Other crime,7207
+2017-01,Other theft,40260
+2017-01,Possession of weapons,2706
+2017-01,Public order,21895
+2017-01,Robbery,5300
+2017-01,Shoplifting,30768
+2017-01,Theft from the person,6893
+2017-01,Vehicle crime,36157
+2017-01,Violence and sexual offences,107791
+2017-02,Anti-social behaviour,122855
+2017-02,Bicycle theft,5775
+2017-02,Burglary,35096
+2017-02,Criminal damage and arson,45254
+2017-02,Drugs,10123
+2017-02,Other crime,7176
+2017-02,Other theft,39724
+2017-02,Possession of weapons,2795
+2017-02,Public order,22850
+2017-02,Robbery,4995
+2017-02,Shoplifting,31373
+2017-02,Theft from the person,6975
+2017-02,Vehicle crime,34470
+2017-02,Violence and sexual offences,103781
+2017-03,Anti-social behaviour,147808
+2017-03,Bicycle theft,7170
+2017-03,Burglary,37838
+2017-03,Criminal damage and arson,51436
+2017-03,Drugs,11825
+2017-03,Other crime,8275
+2017-03,Other theft,45539
+2017-03,Possession of weapons,3320
+2017-03,Public order,28353
+2017-03,Robbery,5980
+2017-03,Shoplifting,34781
+2017-03,Theft from the person,8258
+2017-03,Vehicle crime,39575
+2017-03,Violence and sexual offences,123091
+2017-04,Anti-social behaviour,155866
+2017-04,Bicycle theft,7842
+2017-04,Burglary,34560
+2017-04,Criminal damage and arson,52200
+2017-04,Drugs,10624
+2017-04,Other crime,6834
+2017-04,Other theft,43607
+2017-04,Possession of weapons,3131
+2017-04,Public order,27481
+2017-04,Robbery,5836
+2017-04,Shoplifting,32091
+2017-04,Theft from the person,7338
+2017-04,Vehicle crime,36510
+2017-04,Violence and sexual offences,115970
+2017-05,Anti-social behaviour,158393
+2017-05,Bicycle theft,9017
+2017-05,Burglary,35191
+2017-05,Criminal damage and arson,52764
+2017-05,Drugs,11191
+2017-05,Other crime,7833
+2017-05,Other theft,46812
+2017-05,Possession of weapons,3585
+2017-05,Public order,31149
+2017-05,Robbery,6013
+2017-05,Shoplifting,34232
+2017-05,Theft from the person,7774
+2017-05,Vehicle crime,38465
+2017-05,Violence and sexual offences,130105
+2017-06,Anti-social behaviour,156856
+2017-06,Bicycle theft,9468
+2017-06,Burglary,34754
+2017-06,Criminal damage and arson,49868
+2017-06,Drugs,10602
+2017-06,Other crime,7847
+2017-06,Other theft,46485
+2017-06,Possession of weapons,3618
+2017-06,Public order,34086
+2017-06,Robbery,5947
+2017-06,Shoplifting,31866
+2017-06,Theft from the person,7768
+2017-06,Vehicle crime,37098
+2017-06,Violence and sexual offences,133875
+2017-07,Anti-social behaviour,165656
+2017-07,Bicycle theft,10338
+2017-07,Burglary,35958
+2017-07,Criminal damage and arson,52077
+2017-07,Drugs,11839
+2017-07,Other crime,8080
+2017-07,Other theft,48171
+2017-07,Possession of weapons,3652
+2017-07,Public order,36103
+2017-07,Robbery,6591
+2017-07,Shoplifting,32365
+2017-07,Theft from the person,8555
+2017-07,Vehicle crime,38107
+2017-07,Violence and sexual offences,139516
+2017-08,Anti-social behaviour,161044
+2017-08,Bicycle theft,9886
+2017-08,Burglary,36355
+2017-08,Criminal damage and arson,52336
+2017-08,Drugs,11899
+2017-08,Other crime,7838
+2017-08,Other theft,48170
+2017-08,Possession of weapons,3509
+2017-08,Public order,33581
+2017-08,Robbery,6386
+2017-08,Shoplifting,33574
+2017-08,Theft from the person,8371
+2017-08,Vehicle crime,38383
+2017-08,Violence and sexual offences,127815
+2017-09,Anti-social behaviour,136722
+2017-09,Bicycle theft,9432
+2017-09,Burglary,36165
+2017-09,Criminal damage and arson,48302
+2017-09,Drugs,11138
+2017-09,Other crime,7787
+2017-09,Other theft,44511
+2017-09,Possession of weapons,3354
+2017-09,Public order,31389
+2017-09,Robbery,6211
+2017-09,Shoplifting,31871
+2017-09,Theft from the person,7441
+2017-09,Vehicle crime,40565
+2017-09,Violence and sexual offences,124858

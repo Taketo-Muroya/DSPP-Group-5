@@ -1,0 +1,109 @@
+---
+title: "DSPP Assignment 1_UK2"
+author: "Evelyn"
+date: "2/9/2020"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    toc: yes
+---
+
+# Loading and Viewing Data
+
+```{r, warnings=FALSE, messages=FALSE}
+# load packages
+library(geosphere)
+library(ggplot2)
+library(plotly)
+library(ggthemes)
+library(RColorBrewer) 
+library(sp)
+library(maptools)
+library(maps)
+library(data.table)
+library(tidyverse)
+library(DT)
+library(ggmap)
+library(mapproj)
+library(rgdal)
+library(leaflet)
+library(ggrepel)
+
+# set working directory
+setwd("C:/Users/ydeng.AIR/Desktop/Evelyn/1. Columbia/04. DSPP/Presentation 1 - Crime")
+
+```
+
+
+```{r}
+# load data 
+base::load("police_incidents_df.rdata")
+#base::load("uk_aggregated.rdata")
+#base::load("uk_aggregated_anti_social.rdata")
+
+# view data
+head(police_incidents,10)
+#head(uk_aggregated,1000)              
+#head(uk_aggregated_anti_social, 1000) 
+
+```
+
+# Analysis of Crime by Crime Type
+
+## Data Cleaning and Restructuring
+
+```{r}
+# choose only necessary variables
+crime <- police_incidents[c(2,4,5,6,10)]
+crime
+table(crime$Crime.type)
+
+```
+
+```{r}
+# create dataset with aggregated crime by month by type
+crime_freq_by_month <- crime %>%
+  group_by(Month, Crime.type) %>%
+  summarise(frequency = n())
+
+crime_freq_by_month
+
+```
+
+## Visualize Data: Crime by Month and Type
+
+```{r, fig.height=9, fig.width=12}
+
+graph <- ggplot(crime_freq_by_month, aes(x = Month, y = frequency)) + 
+  geom_line(aes(group=Crime.type, color = Crime.type)) +
+  #geom_point(size = 2, shape = 21, fill = "lightblue") +
+  theme(legend.position = "top") +
+  labs(x="Month", y="Number of Crimes") + 
+  ggtitle("Monthly Crime Frequency in the UK") +
+  theme_hc() + theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(graph, tooltip = c("x", "y", "group"), dynamicTicks=TRUE)
+
+
+```
+
+## Insights
+
+ASB is the most frequent crime, followed by violent and sexual offenses
+
+seasonal crime peaks:
+  - anti-social behavior(ASB)    summer
+  - violent and sexual offences  summer
+  - other theft                  summer
+  - bicycle theft                summer
+  - public order                 summer
+  - burglary                     fall to early winter
+  - theft from the person        early winter (December)
+  
+the seasonality of crime is most notable for:
+  - ASB         (approx 45%  more crime during peak season)
+  - bike theft  (approx 100% more crime during peak season)
+
+
+Note: Increase in crime is not a reflection of increase in population, which was only about 2% from 2014 to 2017 (office for national statistics: https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/articles/overviewoftheukpopulation/august2019)
