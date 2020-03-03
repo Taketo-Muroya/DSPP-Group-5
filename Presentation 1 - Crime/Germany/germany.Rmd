@@ -1,0 +1,1029 @@
+---
+title: "Germany Data Visualization"
+author: "Taketo Muroya"
+date: "2020/2/12"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(geosphere)
+library(ggplot2)
+library(plotly)
+library(dplyr)
+library(ggthemes)
+library(RColorBrewer) 
+library(sp)
+library(maptools)
+library(maps)
+library(data.table)
+library(choroplethr)
+library(choroplethrAdmin1)
+```
+
+## Loading data
+
+```{r}
+# Germany hate crime data
+devtools::install_github("davben/arvig")
+library(arvig)
+data("arvig")
+arvig = as.data.frame(arvig)
+
+# Germany map
+germany_shape_files = readShapePoly(
+  "Germany/VG250_1Jan2011_WGS84/VG250_Bundeslaender.shp")
+
+# Crime Category and Sate
+unique(arvig$category_en)
+unique(arvig$state)
+```
+
+#### Comment: This data has 9 crime categories and 16 states.
+
+***
+
+## Data manipulation
+
+```{r}
+# Add monthly and annual variable
+a <- mutate(arvig, ym = format(date, '%Y-%m'))
+b <- mutate(arvig, y = format(date, '%Y'))
+
+# Aggregate to time, category and state level
+d1 = aggregate(a$ym, by=list(a$ym, a$category_en, a$state), FUN=length)
+colnames(d1) = c("ym", "category", "state", "number")
+
+# Aggregate to time and category level
+d2 = aggregate(a$ym, by=list(a$ym, a$category_en), FUN=length)
+colnames(d2) = c("ym", "category", "number")
+d2$rate = 0
+for (i in 2:nrow(d2)){
+ d2$rate[i] = 100*(d2$number[i] - d2$number[i-1])/d2$number[i-1]
+}
+for (i in c(44,46,93,135,180,188,196)){
+ d2$rate[i] = 0
+}
+d2 <- d2[c(-44,-45,-133,-134,-180:-187),]
+
+# Aggregate to time level
+d3 = aggregate(a$ym, by=list(a$ym), FUN=length)
+colnames(d3) = c("ym", "number")
+d3$rate = 0
+for (i in 2:nrow(d3)){
+ d3$rate[i] = 100*(d3$number[i] - d3$number[i-1])/d3$number[i-1]
+}
+
+# Aggregate to state and category level
+d4 = aggregate(d1$number, by=list(d1$category, d1$state), FUN=sum)
+colnames(d4) = c("category", "state", "number")
+d4 <- d4[c(-11,-18,-22,-25,-27,-54,-61,-77,-84,-93),]
+
+# Aggregate to time and state level
+d5 = aggregate(b$y, by=list(b$y, b$state), FUN=length)
+colnames(d5) = c("year", "state", "number")
+d5$rate = 0
+for (i in 2:nrow(d5)){
+ d5$rate[i] = 100*(d5$number[i] - d5$number[i-1])/d5$number[i-1]
+}
+for (i in c(5,9,13,17,20,24,28,32,36,40,44,48,52,56,60)){
+ d5$rate[i] = 0
+}
+
+# Aggregate to month and state level
+d6 = aggregate(a$ym, by=list(a$ym, a$state), FUN=length)
+colnames(d6) = c("ym", "state", "number")
+d6$rate = 0
+for (i in 2:nrow(d6)){
+ d6$rate[i] = 100*(d6$number[i] - d6$number[i-1])/d6$number[i-1]
+}
+for (i in c(46,92,135,179,191,222,257,301,336,380,417,485,525,558)){
+ d6$rate[i] = 0
+}
+
+# Aggregate to state level
+d7 = aggregate(a$date, by=list(a$state), FUN=length)
+colnames(d7) = c("state", "number")
+others <- read.csv('others.csv')
+d7 <- cbind(d7, others)
+d7 <- d7[,-3]
+d7$crime_pc <- 1000 * d7$number / d7$population
+
+# Aggregate to monthly state level
+d8 = aggregate(a$date, by=list(a$ym, a$state), FUN=length)
+colnames(d8) = c("ym", "state", "number")
+
+# Aggregate to time, category and state level
+d9 = aggregate(arvig$date, by=list(arvig$date, arvig$state), FUN=length)
+colnames(d9) = c("date", "state", "number")
+```
+
+***
+
+## Total crime graphs
+
+```{r}
+# Total
+total1 <- ggplot(d3) + 
+  geom_bar(aes(x=ym, y=rate), fill="blue", 
+           stat="identity", position="identity", alpha=0.5) + 
+  geom_point(aes(x=ym, y=number),
+            stat="identity", position="identity", colour="blue") +
+  theme(legend.position = "top") + 
+  labs(x="Time", y="Number of Crimes") + ggtitle("Total crimes") + 
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+total1
+```
+
+#### Comment: The trend totally changed before and after Jan-2016.
+
+***
+
+```{r, fig.width=10, fig.height=10}
+total2 <- ggplot(d2, aes(x = ym, y = number)) + 
+  geom_line(aes(group=category, color=category), size=2) +
+  theme(legend.position = "top") +
+  labs(x="Time", y="Number of Crimes") + 
+  ggtitle("Crimes by category") +
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+total2
+```
+
+#### Comment: Most of data are from 'Miscellaneous Attack' category.
+
+***
+
+```{r}
+total2.5 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = b, geom = "polygon") + 
+  ggtitle("Total crimes: 2014-2017")
+total2.5
+
+total3 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(b, y <= 2015), 
+    geom = "polygon") + ggtitle("Total crimes: 2014 & 2015")
+total3
+
+total4 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(b, y >= 2016), 
+    geom = "polygon") + ggtitle("Total crimes: 2016 & 2017")
+total4
+```
+
+#### Comment: I divided heat mapping before and after Jan-2016. The crime may expand to broader area after Jan-2016. We can change the time period according to remarkable events.
+
+***
+
+```{r}
+state_trans <- read.csv('state_trans.csv')
+d5$region <- state_trans$region
+
+all = aggregate(d5$number, by=list(d5$region), FUN=sum)
+colnames(all) = c("region", "number")
+totalall <- data.frame(region=all$region, value=all$number)
+total4.5 <- 
+  admin1_choropleth(country.name = "germany", df = totalall, 
+                    title="Total Number of Crimes by State",
+                    legend = "Number", num_colors = 5)
+total4.5
+
+total2014 <- data.frame(region=subset(d5, year==2014)[,5],
+                        value=subset(d5, year==2014)[,3])
+total5 <- 
+  admin1_choropleth(country.name = "germany", df = total2014, 
+                    title="Total Number of Crimes by State (2014)",
+                    legend = "Number", num_colors = 5)
+total5
+
+total2015 <- data.frame(region=subset(d5, year==2015)[,5],
+                        value=subset(d5, year==2015)[,3])
+total6 <- 
+  admin1_choropleth(country.name = "germany", df = total2015,
+                    title="Total Number of Crimes by State (2015)",
+                    legend = "Number", num_colors = 5)
+total6
+
+total2016 <- data.frame(region=subset(d5, year==2016)[,5],
+                        value=subset(d5, year==2016)[,3])
+total7 <- 
+  admin1_choropleth(country.name = "germany", df = total2016,
+                    title="Total Number of Crimes by State (2016)",
+                    legend = "Number", num_colors = 5)
+total7
+
+total2017 <- data.frame(region=subset(d5, year==2017)[,5],
+                        value=subset(d5, year==2017)[,3])
+total8 <- 
+  admin1_choropleth(country.name = "germany", df = total2017,
+                    title="Total Number of Crimes by State (2017)",
+                    legend = "Number", num_colors = 5)
+total8
+
+total2015r <- data.frame(region=subset(d5, year==2015)[,5],
+                        value=subset(d5, year==2015)[,4])
+total9 <- 
+  admin1_choropleth(country.name = "germany", df = total2015r,
+                    title="Total Change of Crimes by State (2015)",
+                    legend = "% Change", num_colors = 5)
+total9
+
+total2016r <- data.frame(region=subset(d5, year==2016)[,5],
+                        value=subset(d5, year==2016)[,4])
+total10 <- 
+  admin1_choropleth(country.name = "germany", df = total2016r,
+                    title="Total Change of Crimes by State (2016)",
+                    legend = "% Change", num_colors = 5)
+total10
+
+total2017r <- data.frame(region=subset(d5, year==2017)[,5],
+                        value=subset(d5, year==2017)[,4])
+total11 <- 
+  admin1_choropleth(country.name = "germany", df = total2017r,
+                    title="Total Change of Crimes by State (2017)",
+                    legend = "% Change", num_colors = 5)
+total11
+```
+
+***
+
+```{r, fig.width=10, fig.height=10}
+total12 <- ggplot(d4) + 
+  geom_bar(aes(x=state, y=number, group=category, fill=category), 
+           stat="identity") + theme(legend.position = "top") +
+  labs(x="State", y="Number of Crimes") + 
+  ggtitle("Crimes by State") + 
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+total12
+```
+
+***
+
+## Crime per capita graphs
+
+```{r}
+state_trans <- read.csv('state_trans2.csv')
+d7$region <- state_trans$region
+
+crime_per_capita <- data.frame(region=d7[,7], value=d7[,6])
+total13 <- 
+  admin1_choropleth(country.name = "germany", df = crime_per_capita,
+                    title="Refugee Crimes per population by State",
+                    legend = "crime / population(million)", 
+                    num_colors = 5)
+total13
+
+poverty <- data.frame(region=d7[,7], value=d7[,4])
+total14 <- 
+  admin1_choropleth(country.name = "germany", df = poverty,
+                    title="Poverty level by State", 
+                    legend = "poverty level (%)", 
+                    num_colors = 5)
+total14
+
+AFD <- data.frame(region=d7[,7], value=d7[,5])
+total15 <- 
+  admin1_choropleth(country.name = "germany", df = AFD,
+                    title="AFD vote by State", 
+                    legend = "AFD vote (%)", 
+                    num_colors = 5)
+total15
+
+result <- lm(crime_pc ~ poverty + AFD, data=d7)
+summary(result)
+
+total16 <- ggplot(data = d7, aes(x = crime_pc, y = poverty)) +
+  geom_point()+
+  xlab("Refugee Crimes per population") + ylab("Poverty level") + 
+  theme_economist() + theme(legend.position="none") + 
+  ggtitle("Rrefugee crime and poverty level")
+total16
+
+total17 <- ggplot(data = d7, aes(x = crime_pc, y = AFD)) +
+  geom_point()+geom_smooth(color="blue", lwd=1, se=FALSE, method=lm)+ 
+  xlab("Refugee Crimes per population") + ylab("AFD vote rate") + 
+  theme_economist() + theme(legend.position="none") + 
+  ggtitle("Rrefugee crime and AFD vote")
+total17
+```
+
+***
+
+## 1. December 2015 VS January 2016
+
+```{r}
+data201511 = subset(d8, ym=="2015-11")
+others <- read.csv('others.csv')
+others <- others[-5,]
+others <- others[-11,]
+data201511 <- cbind(data201511, others)
+data201511 <- data201511[,-4]
+data201511$crime_pc <- 1000 * data201511$number / data201511$population
+state_trans <- read.csv('state_trans2.csv')
+state_trans <- state_trans[-5,]
+state_trans <- state_trans[-11,]
+data201511$region <- state_trans$region
+
+data201512 = subset(d8, ym=="2015-12")
+others <- read.csv('others.csv')
+others <- others[-5,]
+data201512 <- cbind(data201512, others)
+data201512 <- data201512[,-4]
+data201512$crime_pc <- 1000 * data201512$number / data201512$population
+state_trans <- read.csv('state_trans2.csv')
+state_trans <- state_trans[-5,]
+data201512$region <- state_trans$region
+
+data201601 = subset(d8, ym=="2016-01")
+others <- read.csv('others.csv')
+data201601 <- cbind(data201601, others)
+data201601 <- data201601[,-4]
+data201601$crime_pc <- 1000 * data201601$number / data201601$population
+state_trans <- read.csv('state_trans2.csv')
+data201601$region <- state_trans$region
+
+mix1 <- rbind(data201511, data201512, data201601)
+mix1 <- mix1[order(mix1$state),]
+mix1$rate = 0
+for (i in 2:nrow(mix1)){
+ mix1$rate[i] = 
+   100*(mix1$crime_pc[i] - mix1$crime_pc[i-1])/mix1$crime_pc[i-1]
+}
+
+crime201512 <- data.frame(
+  region=subset(mix1, ym=="2015-12")[,8], 
+  value=subset(mix1, ym=="2015-12")[,7])
+total18 <- 
+  admin1_choropleth(country.name = "germany", df = crime201512,
+                    title="Crimes per population by State (Dec.2015)",
+                    legend = "crime / population(million)", 
+                    num_colors = 5)
+total18
+
+crime201601 <- data.frame(
+  region=subset(mix1, ym=="2016-01")[,8], 
+  value=subset(mix1, ym=="2016-01")[,7])
+total19 <- 
+  admin1_choropleth(country.name = "germany", df = crime201601,
+                    title="Crimes per population by State (Jan.2016)",
+                    legend = "crime / population(million)", 
+                    num_colors = 5)
+total19
+
+rate201512 <- data.frame(
+  region=subset(mix1, ym=="2015-12")[,8], 
+  value=subset(mix1, ym=="2015-12")[,9])
+total20 <- 
+  admin1_choropleth(country.name = "germany", df = rate201512,
+                    title="Crimes per population growth by State (Dec.2015)",
+                    legend = "crime per population growth (%)", 
+                    num_colors = 5)
+total20
+
+rate201601 <- data.frame(
+  region=subset(mix1, ym=="2016-01")[,8], 
+  value=subset(mix1, ym=="2016-01")[,9])
+total21 <- 
+  admin1_choropleth(country.name = "germany", df = rate201601,
+                    title="Crimes per population growht by State (Jan.2016)",
+                    legend = "crime per population growth (%)", 
+                    num_colors = 5)
+total21
+```
+
+## 2. July 5, 2016 - July 18th, 2016 VS Juli, 19 2016 - August 2, 2016
+
+```{r}
+aaa = subset(d9, date >= "2016-07-05")
+bbb = subset(aaa, date <= "2016-07-18")
+before2 = aggregate(bbb$number, by=list(bbb$state), FUN=sum)
+colnames(before2) = c("state", "number")
+
+others <- read.csv('others.csv')
+others <- others[-5,]
+before2 <- cbind(before2, others)
+before2 <- before2[,-3]
+before2$crime_pc <- 1000 * before2$number / before2$population
+state_trans <- read.csv('state_trans2.csv')
+state_trans <- state_trans[-5,]
+before2$region <- state_trans$region
+
+before22 <- data.frame(region=before2$region, value=before2$crime_pc)
+total22 <- admin1_choropleth(country.name = "germany", df = before22, title="Crimes per population by State (Jul 5th - 18th, 2016)", legend = "crime / population(million)", num_colors = 5)
+total22
+
+ccc = subset(d9, date >= "2016-07-19")
+ddd = subset(ccc, date <= "2016-08-02")
+after2 = aggregate(ddd$number, by=list(ddd$state), FUN=sum)
+colnames(after2) = c("state", "number")
+
+others <- read.csv('others.csv')
+others <- others[-5,]
+after2 <- cbind(after2, others)
+after2 <- after2[,-3]
+after2$crime_pc <- 1000 * after2$number / after2$population
+state_trans <- read.csv('state_trans2.csv')
+state_trans <- state_trans[-5,]
+after2$region <- state_trans$region
+
+after22 <- data.frame(region=after2$region, value=after2$crime_pc)
+total23 <- admin1_choropleth(country.name = "germany", df = after22, title="Crimes per population by State (Jul 19th - Aug 2nd, 2016)", legend = "crime / population(million)", num_colors = 5)
+total23
+```
+
+## 3. Dec 5, 2016 - Dec 18, 2016 VS Dec, 19 2016 - Jan 2, 2017
+
+```{r}
+aaa = subset(d9, date >= "2016-12-05")
+bbb = subset(aaa, date <= "2016-12-18")
+before2 = aggregate(bbb$number, by=list(bbb$state), FUN=sum)
+colnames(before2) = c("state", "number")
+
+others <- read.csv('others.csv')
+others <- others[-5,]
+others <- others[-5,]
+others <- others[-9,]
+others <- others[-9,]
+before2 <- cbind(before2, others)
+before2 <- before2[,-3]
+before2$crime_pc <- 1000 * before2$number / before2$population
+state_trans <- read.csv('state_trans2.csv')
+state_trans <- state_trans[-5,]
+state_trans <- state_trans[-5,]
+state_trans <- state_trans[-9,]
+state_trans <- state_trans[-9,]
+before2$region <- state_trans$region
+
+before22 <- data.frame(region=before2$region, value=before2$crime_pc)
+total24 <- admin1_choropleth(country.name = "germany", df = before22, title="Crimes per population by State (Dec 5th - 18th, 2016)", legend = "crime / population(million)", num_colors = 5)
+total24
+
+ccc = subset(d9, date >= "2016-12-19")
+ddd = subset(ccc, date <= "2017-01-02")
+after2 = aggregate(ddd$number, by=list(ddd$state), FUN=sum)
+colnames(after2) = c("state", "number")
+
+others <- read.csv('others.csv')
+others <- others[-5,]
+others <- others[-5,]
+others <- others[-10,]
+after2 <- cbind(after2, others)
+after2 <- after2[,-3]
+after2$crime_pc <- 1000 * after2$number / after2$population
+state_trans <- read.csv('state_trans2.csv')
+state_trans <- state_trans[-5,]
+state_trans <- state_trans[-5,]
+state_trans <- state_trans[-10,]
+after2$region <- state_trans$region
+
+after22 <- data.frame(region=after2$region, value=after2$crime_pc)
+total25 <- admin1_choropleth(country.name = "germany", df = after22, title="Crimes per population by State (Dec 19th, 2016 - Jan 2nd, 2017)", legend = "crime / population(million)", num_colors = 5)
+total25
+```
+
+***
+
+```{r, include=FALSE}
+png("image/total1.png", width = 600, height = 450)
+total1
+dev.off()
+png("image/total2.png", width = 600, height = 450)
+total2
+dev.off()
+png("image/total2-5.png", width = 600, height = 450)
+total2.5
+dev.off()
+png("image/total3.png", width = 600, height = 450)
+total3
+dev.off()
+png("image/total4.png", width = 600, height = 450)
+total4
+dev.off()
+png("image/total4-5.png", width = 600, height = 450)
+total4.5
+dev.off()
+png("image/total5.png", width = 600, height = 450)
+total5
+dev.off()
+png("image/total6.png", width = 600, height = 450)
+total6
+dev.off()
+png("image/total7.png", width = 600, height = 450)
+total7
+dev.off()
+png("image/total8.png", width = 600, height = 450)
+total8
+dev.off()
+png("image/total9.png", width = 600, height = 450)
+total9
+dev.off()
+png("image/total10.png", width = 600, height = 450)
+total10
+dev.off()
+png("image/total11.png", width = 600, height = 450)
+total11
+dev.off()
+png("image/total12.png", width = 600, height = 450)
+total12
+dev.off()
+png("image/total13.png", width = 600, height = 450)
+total13
+dev.off()
+png("image/total14.png", width = 600, height = 450)
+total14
+dev.off()
+png("image/total15.png", width = 600, height = 450)
+total15
+dev.off()
+png("image/total16.png", width = 600, height = 450)
+total16
+dev.off()
+png("image/total17.png", width = 600, height = 450)
+total17
+dev.off()
+png("image/total18.png", width = 600, height = 450)
+total18
+dev.off()
+png("image/total19.png", width = 600, height = 450)
+total19
+dev.off()
+png("image/total20.png", width = 600, height = 450)
+total20
+dev.off()
+png("image/total21.png", width = 600, height = 450)
+total21
+dev.off()
+png("image/total22.png", width = 600, height = 450)
+total22
+dev.off()
+png("image/total23.png", width = 600, height = 450)
+total23
+dev.off()
+png("image/total24.png", width = 600, height = 450)
+total24
+dev.off()
+png("image/total25.png", width = 600, height = 450)
+total25
+dev.off()
+```
+
+***
+
+## Arson graphs
+
+```{r}
+# Arson
+arson1 <- ggplot(subset(d2, category=='arson'), 
+                aes(x = ym, y = number)) + 
+  geom_point() + theme(legend.position = "top") +
+  labs(x="Time", y="Number of Crimes") + ggtitle("Arson") +
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+arson1
+
+arson <- subset(b, category_en=='arson')
+
+arson2 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(arson, y <= 2015), 
+    geom = "polygon") + ggtitle("Arson: 2014 & 2015")
+arson2
+
+arson3 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(arson, y >= 2016), 
+    geom = "polygon") + ggtitle("Arson: 2016 & 2017")
+arson3
+```
+
+```{r, include=FALSE}
+png("image/arson1.png", width = 600, height = 450)
+arson1
+dev.off()
+png("image/arson2.png", width = 600, height = 450)
+arson2
+dev.off()
+png("image/arson3.png", width = 600, height = 450)
+arson3
+dev.off()
+```
+
+***
+
+## Assault graphs
+
+```{r}
+# Assault
+assault1 <- ggplot(subset(d2, category=='assault'), 
+                aes(x = ym, y = number)) + 
+  geom_point() + theme(legend.position = "top") +
+  labs(x="Time", y="Number of Crimes") + ggtitle("Assault") +
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+assault1
+
+assault <- subset(b, category_en=='assault')
+
+assault2 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(assault, y <= 2015), 
+    geom = "polygon") + ggtitle("Assault: 2014 & 2015")
+assault2
+
+assault3 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(assault, y >= 2016), 
+    geom = "polygon") + ggtitle("Assault: 2016 & 2017")
+assault3
+```
+
+```{r, include=FALSE}
+png("image/assault1.png", width = 600, height = 450)
+assault1
+dev.off()
+png("image/assault2.png", width = 600, height = 450)
+assault2
+dev.off()
+png("image/assault3.png", width = 600, height = 450)
+assault3
+dev.off()
+```
+
+***
+
+## Demonstration graphs
+
+```{r}
+# Demonstration
+demo1 <- ggplot(subset(d2, category=='demonstration'), 
+                aes(x = ym, y = number)) + 
+  geom_point() + theme(legend.position = "top") +
+  labs(x="Time", y="Number of Crimes") + ggtitle("Demonstration") +
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+demo1
+
+demo <- subset(b, category_en=='demonstration')
+
+demo2 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(demo, y <= 2015), 
+    geom = "polygon") + ggtitle("Demonstration: 2014 & 2015")
+demo2
+
+demo3 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(demo, y >= 2016), 
+    geom = "polygon") + ggtitle("Demonstration: 2016 & 2017")
+demo3
+```
+
+```{r, include=FALSE}
+png("image/demo1.png", width = 600, height = 450)
+demo1
+dev.off()
+png("image/demo2.png", width = 600, height = 450)
+demo2
+dev.off()
+png("image/demo3.png", width = 600, height = 450)
+demo3
+dev.off()
+```
+
+***
+
+## Miscellaneous Attack graphs
+
+```{r}
+# Miscellaneous Attack
+att1 <- ggplot(subset(d2, category=='miscellaneous attack'), 
+                aes(x = ym, y = number)) + 
+  geom_point() + theme(legend.position = "top") +
+  labs(x="Time", y="Number of Crimes") + 
+  ggtitle("Miscellaneous Attack") +
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+att1
+
+att <- subset(b, category_en=='miscellaneous attack')
+
+att2 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(att, y <= 2015), 
+    geom = "polygon") + 
+  ggtitle("Miscellaneous Attack: 2014 & 2015")
+att2
+
+att3 <- ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(demo, y >= 2016), 
+    geom = "polygon") + 
+  ggtitle("Miscellaneous Attack: 2016 & 2017")
+att3
+```
+
+```{r, include=FALSE}
+png("image/att1.png", width = 600, height = 450)
+att1
+dev.off()
+png("image/att2.png", width = 600, height = 450)
+att2
+dev.off()
+png("image/att3.png", width = 600, height = 450)
+att3
+dev.off()
+```
+
+#### Comment: For Miscellaneous Attack, the crime area may shrink after Jan-2016.
+
+***
+
+## Suspicion graphs
+
+```{r}
+# Suspicion
+ggplot(subset(d2, category=='suspicion'), 
+                aes(x = ym, y = number)) + 
+  geom_point() + theme(legend.position = "top") +
+  labs(x="Time", y="Number of Crimes") + ggtitle("Suspicion") +
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+
+sus <- subset(b, category_en=='suspicion')
+
+ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(sus, y >= 2016), 
+    geom = "polygon") + ggtitle("Suspicion: 2016 & 2017")
+```
+
+***
+
+## Other graphs
+
+```{r}
+# Other
+ggplot(subset(d2, category=='other'), 
+                aes(x = ym, y = number)) + 
+  geom_point() + theme(legend.position = "top") +
+  labs(x="Time", y="Number of Crimes") + ggtitle("Other") +
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+
+other <- subset(b, category_en=='other')
+
+ggplot() +
+  geom_path(data = germany_shape_files, 
+            aes(x = long, y = lat, group = group)) +
+  stat_density2d(
+    aes(x=longitude, y=latitude, fill = ..level.., alpha = 0.25),
+    size = 0.01, bins = 30, data = subset(other, y <= 2015), 
+    geom = "polygon") + ggtitle("Other: 2014 & 2015")
+```
+
+***
+
+## Refugee graphs
+
+```{r}
+refugee <- read.csv('refugee.csv')
+r <- subset(
+  refugee, year == 2014 | year == 2015 | year == 2016 | year == 2017)
+ref <- aggregate(r$number, by=list(r$ym), FUN=sum)
+colnames(ref) = c("ym", "number")
+```
+
+```{r}
+ref1 <- ggplot(data = ref, aes(x = ym, y = number)) +
+  geom_point() + geom_smooth(color="blue", lwd=1, se=FALSE) + 
+  xlab("time") + ylab("Refugee influx") + 
+  theme_economist() + theme(legend.position="none") + 
+  ggtitle("Refugee Influx over time") + 
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+ref1
+```
+
+#### Comment: Refugee number in Germany looks strongly correlated with crime data. Although I could not find state level data for refugee data, we may analyze something related to refugee data.
+
+```{r}
+refugee <- read.csv('refugee.csv')
+ref <- aggregate(refugee$number, by=list(refugee$ym), FUN=sum)
+colnames(ref) = c("ym", "number")
+```
+
+```{r}
+ref2 <- ggplot(data = ref, aes(x = ym, y = number)) +
+  geom_point() + geom_smooth(color="blue", lwd=1, se=FALSE) + 
+  xlab("time") + ylab("Refugee influx") + 
+  theme_economist() + theme(legend.position="none") + 
+  ggtitle("Refugee Influx over time") + 
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+ref2
+```
+
+#### http://popstats.unhcr.org/en/asylum_seekers_monthly
+
+```{r}
+refstate <- read.csv('refugee_state.csv')
+colnames(refstate) = c("State","Y2016","Y2017","Y2018","Y2019")
+refstate$total <- refstate$Y2016 + refstate$Y2017 + 
+                  refstate$Y2018 + refstate$Y2019
+```
+
+```{r, fig.width=10, fig.height=10}
+ref3 <- ggplot(refstate) + 
+  geom_bar(aes(x=State, y=total), stat="identity", fill='blue') + 
+  theme(legend.position = "top") + 
+  ggtitle("Refugees by state (2016-2019)") + 
+  labs(x="State", y="Number of Refugees") + 
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+ref3
+
+ref4 <- ggplot(refstate) + 
+  geom_bar(aes(x=State, y=Y2016), stat="identity", fill='blue') + 
+  theme(legend.position = "top") + 
+  ggtitle("Refugees by state (2016)") + 
+  labs(x="State", y="Number of Refugees") + 
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+ref4
+
+ref5 <- ggplot(refstate) + 
+  geom_bar(aes(x=State, y=Y2017), stat="identity", fill='blue') + 
+  theme(legend.position = "top") + 
+  ggtitle("Refugees by state (2017)") + 
+  labs(x="State", y="Number of Refugees") + 
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+ref5
+
+ref6 <- ggplot(refstate) + 
+  geom_bar(aes(x=State, y=Y2018), stat="identity", fill='blue') + 
+  theme(legend.position = "top") + 
+  ggtitle("Refugees by state (2018)") + 
+  labs(x="State", y="Number of Refugees") + 
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+ref6
+
+ref7 <- ggplot(refstate) + 
+  geom_bar(aes(x=State, y=Y2019), stat="identity", fill='blue') + 
+  theme(legend.position = "top") + 
+  ggtitle("Refugees by state (2019)") + 
+  labs(x="State", y="Number of Refugees") + 
+  theme_hc() + theme(axis.text.x = element_text(angle=90, hjust=1))
+ref7
+```
+
+## Crimes by month/asylum applications
+
+```{r}
+q <- read.csv("applicants.csv")
+q$crime <- 0
+for (i in 1:22){
+ q$crime[i] = d3$number[3*(i-1)+1]+d3$number[3*(i-1)+2]+d3$number[3*(i-1)+3]
+}
+
+ref8 <- ggplot(data = q, aes(x = time, y = crime)) +
+  geom_point() + geom_smooth(color="blue", lwd=1, se=FALSE) + 
+  xlab("time") + ylab("Refugee Crimes") + 
+  theme_economist() + theme(legend.position="none") + 
+  ggtitle("Refugee Crimes over time") + 
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+ref8
+
+ref9 <- ggplot(data = q, aes(x = time, y = applicants)) +
+  geom_point() + geom_smooth(color="blue", lwd=1, se=FALSE) + 
+  xlab("time") + ylab("Refugee Applications") + 
+  theme_economist() + theme(legend.position="none") + 
+  ggtitle("Rregee Applications over time") + 
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+ref9
+```
+
+```{r, include=FALSE}
+png("image/ref1.png", width = 600, height = 450)
+ref1
+dev.off()
+png("image/ref2.png", width = 600, height = 450)
+ref2
+dev.off()
+png("image/ref3.png", width = 600, height = 450)
+ref3
+dev.off()
+png("image/ref4.png", width = 600, height = 450)
+ref4
+dev.off()
+png("image/ref5.png", width = 600, height = 450)
+ref5
+dev.off()
+png("image/ref6.png", width = 600, height = 450)
+ref6
+dev.off()
+png("image/ref7.png", width = 600, height = 450)
+ref7
+dev.off()
+png("image/ref8.png", width = 600, height = 450)
+ref8
+dev.off()
+png("image/ref9.png", width = 600, height = 450)
+ref9
+dev.off()
+```
+
+***
+
+## Prediction
+
+```{r}
+library(forecast)
+library(urca)
+crime_ts <- ts(d3$number, start=c(2014,1), frequency=12)
+
+# Unit Root Test
+summary(ur.kpss(crime_ts))
+
+# Autocorrelation
+ggtsdisplay(crime_ts, main="Autocorrelation")
+
+# Seasonality
+ggsubseriesplot(crime_ts, main="Seasonality")
+
+# Model Selection using only crime data
+model <- auto.arima(
+  y=crime_ts, ic="aic", max.order=7, 
+  stepwise=F, approximation=F, parallel=T, num.cores=4 
+)
+
+# Best Model using only crime data
+model
+
+# Prediction using only crime data
+prediction <- forecast(
+  model, h=11, level=c(95,70)
+)
+prediction
+
+autoplot(prediction, predict.colour=1, 
+         main="Prediction using only crime data")
+
+# Loading refugee data
+r2 <- subset(refugee, year == 2014 | year == 2015 | 
+               year == 2016 | year == 2017 | year == 2018)
+reff <- aggregate(r2$number, by=list(r2$ym), FUN=sum)
+colnames(reff) = c("ym", "number")
+
+refugee_ts <- ts(reff$number, start=c(2014,1), frequency=12)
+refugee_ts_train <- window(refugee_ts, end=c(2017,11))
+refugee_ts_test <- window(refugee_ts, start=c(2017,12))
+
+# Refugee data
+plot(refugee_ts, main="Refugee influx data")
+
+# Model Selection with refugee data
+model <- auto.arima(
+  y=crime_ts, xreg=refugee_ts_train, ic="aic", max.order=7, 
+  stepwise=F, approximation=F, parallel=T, num.cores=4 
+)
+
+# Best Model with refugee data
+model
+
+# Prediction with refugee data
+prediction <- forecast(
+  model, xreg=refugee_ts_test, h=11, level=c(95,70)
+)
+prediction
+
+autoplot(prediction, predict.colour=1, 
+         main="Prediction with refugee data")
+```
