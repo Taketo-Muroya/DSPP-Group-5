@@ -1,0 +1,5 @@
+18,000 hurricanes with total of 52,000 rows (average 3 each). Each row represents hurricane measures at a point in time, and measures are recorded 4 times per day.
+
+time span: 1851-2018
+
+There are a few variables that are not available for earlier years, as well as missingness in the second half of the variables

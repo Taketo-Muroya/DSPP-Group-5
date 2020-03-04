@@ -1,0 +1,23 @@
+
+Evelyn
+======
+descriptive info
+  tabl - seasonal frequency
+filter to include only hurricanes (like Sandy?)
+  plot - count of hurricane days over time
+       - (observe increases/decreases)
+  plot - map of hurricane paths, one map per decade
+       - color code by season and wind speed
+       - (observe shape, direction, other patterns)
+
+Taketo
+======
+find 10 counties most affected by Hurricanes
+  plot - poverty rate over time in each county 
+       - (observe local/global changes)
+
+
+number of days a region suffered from hurricanes?
+
+
+
