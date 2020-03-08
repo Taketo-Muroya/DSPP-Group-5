@@ -1,0 +1,98 @@
+---
+title: "Analysis - Hurricanes"
+author: "Evelyn"
+date: "3/8/2020"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(ggthemes)
+```
+
+
+```{r, message = FALSE}
+hurs_all <- read_csv("hurricanes.csv") %>% arrange(Key, Year, Month, Day, Hour)
+hurs_all$Decade <- round(hurs_all_decade$Year-5, digits = -1)
+hurs_all
+```
+
+```{r}
+# Here are a count of hurricanes per year
+hurs_year_key <- hurs_all %>% 
+  filter(Wind>=64) %>%
+  filter(Year>=1860, Year < 2010) %>% #filter out incomplete decades
+  group_by(Year, Key) %>%
+  summarise(`Number of Days with a Hurricane` = n())
+hurs_year <- hurs_year_key %>%
+  group_by(Year) %>%
+  summarise(`Number of Hurricanes` = n())
+
+# plot number of hurricanes per year
+ggplot(data=hurs_year, aes(x=Year, y=`Number of Hurricanes`)) +
+  geom_line()+ theme_bw() + 
+  scale_x_continuous(breaks=seq(from = 1860, to = 2010, by = 10)) + 
+  scale_y_continuous(limits=c(0, max(hurs_year$`Number of Hurricanes`)*1.2)) +
+  labs(title="Hurricanes per Year") + geom_smooth(method = "loess")
+ggplot(data=hurs_year, aes(x=Year, y=`Number of Hurricanes`)) +
+  geom_line()+ theme_bw() + 
+  scale_x_continuous(breaks=seq(from = 1860, to = 2010, by = 10)) + 
+  scale_y_continuous(limits=c(0, max(hurs_year$`Number of Hurricanes`)*1.2)) +
+  labs(title="Hurricanes per Year") + geom_smooth(method = "lm")
+```
+
+
+```{r}
+# Here are a count of "big" hurricanes per year
+big_hurs_year_key <- hurs_all %>% 
+  filter(Wind>=96) %>%
+  filter(Year>=1860, Year < 2010) %>% #filter out incomplete decades
+  group_by(Year, Key) %>%
+  summarise(`Number of Days with a Hurricane` = n())
+big_hurs_year <- big_hurs_year_key %>%
+  group_by(Year) %>%
+  summarise(`Number of Hurricanes` = n()) 
+
+# plot number of "big" hurricane days per year (loess)
+ggplot(data=big_hurs_year, aes(x=Year, y=`Number of Hurricanes`)) +
+  geom_line() + theme_bw() + 
+  scale_x_continuous(breaks=seq(from = 1860, to = 2010, by = 10)) +  scale_y_continuous(limits=c(0,7.5)) +
+  labs(title="Sandy-Like Hurricane Days per Year (Wind Speed Over 96 Knots)") + geom_smooth(method = "loess")
+# plot number of "big" hurricane days per year (lm)
+ggplot(data=big_hurs_year, aes(x=Year, y=`Number of Hurricanes`)) +
+  geom_line() + theme_bw() + 
+  scale_x_continuous(breaks=seq(from = 1860, to = 2010, by = 10)) + scale_y_continuous(limits=c(0,7.5)) +
+  labs(title="Sandy-Like Hurricane Days per Year (Wind Speed Over 96 Knots)") + geom_smooth(method = "lm")
+```
+
+
+```{r}
+# create dataset with maximum wind speeds per year
+hurs_decade_max <- hurs_all_decade %>%
+  group_by(Year) %>%
+  summarize(MaxWind = max(Wind))
+
+# plot maximum wind speed over time
+ggplot(hurs_decade_max, aes(x=Year, y=MaxWind)) + geom_line() + geom_smooth(method = "loess") + theme_tufte() + scale_y_continuous(limits=c(60, 170))
+ggplot(hurs_decade_max, aes(x=Year, y=MaxWind)) + geom_line() + geom_smooth(method = "lm") + theme_tufte() + scale_y_continuous(limits=c(60, 170))
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+
+
+
+
