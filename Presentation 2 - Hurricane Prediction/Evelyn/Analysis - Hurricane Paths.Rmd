@@ -59,13 +59,13 @@ library(ggmap)
 # background_US_zoom2 <- ggmap(US_map_zoom2)
 # 
 # get raster map backgrounds for the US 
-Atlantic_map <- get_stamenmap(c(left = -120, bottom = 3, right = 10, top = 70), zoom = 3, maptype="watercolor")
+Atlantic_map <- get_stamenmap(c(left = -125, bottom = 5, right = 15, top = 65), zoom = 3, maptype="watercolor")
 background_Atlantic <- ggmap(Atlantic_map)
 ```
 
 ```{r, fig.height=12, fig.width=15}
 # map path of all Atlantic hurricanes
-background_Atlantic + geom_point(data=hurs_all, aes(x=Lon ,y=Lat), size=hurs_all$Wind/100, alpha=0.6, color="blue") + labs(title="All Atlantic Hurricanes 1851-2018") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 30), panel.border = element_rect(colour = "grey", fill=NA, size=4))
+background_Atlantic + geom_point(data=hurs_all, aes(x=Lon ,y=Lat), size=hurs_all$Wind/100, alpha=0.5, color="darkblue") + labs(title="All Atlantic Hurricanes 1851-2018") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 30), panel.border = element_rect(colour = "grey", fill=NA, size=4))
 ```
 
 ```{r, fig.width = 15, fig.height = 12}
@@ -78,14 +78,14 @@ class(world)
 
 # plot of category 3 + hurricanes that hit the US (1991-2018)
 map_landfall_since_1991 <- subset(US_landfall_cat3, Year > 1990)
-ggplot(data = world) + geom_sf() + coord_sf(xlim = c(-102.15, 0), ylim = c(5, 60), expand = FALSE) +
+ggplot(data = world) + geom_sf() + coord_sf(xlim = c(-110, 5), ylim = c(5, 60), expand = FALSE) +
   geom_point(data=map_landfall_since_1991, aes(x=Lon ,y=Lat, color=Key), size=map_landfall_since_1991$Wind/50, alpha=0.7) + labs(title="Category 3+ Hurricanes that Hit the US (1991-2018)") + theme_void() + theme(legend.position = "none", plot.title = element_text(colour = "dark orange", size = 30), panel.border = element_rect(colour = "grey", fill=NA, size=4))
 ###### hurricanes slow down when they're intense (high wind speed)
 ###### hurricanes lose wind speed once they hit land
 
 # non-landfall since 1991
 map_non_landfall_since_1991 <- subset(non_landfall, Year > 1990)
-ggplot(data = world) + geom_sf() + coord_sf(xlim = c(-102.15, 0), ylim = c(5, 60), expand = FALSE) +
+ggplot(data = world) + geom_sf() + coord_sf(xlim = c(-110, 5), ylim = c(5, 60), expand = FALSE) +
   geom_point(data=map_non_landfall_since_1991, aes(x=Lon ,y=Lat, color=Key), size=map_non_landfall_since_1991$Wind/50, alpha=0.7) + labs(title="Atlantic Hurricanes Never Making Landfall (1991-2018)") + theme_void() + theme(legend.position = "none", plot.title = element_text(colour = "dark orange", size = 30), panel.border = element_rect(colour = "grey", fill=NA, size=4))
 ```
 
@@ -96,46 +96,46 @@ map1850 <- subset(hurs_all, Decade == 1850)
 background_Atlantic + geom_point(data=map1850, aes(x=Lon ,y=Lat), size=map1850$Wind/200, alpha=map1850$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1851-1859") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1860 <- subset(hurs_all, Decade == 1860)
-background_Atlantic + geom_point(data=map1860, aes(x=Lon ,y=Lat), size=map1860$Wind/200, alpha=map1860$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1860-1869") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1860, aes(x=Lon ,y=Lat), size=map1860$Wind/200, alpha=map1860$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1860's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1870 <- subset(hurs_all, Decade == 1870)
-background_Atlantic + geom_point(data=map1870, aes(x=Lon ,y=Lat), size=map1870$Wind/200, alpha=map1870$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1870-1879") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1870, aes(x=Lon ,y=Lat), size=map1870$Wind/200, alpha=map1870$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1870's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1880 <- subset(hurs_all, Decade == 1880)
-background_Atlantic + geom_point(data=map1880, aes(x=Lon ,y=Lat), size=map1880$Wind/200, alpha=map1880$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1880-1889") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1880, aes(x=Lon ,y=Lat), size=map1880$Wind/200, alpha=map1880$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1880's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1890 <- subset(hurs_all, Decade == 1890)
-background_Atlantic + geom_point(data=map1890, aes(x=Lon ,y=Lat), size=map1890$Wind/200, alpha=map1890$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1890-1899") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1890, aes(x=Lon ,y=Lat), size=map1890$Wind/200, alpha=map1890$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1890's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1900 <- subset(hurs_all, Decade == 1900)
 background_Atlantic + geom_point(data=map1900, aes(x=Lon ,y=Lat), size=map1900$Wind/200, alpha=map1900$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1900-1909") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1910 <- subset(hurs_all, Decade == 1910)
-background_Atlantic + geom_point(data=map1910, aes(x=Lon ,y=Lat), size=map1910$Wind/200, alpha=map1910$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1910-1919") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1910, aes(x=Lon ,y=Lat), size=map1910$Wind/200, alpha=map1910$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1910's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1920 <- subset(hurs_all, Decade == 1920)
-background_Atlantic + geom_point(data=map1920, aes(x=Lon ,y=Lat), size=map1920$Wind/200, alpha=map1920$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1920-1929") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1920, aes(x=Lon ,y=Lat), size=map1920$Wind/200, alpha=map1920$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1920's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1930 <- subset(hurs_all, Decade == 1930)
-background_Atlantic + geom_point(data=map1930, aes(x=Lon ,y=Lat), size=map1930$Wind/200, alpha=map1930$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1930-1939") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1930, aes(x=Lon ,y=Lat), size=map1930$Wind/200, alpha=map1930$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1930's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1940 <- subset(hurs_all, Decade == 1940)
-background_Atlantic + geom_point(data=map1940, aes(x=Lon ,y=Lat), size=map1940$Wind/200, alpha=map1940$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1940-1949") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1940, aes(x=Lon ,y=Lat), size=map1940$Wind/200, alpha=map1940$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1940's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1950 <- subset(hurs_all, Decade == 1950)
-background_Atlantic + geom_point(data=map1950, aes(x=Lon ,y=Lat), size=map1950$Wind/200, alpha=map1950$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1950-1959") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1950, aes(x=Lon ,y=Lat), size=map1950$Wind/200, alpha=map1950$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1950's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1960 <- subset(hurs_all, Decade == 1960)
-background_Atlantic + geom_point(data=map1960, aes(x=Lon ,y=Lat), size=map1960$Wind/200, alpha=map1960$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1960-1969") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1960, aes(x=Lon ,y=Lat), size=map1960$Wind/200, alpha=map1960$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1960's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1970 <- subset(hurs_all, Decade == 1970)
-background_Atlantic + geom_point(data=map1970, aes(x=Lon ,y=Lat), size=map1970$Wind/200, alpha=map1970$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1970-1979") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1970, aes(x=Lon ,y=Lat), size=map1970$Wind/200, alpha=map1970$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1970's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1980 <- subset(hurs_all, Decade == 1980)
-background_Atlantic + geom_point(data=map1980, aes(x=Lon ,y=Lat), size=map1980$Wind/200, alpha=map1980$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1980-1989") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1980, aes(x=Lon ,y=Lat), size=map1980$Wind/200, alpha=map1980$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1980's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map1990 <- subset(hurs_all, Decade == 1990)
-background_Atlantic + geom_point(data=map1990, aes(x=Lon ,y=Lat), size=map1990$Wind/200, alpha=map1990$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1990-1999") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
+background_Atlantic + geom_point(data=map1990, aes(x=Lon ,y=Lat), size=map1990$Wind/200, alpha=map1990$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 1990's") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
 
 map2000 <- subset(hurs_all, Decade == 2000)
 background_Atlantic + geom_point(data=map2000, aes(x=Lon ,y=Lat), size=map2000$Wind/200, alpha=map2000$Wind/80, color="darkblue") + labs(title="Atlantic Hurricanes 2000-2009") + theme_void() + theme(plot.title = element_text(colour = "dark orange", size = 20), panel.border = element_rect(colour = "grey", fill=NA, size=3))
