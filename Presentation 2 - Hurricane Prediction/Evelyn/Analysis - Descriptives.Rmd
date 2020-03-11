@@ -1,5 +1,5 @@
 ---
-title: "DSPP - Hurricane Prediction"
+title: "Analysis - Data Manipulation and Descriptives"
 author: "Evelyn"
 date: "2/26/2020"
 output:
@@ -94,11 +94,23 @@ This is a dataset of 642 hurricanes that have reached land (center of system cro
 # create dataset with hurricanes that reached land
 landfall_list <- hurs_big[hurs_big$Record=="Landfall", 1]
 hurs_landfall <- hurs_big[hurs_big$Key %in% landfall_list, ]
-head(hurs_landfall, 10)
+hurs_landfall
 
 # save data with hurricanes that reached land
 write_csv(hurs_landfall, "landfall_hurricanes.csv")
 ```
+
+### Non-Landfall Hurricanes Dataset
+```{r}
+`%notin%` <- Negate(`%in%`)
+
+hurs_non_landfall <- hurs_big[hurs_big$Key %notin% landfall_list, ]
+hurs_non_landfall
+
+# save data with hurricanes that didn't reached land
+write_csv(hurs_non_landfall, "non_landfall_hurricanes.csv")
+```
+
 
 ### Hurricane Dataset with Select Variables
 This is a dataset that does not include variables that are mostly missing, with the exception of the "Pressure" variable, which is mostly non-missing starting at around 1980, and the "Record" variable, which flags hurricanes that have reached land.
@@ -162,7 +174,7 @@ ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
 
 ## Longest-Lasting Hurricane (AL031899)
 
-AL031899 is the longest-lasting hurricane. It lasted a month on August 1899. It had a peak wind speed of 130.
+AL031899 is the longest-lasting hurricane. It lasted a month in August 1899. It had a peak wind speed of 130.
 ```{r paged.print=TRUE}
 # find the longest-lasting hurricane
 head(hurs_all %>% group_by(Key, Year) %>% summarise(count=n()) %>% arrange(-count), 10)
@@ -281,20 +293,6 @@ ggplotly(graph, tooltip = c("x", "y"), dynamicTicks=TRUE)
 
 ```
 
-## Are Hurricanes More or Less Severe Over Time?
-
-### How many "Tropical Hurricanes" have there been per decade?
-```{r}
-
-
-```
-
-
-### How many hurricanes with wind speeds higher or equal to Sandy have there been per decade?
-```{r}
-
-
-```
 
 
 

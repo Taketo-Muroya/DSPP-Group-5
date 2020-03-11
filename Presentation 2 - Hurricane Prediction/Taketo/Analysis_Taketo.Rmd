@@ -82,15 +82,21 @@ write_csv(hurs_big, "hurricanes_big.csv")
 ### Landfall Hurricanes Dataset
 
 ```{r paged.print=TRUE}
-# create dataset with hurricanes that reached land
-landfall_list <- hurs_big[hurs_big$Record=="Landfall", 1]
-hurs_landfall <- hurs_big[hurs_big$Key %in% landfall_list, ]
+# # create dataset with hurricanes that reached land
+# landfall_list <- hurs_big[hurs_big$Record=="Landfall", 1]
+# hurs_landfall <- hurs_big[hurs_big$Key %in% landfall_list, ]
+```
+
+```{r}
+# read in geocoded dataset
+landfall <- read_csv("hurs_geocode.csv") %>%
+  filter(!is.na(County))
 ```
 
 ### Mapping of Landfalls
 
-```{r}
-map <- subset(hurs_all, Record == "Landfall")
+```{r, fig.asp=0.8}
+map <- subset(landfall, Record == "Landfall")
 map <- subset(map, Wind >= 64)
 map <- subset(map, Lat >= 24)
 map <- subset(map, Lon <= -65)
@@ -99,11 +105,11 @@ us.states <- ggplot2::map_data("state")
 g1 <- ggplot() + 
   geom_polygon(data=us.states, aes(x=long, y=lat, group=group), 
                color = "grey", fill = NA) + 
-  geom_point(data=map, aes(x=Lon ,y=Lat), size=map$Wind/40,
-             alpha=map$Wind/160, color="blue") + 
+  geom_point(data=map, aes(x=Lon ,y=Lat), size=map$Wind/20,
+             alpha=map$Wind/500, color="blue") + 
   xlab("longitude") + ylab("latitude") + 
-  coord_cartesian(xlim=c(-110, -65)) + 
-  ggtitle("Hurricane Landfalls (1851-2018)") + theme_hc()
+  coord_cartesian(xlim=c(-102, -65)) + 
+  ggtitle("Hurricane Landfalls (1851-2018)") + theme_void()
 g1
 
 png("image/g1.png", width = 400, height = 300)
@@ -113,7 +119,7 @@ dev.off()
 
 ### Clustering of Landfalls
 
-```{r}
+```{r, fig.asp = 0.8}
 cluster <- read.csv("cluster.csv") # data from python code
 
 g2 <- ggplot() + 
@@ -122,8 +128,8 @@ g2 <- ggplot() +
   geom_point(data=cluster, aes(x=Lon ,y=Lat), 
              size=cluster$Wind/10, alpha=0.5, color="blue") + 
   xlab("longitude") + ylab("latitude") + 
-  coord_cartesian(xlim=c(-110, -65)) + 
-  ggtitle("Clustering Hurricane Landfalls") + theme_hc()
+  coord_cartesian(xlim=c(-102, -65)) + 
+  ggtitle("Clustering Hurricane Landfalls") + theme_void()
 g2
 
 png("image/g2.png", width = 400, height = 300)
