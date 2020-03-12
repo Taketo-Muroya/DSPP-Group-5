@@ -103,10 +103,10 @@ g1 <- ggplot() +
              alpha=map$Wind/160, color="blue") + 
   xlab("longitude") + ylab("latitude") + 
   coord_cartesian(xlim=c(-110, -65)) + 
-  ggtitle("Hurricane Landfalls (1851-2018)") + theme_hc()
+  ggtitle("Hurricane Landfalls (1851-2018)") + theme_classic()
 g1
 
-png("image/g1.png", width = 400, height = 300)
+png("image/g1.png", width = 350, height = 300)
 g1
 dev.off()
 ```
@@ -114,19 +114,19 @@ dev.off()
 ### Clustering of Landfalls
 
 ```{r}
-cluster <- read.csv("cluster.csv") # data from python code
+cluster <- read.csv("cluster1.csv") # data from python code
 
 g2 <- ggplot() + 
   geom_polygon(data = us.states, aes(x=long, y=lat, group=group), 
                color = "grey", fill = NA) + 
-  geom_point(data=cluster, aes(x=Lon ,y=Lat), 
-             size=cluster$Wind/10, alpha=0.5, color="blue") + 
+  geom_point(data=cluster, aes(x=Lon ,y=Lat), fill=cluster$Colour, 
+             size=cluster$Number/3.4, alpha=0.5, color=cluster$Colour) + 
   xlab("longitude") + ylab("latitude") + 
-  coord_cartesian(xlim=c(-110, -65)) + 
-  ggtitle("Clustering Hurricane Landfalls") + theme_hc()
+  coord_cartesian(xlim=c(-100, -65)) + 
+  ggtitle("Clustering Hurricane Landfalls") + theme_classic()
 g2
 
-png("image/g2.png", width = 400, height = 300)
+png("image/g2.png", width = 350, height = 300)
 g2
 dev.off()
 ```
@@ -178,12 +178,50 @@ ranking64 = aggregate(h64$Key, by=list(h64$County), FUN=length)
 colnames(ranking64) = c("county", "number")
 sortlist <- order(ranking64$number, decreasing=TRUE)
 ranking64 <- ranking64[sortlist,]
+write_csv(ranking64, "ranking64.csv")
 
 h60 <- subset(h64, Year >= 1960)
 ranking60 = aggregate(h60$Key, by=list(h60$County), FUN=length)
 colnames(ranking60) = c("county", "number")
 sortlist <- order(ranking60$number, decreasing=TRUE)
 ranking60 <- ranking60[sortlist,]
+```
+
+### County Mapping
+
+```{r}
+library(urbnmapr)
+# Returns a ggplot2 object with a geom_map of the the lower 
+# 48 states (plus Hawaii & Alaska reset on the bottom) 
+# uscounties_sf <- get_urbn_map("counties", sf = TRUE)
+
+rf <- read.csv("ranking64fips.csv")
+rf$FIPS <- as.character(rf$FIPS)
+rf$FIPS[16] <- "01003"
+rf$FIPS[45] <- "01099"
+rm <- left_join(rf, counties, by = c("FIPS" = "county_fips"))
+
+gg <- rm %>%
+  ggplot(aes(long, lat, group = group, fill = number)) +
+  geom_polygon(color = "black", size=0.0125) +
+  scale_fill_gradientn(colours=c("blue","purple2","red"), 
+           name="Number of Hurricanes") + theme_classic()
+
+gg <- gg + theme(legend.position = c(0.8, 0.3)) + 
+  ggtitle("Counties passed over by Hurricanes (> 64 knots)") +
+  theme(plot.title = element_text(hjust=0.5, size=20),
+        legend.title = element_text(size=15))
+
+gg <- gg + 
+  geom_polygon(data = urbnmapr::states,
+               mapping = aes(x = long, y = lat, group = group),
+               fill = NA, color = "black", size=0.0125) + 
+  coord_cartesian(xlim=c(-100, -60), ylim=c(23, 45))
+gg
+
+png("image/gg.png", width = 650, height = 400)
+gg
+dev.off()
 ```
 
 ### Impact on poverty rate
@@ -202,28 +240,28 @@ poverty <- c(28.3,19.8,11.1,8.3,8.8,12.5)
 p_martin <- data.frame(Year=year, Poverty_rate=poverty)
 
 g3 <- ggplot(p_plaque, aes(x=Year, y=Poverty_rate)) + 
-  geom_bar(stat="identity", fill="green") + 
-  annotate("text", x=1988, y=27, col="blue", label="FLORENCE \n (1988)") +
-  annotate("text", x=2005, y=22, col="blue", label="KATRINA \n (2005)") + 
-  annotate("text", x=2017, y=15, col="blue", label="NATE \n (2017)") + 
+  geom_bar(stat="identity", fill="blue") + 
+  annotate("text", x=1988, y=27, col="red", label="FLORENCE \n (1988)") +
+  annotate("text", x=2005, y=22, col="red", label="KATRINA \n (2005)") + 
+  annotate("text", x=2017, y=15, col="red", label="NATE \n (2017)") + 
   xlab("Year") + ylab("Poverty rate (%)") + 
   coord_cartesian(xlim=c(1960,2020)) + 
   ggtitle("Poverty rate at Plaquemines (LA)") + theme_hc()
 g3
 
 g4 <- ggplot(p_collier, aes(x=Year, y=Poverty_rate)) + 
-  geom_bar(stat="identity", fill="green") + 
-  annotate("text", x=1960, y=36, col="blue", label="DONNA \n (1960)") +
-  annotate("text", x=2005, y=20, col="blue", label="WILMA \n (2005)") + 
+  geom_bar(stat="identity", fill="blue") + 
+  annotate("text", x=1960, y=36, col="red", label="DONNA \n (1960)") +
+  annotate("text", x=2005, y=20, col="red", label="WILMA \n (2005)") + 
   xlab("Year") + ylab("Poverty rate (%)") + 
   coord_cartesian(xlim=c(1955,2010), ylim=c(0,40)) + 
   ggtitle("Poverty rate at Collier (FL)") + theme_hc()
 g4
 
 g5 <- ggplot(p_martin, aes(x=Year, y=Poverty_rate)) + 
-  geom_bar(stat="identity", fill="green") + 
-  annotate("text", x=1999, y=12, col="blue", label="IRENE \n (1999)") +
-  annotate("text", x=2004, y=18.5, col="blue", 
+  geom_bar(stat="identity", fill="blue") + 
+  annotate("text", x=1999, y=12,   col="red", label="IRENE \n (1999)") +
+  annotate("text", x=2004, y=18.5, col="red", 
            label="FRANCES \n & JEANNE \n (2004)") + 
   xlab("Year") + ylab("Poverty rate (%)") + 
   coord_cartesian(xlim=c(1960,2010)) + 
@@ -239,4 +277,8 @@ dev.off()
 png("image/g5.png", width = 400, height = 300)
 g5
 dev.off()
+```
+
+```{r}
+#test <- read.csv("test.csv")
 ```
