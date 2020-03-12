@@ -1,5 +1,5 @@
 ---
-title: "Analysis - Hurricanes"
+title: "Analysis - Hurricane Trends Over Time"
 author: "Evelyn"
 date: "3/8/2020"
 output: html_document
@@ -8,14 +8,13 @@ output: html_document
 ```{r}
 library(tidyverse)
 library(ggplot2)
-library(plotly)
 library(ggthemes)
 ```
 
 
 ```{r, message = FALSE}
 hurs_all <- read_csv("hurricanes.csv") %>% arrange(Key, Year, Month, Day, Hour)
-hurs_all$Decade <- round(hurs_all_decade$Year-5, digits = -1)
+hurs_all$Decade <- round(hurs_all$Year-5, digits = -1)
 hurs_all
 ```
 
@@ -70,13 +69,13 @@ ggplot(data=big_hurs_year, aes(x=Year, y=`Number of Hurricanes`)) +
 
 ```{r}
 # create dataset with maximum wind speeds per year
-hurs_decade_max <- hurs_all_decade %>%
+hurs_decade_max <- hurs_all%>%
   group_by(Year) %>%
   summarize(MaxWind = max(Wind))
 
 # plot maximum wind speed over time
-ggplot(hurs_decade_max, aes(x=Year, y=MaxWind)) + geom_line() + geom_smooth(method = "loess") + theme_tufte() + scale_y_continuous(limits=c(60, 170))
-ggplot(hurs_decade_max, aes(x=Year, y=MaxWind)) + geom_line() + geom_smooth(method = "lm") + theme_tufte() + scale_y_continuous(limits=c(60, 170))
+ggplot(hurs_decade_max, aes(x=Year, y=MaxWind)) + geom_point() + geom_smooth(method = "loess") + theme_tufte() + scale_y_continuous(limits=c(60, 170))
+ggplot(hurs_decade_max, aes(x=Year, y=MaxWind)) + geom_point() + geom_smooth(method = "lm") + theme_tufte() + scale_y_continuous(limits=c(60, 170))
 ```
 
 
