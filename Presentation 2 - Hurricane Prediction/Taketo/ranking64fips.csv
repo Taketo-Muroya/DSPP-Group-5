@@ -1,0 +1,176 @@
+name,number,FIPS,SS,State,County
+"louisiana,plaquemines",11,22075,LA,louisiana,plaquemines
+"florida,collier",10,12021,FL,florida,collier
+"florida,martin",10,12085,FL,florida,martin
+"florida,miami-dade",8,12025,FL,florida,miami-dade
+"texas,brazoria",8,48039,TX,texas,brazoria
+"florida,bay",6,12005,FL,florida,bay
+"florida,polk",6,12105,FL,florida,polk
+"louisiana,st mary",6,22101,LA,louisiana,st mary
+"louisiana,terrebonne",6,22109,LA,louisiana,terrebonne
+"south carolina,charleston",6,45019,SC,south carolina,charleston
+"florida,gulf",5,12045,FL,florida,gulf
+"florida,palm beach",5,12099,FL,florida,palm beach
+"louisiana,cameron",5,22023,LA,louisiana,cameron
+"louisiana,lafourche",5,22057,LA,louisiana,lafourche
+"texas,jefferson",5,48245,TX,texas,jefferson
+"alabama,baldwin",4,1003,AL,alabama,baldwin
+"florida,broward",4,12011,FL,florida,broward
+"florida,levy",4,12075,FL,florida,levy
+"florida,pasco",4,12101,FL,florida,pasco
+"georgia,chatham",4,13051,GA,georgia,chatham
+"mississippi,jackson",4,28059,MS,mississippi,jackson
+"north carolina,brunswick",4,37019,NC,north carolina,brunswick
+"north carolina,hyde",4,37095,NC,north carolina,hyde
+"south carolina,horry",4,45051,SC,south carolina,horry
+"texas,cameron",4,48061,TX,texas,cameron
+"florida,dixie",3,12029,FL,florida,dixie
+"florida,hardee",3,12049,FL,florida,hardee
+"florida,hernando",3,12053,FL,florida,hernando
+"florida,jefferson",3,12065,FL,florida,jefferson
+"florida,marion",3,12083,FL,florida,marion
+"florida,monroe",3,12087,FL,florida,monroe
+"florida,santa rosa",3,12113,FL,florida,santa rosa
+"florida,st lucie",3,12111,FL,florida,st lucie
+"florida,walton",3,12131,FL,florida,walton
+"louisiana,assumption",3,22007,LA,louisiana,assumption
+"louisiana,calcasieu",3,22019,LA,louisiana,calcasieu
+"mississippi,harrison",3,28047,MS,mississippi,harrison
+"new york,suffolk",3,36103,NY,new york,suffolk
+"north carolina,carteret",3,37031,NC,north carolina,carteret
+"north carolina,onslow",3,37133,NC,north carolina,onslow
+"south carolina,beaufort",3,45013,SC,south carolina,beaufort
+"texas,goliad",3,48175,TX,texas,goliad
+"texas,harris",3,48201,TX,texas,harris
+"texas,kenedy",3,48261,TX,texas,kenedy
+"alabama,monroe",2,1099,AL,alabama,monroe
+"florida,charlotte",2,12015,FL,florida,charlotte
+"florida,flagler",2,12035,FL,florida,flagler
+"florida,franklin",2,12037,FL,florida,franklin
+"florida,glades",2,12043,FL,florida,glades
+"florida,hendry",2,12051,FL,florida,hendry
+"florida,highlands",2,12055,FL,florida,highlands
+"florida,indian river",2,12061,FL,florida,indian river
+"florida,okeechobee",2,12093,FL,florida,okeechobee
+"florida,osceola",2,12097,FL,florida,osceola
+"florida,volusia",2,12127,FL,florida,volusia
+"georgia,effingham",2,13103,GA,georgia,effingham
+"georgia,telfair",2,13271,GA,georgia,telfair
+"louisiana,iberia",2,22045,LA,louisiana,iberia
+"massachusetts,barnstable",2,25001,MA,massachusetts,barnstable
+"mississippi,perry",2,28111,MS,mississippi,perry
+"new jersey,atlantic",2,34001,NJ,new jersey,atlantic
+"north carolina,craven",2,37049,NC,north carolina,craven
+"north carolina,dare",2,37055,NC,north carolina,dare
+"north carolina,martin",2,37117,NC,north carolina,martin
+"north carolina,new hanover",2,37129,NC,north carolina,new hanover
+"north carolina,pamlico",2,37137,NC,north carolina,pamlico
+"rhode island,washington",2,44009,RI,rhode island,washington
+"texas,calhoun",2,48057,TX,texas,calhoun
+"texas,fort bend",2,48157,TX,texas,fort bend
+"texas,galveston",2,48167,TX,texas,galveston
+"texas,victoria",2,48469,TX,texas,victoria
+"texas,wharton",2,48481,TX,texas,wharton
+"alabama,clarke",1,1025,AL,alabama,clarke
+"alabama,geneva",1,1061,AL,alabama,geneva
+"alabama,mobile",1,1097,AL,alabama,mobile
+"alabama,washington",1,1129,AL,alabama,washington
+"connecticut,hartford",1,9003,CT,connecticut,hartford
+"connecticut,middlesex",1,9007,CT,connecticut,middlesex
+"connecticut,new haven",1,9009,CT,connecticut,new haven
+"connecticut,new london",1,9011,CT,connecticut,new london
+"florida,bradford",1,12007,FL,florida,bradford
+"florida,citrus",1,12017,FL,florida,citrus
+"florida,clay",1,12019,FL,florida,clay
+"florida,de soto",1,12027,FL,florida,de soto
+"florida,escambia",1,12033,FL,florida,escambia
+"florida,gadsden",1,12039,FL,florida,gadsden
+"florida,gilchrist",1,12041,FL,florida,gilchrist
+"florida,holmes",1,12059,FL,florida,holmes
+"florida,jackson",1,12063,FL,florida,jackson
+"florida,lake",1,12069,FL,florida,lake
+"florida,lee",1,12071,FL,florida,lee
+"florida,leon",1,12073,FL,florida,leon
+"florida,liberty",1,12077,FL,florida,liberty
+"florida,manatee",1,12081,FL,florida,manatee
+"florida,orange",1,12095,FL,florida,orange
+"florida,pinellas",1,12103,FL,florida,pinellas
+"florida,st johns",1,12109,FL,florida,st johns
+"florida,sumter",1,12119,FL,florida,sumter
+"florida,suwannee",1,12121,FL,florida,suwannee
+"florida,taylor",1,12123,FL,florida,taylor
+"florida,union",1,12125,FL,florida,union
+"florida,wakulla",1,12129,FL,florida,wakulla
+"georgia,calhoun",1,13037,GA,georgia,calhoun
+"georgia,camden",1,13039,GA,georgia,camden
+"georgia,coffee",1,13069,GA,georgia,coffee
+"georgia,colquitt",1,13071,GA,georgia,colquitt
+"georgia,decatur",1,13087,GA,georgia,decatur
+"georgia,dougherty",1,13095,GA,georgia,dougherty
+"georgia,lowndes",1,13185,GA,georgia,lowndes
+"georgia,miller",1,13201,GA,georgia,miller
+"georgia,tattnall",1,13267,GA,georgia,tattnall
+"georgia,tift",1,13277,GA,georgia,tift
+"louisiana,beauregard",1,22011,LA,louisiana,beauregard
+"louisiana,concordia",1,22029,LA,louisiana,concordia
+"louisiana,east baton rouge",1,22033,LA,louisiana,east baton rouge
+"louisiana,iberville",1,22047,LA,louisiana,iberville
+"louisiana,pointe coupee",1,22077,LA,louisiana,pointe coupee
+"louisiana,st bernard",1,22087,LA,louisiana,st bernard
+"louisiana,st james",1,22093,LA,louisiana,st james
+"louisiana,st tammany",1,22103,LA,louisiana,st tammany
+"maine,piscataquis",1,23021,ME,maine,piscataquis
+"maine,sagadahoc",1,23023,ME,maine,sagadahoc
+"maryland,montgomery",1,24031,MD,maryland,montgomery
+"massachusetts,essex",1,25009,MA,massachusetts,essex
+"massachusetts,plymouth",1,25023,MA,massachusetts,plymouth
+"mississippi,george",1,28039,MS,mississippi,george
+"mississippi,hancock",1,28045,MS,mississippi,hancock
+"mississippi,jefferson",1,28063,MS,mississippi,jefferson
+"mississippi,lamar",1,28073,MS,mississippi,lamar
+"mississippi,pearl river",1,28109,MS,mississippi,pearl river
+"mississippi,simpson",1,28127,MS,mississippi,simpson
+"mississippi,stone",1,28131,MS,mississippi,stone
+"new hampshire,merrimack",1,33013,NH,new hampshire,merrimack
+"new york,queens",1,36081,NY,new york,queens
+"north carolina,beaufort",1,37013,NC,north carolina,beaufort
+"north carolina,bladen",1,37017,NC,north carolina,bladen
+"north carolina,cabarrus",1,37025,NC,north carolina,cabarrus
+"north carolina,camden",1,37029,NC,north carolina,camden
+"north carolina,chatham",1,37037,NC,north carolina,chatham
+"north carolina,cumberland",1,37051,NC,north carolina,cumberland
+"north carolina,edgecombe",1,37065,NC,north carolina,edgecombe
+"north carolina,franklin",1,37069,NC,north carolina,franklin
+"north carolina,jones",1,37103,NC,north carolina,jones
+"north carolina,pender",1,7141,NC,north carolina,pender
+"north carolina,robeson",1,37155,NC,north carolina,robeson
+"north carolina,sampson",1,37163,NC,north carolina,sampson
+"north carolina,washington",1,37187,NC,north carolina,washington
+"pennsylvania,cumberland",1,42041,PA,pennsylvania,cumberland
+"pennsylvania,wayne",1,42127,PA,pennsylvania,wayne
+"south carolina,berkeley",1,45015,SC,south carolina,berkeley
+"south carolina,calhoun",1,45017,SC,south carolina,calhoun
+"south carolina,clarendon",1,45027,SC,south carolina,clarendon
+"south carolina,colleton",1,45029,SC,south carolina,colleton
+"south carolina,dorchester",1,45035,SC,south carolina,dorchester
+"south carolina,lexington",1,45063,SC,south carolina,lexington
+"south carolina,williamsburg",1,45089,SC,south carolina,williamsburg
+"texas,aransas",1,48007,TX,texas,aransas
+"texas,bexar",1,48029,TX,texas,bexar
+"texas,colorado",1,48089,TX,texas,colorado
+"texas,jasper",1,48241,TX,texas,jasper
+"texas,karnes",1,48255,TX,texas,karnes
+"texas,kleberg",1,48273,TX,texas,kleberg
+"texas,lavaca",1,48285,TX,texas,lavaca
+"texas,matagorda",1,48321,TX,texas,matagorda
+"texas,milam",1,48331,TX,texas,milam
+"texas,montgomery",1,48339,TX,texas,montgomery
+"texas,newton",1,48351,TX,texas,newton
+"texas,refugio",1,48391,TX,texas,refugio
+"texas,san patricio",1,48409,TX,texas,san patricio
+"texas,starr",1,48427,TX,texas,starr
+"texas,tyler",1,48441,TX,texas,tyler
+"texas,waller",1,48473,TX,texas,waller
+"texas,willacy",1,48489,TX,texas,willacy
+"virginia,brunswick",1,51025,VA,virginia,brunswick
+"virginia,rappahannock",1,51157,VA,virginia,rappahannock
