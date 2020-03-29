@@ -278,7 +278,7 @@ g5
 dev.off()
 ```
 
-### Find interesting hurricanes
+### Add hurricane information to ranking
 
 ```{r}
 h64 <- subset(h, Wind >= 64)
