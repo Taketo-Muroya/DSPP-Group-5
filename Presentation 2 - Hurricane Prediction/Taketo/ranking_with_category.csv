@@ -1,0 +1,244 @@
+county,category,number
+"florida,bay",5,1
+"mississippi,hancock",5,1
+"florida,collier",4,2
+"florida,miami-dade",4,2
+"florida,charlotte",4,1
+"florida,gulf",4,1
+"florida,monroe",4,1
+"florida,palm beach",4,1
+"louisiana,lafourche",4,1
+"mississippi,pearl river",4,1
+"south carolina,beaufort",4,1
+"south carolina,charleston",4,1
+"south carolina,horry",4,1
+"florida,martin",3,4
+"louisiana,plaquemines",3,3
+"florida,bay",3,2
+"florida,collier",3,2
+"florida,levy",3,2
+"louisiana,cameron",3,2
+"louisiana,st mary",3,2
+"mississippi,harrison",3,2
+"connecticut,new haven",3,1
+"florida,broward",3,1
+"florida,gilchrist",3,1
+"florida,glades",3,1
+"florida,miami-dade",3,1
+"florida,palm beach",3,1
+"florida,santa rosa",3,1
+"louisiana,st tammany",3,1
+"louisiana,terrebonne",3,1
+"new york,suffolk",3,1
+"rhode island,washington",3,1
+"texas,brazoria",3,1
+"texas,cameron",3,1
+"texas,refugio",3,1
+"texas,victoria",3,1
+"florida,collier",2,5
+"florida,martin",2,4
+"georgia,chatham",2,3
+"louisiana,st mary",2,3
+"louisiana,terrebonne",2,3
+"mississippi,jackson",2,3
+"texas,brazoria",2,3
+"florida,gulf",2,2
+"louisiana,plaquemines",2,2
+"massachusetts,barnstable",2,2
+"north carolina,carteret",2,2
+"north carolina,onslow",2,2
+"texas,cameron",2,2
+"texas,jefferson",2,2
+"florida,de soto",2,1
+"florida,dixie",2,1
+"florida,escambia",2,1
+"florida,gadsden",2,1
+"florida,hendry",2,1
+"florida,hernando",2,1
+"florida,highlands",2,1
+"florida,indian river",2,1
+"florida,jackson",2,1
+"florida,monroe",2,1
+"florida,palm beach",2,1
+"florida,polk",2,1
+"florida,st johns",2,1
+"florida,st lucie",2,1
+"florida,walton",2,1
+"georgia,camden",2,1
+"louisiana,assumption",2,1
+"louisiana,cameron",2,1
+"louisiana,lafourche",2,1
+"louisiana,st bernard",2,1
+"new york,suffolk",2,1
+"north carolina,brunswick",2,1
+"north carolina,dare",2,1
+"north carolina,martin",2,1
+"north carolina,new hanover",2,1
+"north carolina,pamlico",2,1
+"north carolina,pender",2,1
+"rhode island,washington",2,1
+"south carolina,beaufort",2,1
+"south carolina,clarendon",2,1
+"south carolina,horry",2,1
+"texas,calhoun",2,1
+"texas,galveston",2,1
+"texas,goliad",2,1
+"texas,karnes",2,1
+"texas,kenedy",2,1
+"texas,montgomery",2,1
+"texas,san patricio",2,1
+"texas,waller",2,1
+"louisiana,plaquemines",1,6
+"florida,miami-dade",1,5
+"florida,polk",1,5
+"south carolina,charleston",1,5
+"alabama,baldwin",1,4
+"florida,pasco",1,4
+"north carolina,hyde",1,4
+"texas,brazoria",1,4
+"florida,bay",1,3
+"florida,broward",1,3
+"florida,hardee",1,3
+"florida,jefferson",1,3
+"florida,marion",1,3
+"louisiana,calcasieu",1,3
+"louisiana,lafourche",1,3
+"north carolina,brunswick",1,3
+"texas,harris",1,3
+"texas,jefferson",1,3
+"alabama,monroe",1,2
+"florida,dixie",1,2
+"florida,flagler",1,2
+"florida,franklin",1,2
+"florida,gulf",1,2
+"florida,hernando",1,2
+"florida,levy",1,2
+"florida,martin",1,2
+"florida,okeechobee",1,2
+"florida,osceola",1,2
+"florida,palm beach",1,2
+"florida,santa rosa",1,2
+"florida,st lucie",1,2
+"florida,volusia",1,2
+"florida,walton",1,2
+"georgia,effingham",1,2
+"georgia,telfair",1,2
+"louisiana,assumption",1,2
+"louisiana,cameron",1,2
+"louisiana,iberia",1,2
+"louisiana,terrebonne",1,2
+"mississippi,perry",1,2
+"new jersey,atlantic",1,2
+"north carolina,craven",1,2
+"south carolina,horry",1,2
+"texas,fort bend",1,2
+"texas,goliad",1,2
+"texas,kenedy",1,2
+"texas,wharton",1,2
+"alabama,clarke",1,1
+"alabama,geneva",1,1
+"alabama,mobile",1,1
+"alabama,washington",1,1
+"connecticut,hartford",1,1
+"connecticut,middlesex",1,1
+"connecticut,new london",1,1
+"florida,bradford",1,1
+"florida,charlotte",1,1
+"florida,citrus",1,1
+"florida,clay",1,1
+"florida,collier",1,1
+"florida,glades",1,1
+"florida,hendry",1,1
+"florida,highlands",1,1
+"florida,holmes",1,1
+"florida,indian river",1,1
+"florida,lake",1,1
+"florida,lee",1,1
+"florida,leon",1,1
+"florida,liberty",1,1
+"florida,manatee",1,1
+"florida,monroe",1,1
+"florida,orange",1,1
+"florida,pinellas",1,1
+"florida,sumter",1,1
+"florida,suwannee",1,1
+"florida,taylor",1,1
+"florida,union",1,1
+"florida,wakulla",1,1
+"georgia,calhoun",1,1
+"georgia,chatham",1,1
+"georgia,coffee",1,1
+"georgia,colquitt",1,1
+"georgia,decatur",1,1
+"georgia,dougherty",1,1
+"georgia,lowndes",1,1
+"georgia,miller",1,1
+"georgia,tattnall",1,1
+"georgia,tift",1,1
+"louisiana,beauregard",1,1
+"louisiana,concordia",1,1
+"louisiana,east baton rouge",1,1
+"louisiana,iberville",1,1
+"louisiana,pointe coupee",1,1
+"louisiana,st james",1,1
+"louisiana,st mary",1,1
+"maine,piscataquis",1,1
+"maine,sagadahoc",1,1
+"maryland,montgomery",1,1
+"massachusetts,essex",1,1
+"massachusetts,plymouth",1,1
+"mississippi,george",1,1
+"mississippi,harrison",1,1
+"mississippi,jackson",1,1
+"mississippi,jefferson",1,1
+"mississippi,lamar",1,1
+"mississippi,simpson",1,1
+"mississippi,stone",1,1
+"new hampshire,merrimack",1,1
+"new york,queens",1,1
+"new york,suffolk",1,1
+"north carolina,beaufort",1,1
+"north carolina,bladen",1,1
+"north carolina,cabarrus",1,1
+"north carolina,camden",1,1
+"north carolina,carteret",1,1
+"north carolina,chatham",1,1
+"north carolina,cumberland",1,1
+"north carolina,dare",1,1
+"north carolina,edgecombe",1,1
+"north carolina,franklin",1,1
+"north carolina,jones",1,1
+"north carolina,martin",1,1
+"north carolina,new hanover",1,1
+"north carolina,onslow",1,1
+"north carolina,pamlico",1,1
+"north carolina,robeson",1,1
+"north carolina,sampson",1,1
+"north carolina,washington",1,1
+"pennsylvania,cumberland",1,1
+"pennsylvania,wayne",1,1
+"south carolina,beaufort",1,1
+"south carolina,berkeley",1,1
+"south carolina,calhoun",1,1
+"south carolina,colleton",1,1
+"south carolina,dorchester",1,1
+"south carolina,lexington",1,1
+"south carolina,williamsburg",1,1
+"texas,aransas",1,1
+"texas,bexar",1,1
+"texas,calhoun",1,1
+"texas,cameron",1,1
+"texas,colorado",1,1
+"texas,galveston",1,1
+"texas,jasper",1,1
+"texas,kleberg",1,1
+"texas,lavaca",1,1
+"texas,matagorda",1,1
+"texas,milam",1,1
+"texas,newton",1,1
+"texas,starr",1,1
+"texas,tyler",1,1
+"texas,victoria",1,1
+"texas,willacy",1,1
+"virginia,brunswick",1,1
+"virginia,rappahannock",1,1

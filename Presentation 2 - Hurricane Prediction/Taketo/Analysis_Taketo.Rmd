@@ -278,6 +278,43 @@ g5
 dev.off()
 ```
 
+### Find interesting hurricanes
+
 ```{r}
-#test <- read.csv("test.csv")
+h64 <- subset(h, Wind >= 64)
+category1 <- subset(h64, Wind <= 82)
+category2 <- subset(h64, Wind >= 83)
+category2 <- subset(category2, Wind <= 95)
+category3 <- subset(h64, Wind >= 96)
+category3 <- subset(category3, Wind <= 112)
+category4 <- subset(h64, Wind >= 113)
+category4 <- subset(category4, Wind <= 136)
+category5 <- subset(h64, Wind >= 137)
+
+category1$category <- 1
+category2$category <- 2
+category3$category <- 3
+category4$category <- 4
+category5$category <- 5
+cat <- rbind(category1, category2, category3, category4, category5)
+
+ran = aggregate(cat$Key, by=list(cat$County, cat$category), length)
+colnames(ran) = c("county", "category", "number")
+sortlist1 <- order(ran$number, decreasing=TRUE)
+ran <- ran[sortlist1,]
+sortlist2 <- order(ran$category, decreasing=TRUE)
+ran <- ran[sortlist2,]
+write_csv(ran, "ranking_with_category.csv")
+```
+
+```{r}
+for (i in 1:nrow(ranking64)){
+  tmp <- subset(h64, h64$County == ranking64[i,1])
+  tmp$info <- paste(tmp$Date, tmp$Name, tmp$Wind)
+  for (j in 1:nrow(tmp)){
+    ranking64[i,j+2] <- tmp$info[j]
+  }
+}
+colnames(ranking64) = c("county", "number", "hurricane1", "hurricane2", "hurricane3", "hurricane4", "hurricane5", "hurricane6", "hurricane6", "hurricane8", "hurricane9", "hurricane10", "hurricane11")
+write_csv(ranking64, "ranking_hurricane_added.csv")
 ```
