@@ -1,0 +1,398 @@
+county,number,storm1,storm2,storm3,storm4,storm5
+"florida,martin",5,1985-07-24 BOB 40,2004-09-05 FRANCES 90,2004-09-05 FRANCES 90,2004-09-26 JEANNE 105,1999-10-16 IRENE 65
+"florida,polk",5,2004-08-14 CHARLEY 75,1995-08-02 ERIN 50,2004-09-05 FRANCES 60,2001-09-14 GABRIELLE 45,2004-09-26 JEANNE 75
+"louisiana,plaquemines",5,1988-09-10 FLORENCE 70,1988-09-10 FLORENCE 60,2005-08-29 KATRINA 110,2005-08-29 KATRINA 110,2017-10-08 NATE 75
+"alabama,baldwin",4,1995-08-03 ERIN 65,1997-07-20 DANNY 60,1997-07-20 DANNY 45,1985-10-31 JUAN 55,NA
+"florida,brevard",4,1983-08-25 BARRY 30,1983-08-25 BARRY 30,2006-08-31 ERNESTO 35,2001-09-15 GABRIELLE 40,NA
+"florida,escambia",4,1997-07-20 DANNY 35,1997-07-20 DANNY 30,1997-07-21 DANNY 25,1998-09-29 GEORGES 30,NA
+"florida,miami-dade",4,2006-08-30 ERNESTO 40,2006-08-30 ERNESTO 40,2004-09-21 IVAN 25,2005-08-26 KATRINA 70,NA
+"florida,santa rosa",4,2005-07-10 DENNIS 105,1998-09-30 GEORGES 30,2009-11-10 IDA 30,1995-10-05 OPAL 80,NA
+"mississippi,harrison",4,1985-09-02 ELENA 100,1998-09-28 GEORGES 65,1998-09-29 GEORGES 50,2017-10-08 NATE 60,NA
+"north carolina,hyde",4,1995-06-07 ALLISON 40,1986-08-17 CHARLEY 65,2011-08-27 IRENE 65,1984-09-14 DIANA 50,NA
+"north carolina,pender",4,1995-06-06 ALLISON 40,1998-08-27 BONNIE 95,2004-08-14 CHARLEY 60,2006-09-01 ERNESTO 50,NA
+"south carolina,georgetown",4,2018-09-15 FLORENCE 55,2016-09-03 HERMINE 50,2002-10-11 KYLE 35,1985-11-22 KATE 45,NA
+"south carolina,williamsburg",4,1995-06-06 ALLISON 35,2018-09-15 FLORENCE 55,2018-09-15 FLORENCE 50,2004-08-29 GASTON 45,NA
+"texas,de witt",4,2017-08-26 HARVEY 50,2017-08-27 HARVEY 45,2017-08-27 HARVEY 35,2017-08-27 HARVEY 35,NA
+"alabama,monroe",3,1997-07-21 DANNY 20,2004-09-16 IVAN 70,1985-11-01 JUAN 40,NA,NA
+"georgia,effingham",3,1986-08-15 CHARLEY 15,2016-09-02 HERMINE 50,1985-11-22 KATE 50,NA,NA
+"louisiana,cameron",3,1985-08-15 DANNY 70,2004-09-24 IVAN 30,2017-08-30 HARVEY 40,NA,NA
+"louisiana,la salle",3,2007-09-14 HUMBERTO 25,2017-08-31 HARVEY 25,2002-10-04 LILI 40,NA,NA
+"louisiana,st mary",3,1992-08-26 ANDREW 100,2008-09-01 GUSTAV 85,1985-10-29 JUAN 65,NA,NA
+"louisiana,terrebonne",3,2008-09-01 GUSTAV 90,2012-08-29 ISAAC 65,2012-08-29 ISAAC 60,NA,NA
+"maine,somerset",3,2005-07-10 CINDY 30,2005-07-10 CINDY 30,1985-09-28 GLORIA 50,NA,NA
+"maine,washington",3,1991-08-20 BOB 50,1999-09-18 FLOYD 40,2017-10-10 NATE 25,NA,NA
+"north carolina,brunswick",3,2018-09-14 FLORENCE 65,1984-09-13 DIANA 65,2002-10-12 KYLE 30,NA,NA
+"south carolina,clarendon",3,2018-09-16 FLORENCE 45,1989-09-22 HUGO 85,2000-09-19 GORDON 25,NA,NA
+"west virginia,mason",3,1995-08-06 ERIN 20,2018-09-17 FLORENCE 25,2018-09-17 FLORENCE 25,NA,NA
+"alabama,clarke",2,2005-07-11 DENNIS 45,1997-07-21 DANNY 20,NA,NA,NA
+"alabama,colbert",2,1985-08-17 DANNY 30,2017-09-12 IRMA 15,NA,NA,NA
+"alabama,dallas",2,2005-07-07 CINDY 25,1997-07-21 DANNY 20,NA,NA,NA
+"alabama,jefferson",2,2017-09-12 IRMA 20,1985-11-01 JUAN 35,NA,NA,NA
+"alabama,mobile",2,1998-09-29 GEORGES 40,1998-09-29 GEORGES 30,NA,NA,NA
+"alabama,shelby",2,1997-07-22 DANNY 20,1997-07-22 DANNY 20,NA,NA,NA
+"alabama,st clair",2,1997-07-22 DANNY 20,2004-09-17 IVAN 30,NA,NA,NA
+"alabama,talladega",2,2005-07-07 CINDY 20,1995-10-05 OPAL 50,NA,NA,NA
+"arkansas,hempstead",2,1989-10-16 JERRY 15,2005-09-25 RITA 30,NA,NA,NA
+"arkansas,little river",2,2008-09-03 GUSTAV 20,2008-09-03 GUSTAV 20,NA,NA,NA
+"arkansas,sevier",2,1986-06-27 BONNIE 20,2008-09-03 GUSTAV 20,NA,NA,NA
+"arkansas,yell",2,1986-06-27 BONNIE 20,2008-09-04 GUSTAV 15,NA,NA,NA
+"florida,charlotte",2,2004-08-13 CHARLEY 125,2017-09-11 IRMA 80,NA,NA,NA
+"florida,collier",2,2006-08-30 ERNESTO 35,2005-10-24 WILMA 95,NA,NA,NA
+"florida,gulf",2,1985-11-21 KATE 85,2018-10-10 MICHAEL 135,NA,NA,NA
+"florida,hendry",2,1985-07-23 BOB 40,1998-11-05 MITCH 55,NA,NA,NA
+"florida,jefferson",2,2016-09-02 HERMINE 65,2016-09-02 HERMINE 60,NA,NA,NA
+"florida,pasco",2,2004-09-26 JEANNE 55,2017-09-11 IRMA 65,NA,NA,NA
+"florida,walton",2,1998-09-30 GEORGES 30,2009-11-11 IDA 25,NA,NA,NA
+"georgia,cherokee",2,1997-07-23 DANNY 20,2004-09-08 FRANCES 25,NA,NA,NA
+"georgia,colquitt",2,1998-09-03 EARL 45,2004-09-27 JEANNE 35,NA,NA,NA
+"georgia,thomas",2,1995-06-05 ALLISON 45,1986-08-13 CHARLEY 10,NA,NA,NA
+"georgia,tift",2,1986-08-14 CHARLEY 10,1985-11-22 KATE 65,NA,NA,NA
+"indiana,bartholomew",2,2005-07-13 DENNIS 15,2005-07-14 DENNIS 10,NA,NA,NA
+"kentucky,meade",2,2005-07-15 DENNIS 10,2005-07-15 DENNIS 10,NA,NA,NA
+"louisiana,caddo",2,2008-09-02 GUSTAV 20,2005-09-25 RITA 35,NA,NA,NA
+"louisiana,calcasieu",2,2007-09-13 HUMBERTO 65,2017-08-30 HARVEY 40,NA,NA,NA
+"louisiana,evangeline",2,1985-08-16 DANNY 50,2008-09-02 GUSTAV 60,NA,NA,NA
+"louisiana,lafourche",2,2005-07-06 CINDY 65,2012-08-29 ISAAC 70,NA,NA,NA
+"louisiana,vermilion",2,1985-10-30 JUAN 60,1985-10-30 JUAN 55,NA,NA,NA
+"maryland,dorchester",2,1996-07-13 BERTHA 60,2000-09-19 GORDON 25,NA,NA,NA
+"maryland,st marys",2,2005-07-08 CINDY 25,2004-09-18 IVAN 15,NA,NA,NA
+"massachusetts,berkshire",2,2018-09-18 FLORENCE 25,2011-08-28 IRENE 50,NA,NA,NA
+"massachusetts,worcester",2,1996-07-14 BERTHA 60,1999-09-17 FLOYD 50,NA,NA,NA
+"missouri,stoddard",2,2017-09-13 IRMA 15,2005-09-26 RITA 20,NA,NA,NA
+"new jersey,monmouth",2,1996-07-13 BERTHA 60,2011-08-28 IRENE 55,NA,NA,NA
+"new york,jefferson",2,1999-09-08 DENNIS 20,2004-09-09 FRANCES 30,NA,NA,NA
+"new york,livingston",2,1999-09-07 DENNIS 20,2004-09-09 FRANCES 35,NA,NA,NA
+"north carolina,craven",2,1998-08-27 BONNIE 75,1984-09-14 DIANA 45,NA,NA,NA
+"north carolina,cumberland",2,1996-09-06 FRAN 65,2000-09-19 GORDON 20,NA,NA,NA
+"north carolina,graham",2,1992-08-28 ANDREW 20,2004-09-17 IVAN 20,NA,NA,NA
+"north carolina,jones",2,1996-07-13 BERTHA 65,2016-09-03 HERMINE 55,NA,NA,NA
+"north carolina,new hanover",2,1996-07-12 BERTHA 90,2018-09-14 FLORENCE 80,NA,NA,NA
+"pennsylvania,lawrence",2,2003-09-19 ISABEL 35,2012-10-31 SANDY 35,NA,NA,NA
+"pennsylvania,lycoming",2,2006-09-03 ERNESTO 25,2018-09-18 FLORENCE 25,NA,NA,NA
+"south carolina,abbeville",2,1997-07-24 DANNY 20,2004-09-28 JEANNE 20,NA,NA,NA
+"south carolina,charleston",2,2004-08-29 GASTON 65,1989-09-22 HUGO 120,NA,NA,NA
+"tennessee,lincoln",2,2002-09-27 ISIDORE 20,1985-11-01 JUAN 30,NA,NA,NA
+"texas,duval",2,1999-08-23 BRET 60,1999-08-23 BRET 35,NA,NA,NA
+"texas,grimes",2,1983-08-18 ALICIA 40,1989-08-02 CHANTAL 35,NA,NA,NA
+"texas,jack",2,1983-08-19 ALICIA 25,1989-08-02 CHANTAL 20,NA,NA,NA
+"texas,jefferson",2,1986-06-26 BONNIE 65,2004-09-24 IVAN 25,NA,NA,NA
+"texas,johnson",2,1983-08-19 ALICIA 30,1989-08-02 CHANTAL 20,NA,NA,NA
+"texas,montgomery",2,1989-08-01 CHANTAL 50,2008-09-13 IKE 85,NA,NA,NA
+"virginia,brunswick",2,1985-08-19 DANNY 25,2003-09-19 ISABEL 65,NA,NA,NA
+"virginia,franklin",2,2005-07-08 CINDY 20,1999-09-06 DENNIS 20,NA,NA,NA
+"virginia,rockbridge",2,1999-09-06 DENNIS 20,1996-09-06 FRAN 30,NA,NA,NA
+"virginia,southampton",2,1996-07-13 BERTHA 60,2006-09-01 ERNESTO 40,NA,NA,NA
+"alabama,barbour",1,2004-09-07 FRANCES 25,NA,NA,NA,NA
+"alabama,bibb",1,1997-07-22 DANNY 20,NA,NA,NA,NA
+"alabama,choctaw",1,2017-10-08 NATE 35,NA,NA,NA,NA
+"alabama,cullman",1,2017-10-08 NATE 25,NA,NA,NA,NA
+"alabama,de kalb",1,2004-09-17 IVAN 25,NA,NA,NA,NA
+"alabama,etowah",1,1997-07-23 DANNY 20,NA,NA,NA,NA
+"alabama,lee",1,2004-09-07 FRANCES 25,NA,NA,NA,NA
+"alabama,morgan",1,1992-08-28 ANDREW 20,NA,NA,NA,NA
+"alabama,perry",1,2004-09-16 IVAN 50,NA,NA,NA,NA
+"alabama,tallapoosa",1,2017-09-12 IRMA 25,NA,NA,NA,NA
+"alabama,washington",1,2005-07-06 CINDY 30,NA,NA,NA,NA
+"arkansas,baxter",1,2008-09-04 GUSTAV 15,NA,NA,NA,NA
+"arkansas,chicot",1,2002-10-04 LILI 30,NA,NA,NA,NA
+"arkansas,franklin",1,2012-08-31 ISAAC 20,NA,NA,NA,NA
+"arkansas,howard",1,2008-09-04 GUSTAV 15,NA,NA,NA,NA
+"arkansas,independence",1,2005-09-25 RITA 25,NA,NA,NA,NA
+"arkansas,johnson",1,2008-09-14 IKE 35,NA,NA,NA,NA
+"arkansas,lafayette",1,1985-09-03 ELENA 25,NA,NA,NA,NA
+"arkansas,madison",1,1985-09-04 ELENA 20,NA,NA,NA,NA
+"arkansas,miller",1,2008-09-03 GUSTAV 20,NA,NA,NA,NA
+"arkansas,mississippi",1,2002-10-04 LILI 25,NA,NA,NA,NA
+"arkansas,pike",1,2012-08-31 ISAAC 25,NA,NA,NA,NA
+"arkansas,polk",1,1985-09-03 ELENA 25,NA,NA,NA,NA
+"arkansas,pulaski",1,2005-09-25 RITA 25,NA,NA,NA,NA
+"arkansas,randolph",1,1986-06-28 BONNIE 10,NA,NA,NA,NA
+"arkansas,union",1,2012-08-31 ISAAC 30,NA,NA,NA,NA
+"arkansas,van buren",1,1986-06-28 BONNIE 15,NA,NA,NA,NA
+"connecticut,hartford",1,1985-09-27 GLORIA 75,NA,NA,NA,NA
+"connecticut,new london",1,2000-09-20 GORDON 25,NA,NA,NA,NA
+"florida,bay",1,2018-10-10 MICHAEL 140,NA,NA,NA,NA
+"florida,broward",1,1999-10-16 IRENE 65,NA,NA,NA,NA
+"florida,dixie",1,2000-09-18 GORDON 40,NA,NA,NA,NA
+"florida,gilchrist",1,2017-09-11 IRMA 50,NA,NA,NA,NA
+"florida,hamilton",1,1998-10-01 GEORGES 25,NA,NA,NA,NA
+"florida,hardee",1,1983-08-25 BARRY 25,NA,NA,NA,NA
+"florida,highlands",1,1994-11-16 GORDON 45,NA,NA,NA,NA
+"florida,hillsborough",1,2004-09-06 FRANCES 55,NA,NA,NA,NA
+"florida,jackson",1,1998-09-30 GEORGES 25,NA,NA,NA,NA
+"florida,lafayette",1,2004-09-27 JEANNE 40,NA,NA,NA,NA
+"florida,lee",1,1994-11-16 GORDON 45,NA,NA,NA,NA
+"florida,leon",1,1998-09-30 GEORGES 25,NA,NA,NA,NA
+"florida,levy",1,2004-09-27 JEANNE 45,NA,NA,NA,NA
+"florida,liberty",1,1985-11-22 KATE 80,NA,NA,NA,NA
+"florida,monroe",1,1992-08-24 ANDREW 115,NA,NA,NA,NA
+"florida,nassau",1,1998-10-01 GEORGES 20,NA,NA,NA,NA
+"florida,okeechobee",1,2004-09-05 FRANCES 80,NA,NA,NA,NA
+"florida,orange",1,2001-09-15 GABRIELLE 40,NA,NA,NA,NA
+"florida,palm beach",1,2006-08-30 ERNESTO 35,NA,NA,NA,NA
+"florida,st lucie",1,2004-09-26 JEANNE 95,NA,NA,NA,NA
+"florida,volusia",1,1994-11-21 GORDON 20,NA,NA,NA,NA
+"florida,washington",1,2009-11-11 IDA 25,NA,NA,NA,NA
+"georgia,brantley",1,1994-11-21 GORDON 20,NA,NA,NA,NA
+"georgia,brooks",1,2017-09-11 IRMA 45,NA,NA,NA,NA
+"georgia,bulloch",1,2000-09-18 GORDON 25,NA,NA,NA,NA
+"georgia,calhoun",1,2018-10-11 MICHAEL 80,NA,NA,NA,NA
+"georgia,candler",1,1986-08-14 CHARLEY 10,NA,NA,NA,NA
+"georgia,charlton",1,2000-09-18 GORDON 30,NA,NA,NA,NA
+"georgia,clay",1,2004-09-07 FRANCES 30,NA,NA,NA,NA
+"georgia,coffee",1,2016-09-02 HERMINE 50,NA,NA,NA,NA
+"georgia,coweta",1,2004-09-08 FRANCES 25,NA,NA,NA,NA
+"georgia,decatur",1,2004-09-07 FRANCES 35,NA,NA,NA,NA
+"georgia,emanuel",1,1986-08-14 CHARLEY 10,NA,NA,NA,NA
+"georgia,floyd",1,1997-07-23 DANNY 20,NA,NA,NA,NA
+"georgia,hall",1,1997-07-23 DANNY 20,NA,NA,NA,NA
+"georgia,hancock",1,2004-09-28 JEANNE 25,NA,NA,NA,NA
+"georgia,houston",1,2004-09-27 JEANNE 30,NA,NA,NA,NA
+"georgia,jeff davis",1,1995-06-06 ALLISON 30,NA,NA,NA,NA
+"georgia,lumpkin",1,2005-07-07 CINDY 20,NA,NA,NA,NA
+"georgia,screven",1,1995-06-06 ALLISON 35,NA,NA,NA,NA
+"georgia,telfair",1,1986-08-14 CHARLEY 10,NA,NA,NA,NA
+"georgia,terrell",1,2017-09-12 IRMA 35,NA,NA,NA,NA
+"georgia,treutlen",1,1998-09-03 EARL 40,NA,NA,NA,NA
+"georgia,wilkinson",1,2018-10-11 MICHAEL 50,NA,NA,NA,NA
+"illinois,coles",1,2005-09-26 RITA 20,NA,NA,NA,NA
+"illinois,de witt",1,2008-09-05 GUSTAV 20,NA,NA,NA,NA
+"illinois,johnson",1,1995-08-05 ERIN 20,NA,NA,NA,NA
+"illinois,mason",1,1988-09-19 GILBERT 25,NA,NA,NA,NA
+"illinois,saline",1,2005-07-12 DENNIS 15,NA,NA,NA,NA
+"illinois,wabash",1,2005-07-13 DENNIS 15,NA,NA,NA,NA
+"illinois,white",1,2005-07-12 DENNIS 15,NA,NA,NA,NA
+"indiana,dubois",1,1995-08-06 ERIN 20,NA,NA,NA,NA
+"indiana,fountain",1,2008-09-14 IKE 50,NA,NA,NA,NA
+"indiana,hamilton",1,2005-07-16 DENNIS 10,NA,NA,NA,NA
+"indiana,jefferson",1,2005-07-14 DENNIS 10,NA,NA,NA,NA
+"indiana,jennings",1,2005-07-14 DENNIS 10,NA,NA,NA,NA
+"indiana,knox",1,2005-07-13 DENNIS 15,NA,NA,NA,NA
+"indiana,martin",1,2005-07-16 DENNIS 10,NA,NA,NA,NA
+"indiana,monroe",1,2005-07-13 DENNIS 15,NA,NA,NA,NA
+"indiana,morgan",1,2005-07-16 DENNIS 10,NA,NA,NA,NA
+"indiana,orange",1,2005-07-15 DENNIS 10,NA,NA,NA,NA
+"indiana,wells",1,2005-07-16 DENNIS 10,NA,NA,NA,NA
+"kansas,jewell",1,1983-08-21 ALICIA 20,NA,NA,NA,NA
+"kansas,kiowa",1,1983-08-20 ALICIA 20,NA,NA,NA,NA
+"kansas,russell",1,1983-08-20 ALICIA 20,NA,NA,NA,NA
+"kentucky,ballard",1,2005-07-12 DENNIS 15,NA,NA,NA,NA
+"kentucky,gallatin",1,1995-08-06 ERIN 20,NA,NA,NA,NA
+"kentucky,green",1,2017-09-02 HARVEY 20,NA,NA,NA,NA
+"kentucky,jefferson",1,2005-07-15 DENNIS 10,NA,NA,NA,NA
+"kentucky,lewis",1,1995-10-05 OPAL 40,NA,NA,NA,NA
+"kentucky,logan",1,2005-08-30 KATRINA 30,NA,NA,NA,NA
+"kentucky,mercer",1,2017-09-02 HARVEY 20,NA,NA,NA,NA
+"kentucky,oldham",1,2005-07-14 DENNIS 10,NA,NA,NA,NA
+"kentucky,scott",1,2017-09-02 HARVEY 15,NA,NA,NA,NA
+"kentucky,todd",1,1985-11-01 JUAN 25,NA,NA,NA,NA
+"kentucky,trimble",1,2005-08-31 KATRINA 30,NA,NA,NA,NA
+"louisiana,allen",1,2017-08-30 HARVEY 35,NA,NA,NA,NA
+"louisiana,ascension",1,2012-08-30 ISAAC 55,NA,NA,NA,NA
+"louisiana,bienville",1,1985-09-03 ELENA 30,NA,NA,NA,NA
+"louisiana,caldwell",1,1985-08-16 DANNY 40,NA,NA,NA,NA
+"louisiana,catahoula",1,2012-08-30 ISAAC 45,NA,NA,NA,NA
+"louisiana,franklin",1,1985-09-03 ELENA 45,NA,NA,NA,NA
+"louisiana,iberia",1,1992-08-26 ANDREW 80,NA,NA,NA,NA
+"louisiana,jefferson",1,2005-07-06 CINDY 50,NA,NA,NA,NA
+"louisiana,madison",1,2007-09-14 HUMBERTO 20,NA,NA,NA,NA
+"louisiana,natchitoches",1,2008-09-02 GUSTAV 40,NA,NA,NA,NA
+"louisiana,orleans",1,2002-09-26 ISIDORE 55,NA,NA,NA,NA
+"louisiana,ouachita",1,1988-09-11 FLORENCE 15,NA,NA,NA,NA
+"louisiana,pointe coupee",1,2012-08-30 ISAAC 55,NA,NA,NA,NA
+"louisiana,rapides",1,2017-08-31 HARVEY 30,NA,NA,NA,NA
+"louisiana,red river",1,2008-09-02 GUSTAV 30,NA,NA,NA,NA
+"louisiana,richland",1,2017-08-31 HARVEY 20,NA,NA,NA,NA
+"louisiana,st helena",1,1988-09-10 FLORENCE 30,NA,NA,NA,NA
+"louisiana,st landry",1,2002-10-03 LILI 60,NA,NA,NA,NA
+"louisiana,st martin",1,1985-10-29 JUAN 60,NA,NA,NA,NA
+"louisiana,st tammany",1,2005-08-29 KATRINA 105,NA,NA,NA,NA
+"louisiana,tensas",1,1988-09-10 FLORENCE 20,NA,NA,NA,NA
+"louisiana,vernon",1,2007-09-13 HUMBERTO 35,NA,NA,NA,NA
+"louisiana,webster",1,1988-09-11 FLORENCE 15,NA,NA,NA,NA
+"louisiana,west carroll",1,1985-08-16 DANNY 30,NA,NA,NA,NA
+"louisiana,west feliciana",1,1992-08-26 ANDREW 50,NA,NA,NA,NA
+"louisiana,winn",1,2012-08-30 ISAAC 35,NA,NA,NA,NA
+"maine,piscataquis",1,2011-08-29 IRENE 40,NA,NA,NA,NA
+"maine,york",1,1999-09-17 FLOYD 45,NA,NA,NA,NA
+"maryland,prince georges",1,2006-09-02 ERNESTO 40,NA,NA,NA,NA
+"massachusetts,barnstable",1,2016-09-08 HERMINE 20,NA,NA,NA,NA
+"michigan,wayne",1,2005-07-17 DENNIS 10,NA,NA,NA,NA
+"mississippi,attala",1,1995-08-04 ERIN 20,NA,NA,NA,NA
+"mississippi,chickasaw",1,2005-07-11 DENNIS 25,NA,NA,NA,NA
+"mississippi,franklin",1,1992-08-27 ANDREW 35,NA,NA,NA,NA
+"mississippi,greene",1,1995-08-04 ERIN 45,NA,NA,NA,NA
+"mississippi,hinds",1,1992-08-27 ANDREW 30,NA,NA,NA,NA
+"mississippi,kemper",1,2005-07-11 DENNIS 30,NA,NA,NA,NA
+"mississippi,lamar",1,2005-08-29 KATRINA 80,NA,NA,NA,NA
+"mississippi,leake",1,1992-08-27 ANDREW 30,NA,NA,NA,NA
+"mississippi,lee",1,2005-08-30 KATRINA 40,NA,NA,NA,NA
+"mississippi,leflore",1,1985-08-16 DANNY 30,NA,NA,NA,NA
+"mississippi,lowndes",1,1992-08-27 ANDREW 25,NA,NA,NA,NA
+"mississippi,neshoba",1,2005-08-30 KATRINA 50,NA,NA,NA,NA
+"mississippi,newton",1,1995-08-04 ERIN 35,NA,NA,NA,NA
+"mississippi,pike",1,1985-09-02 ELENA 60,NA,NA,NA,NA
+"mississippi,pontotoc",1,1985-08-17 DANNY 30,NA,NA,NA,NA
+"mississippi,quitman",1,1995-08-04 ERIN 20,NA,NA,NA,NA
+"mississippi,rankin",1,2002-09-26 ISIDORE 40,NA,NA,NA,NA
+"mississippi,stone",1,2005-07-06 CINDY 40,NA,NA,NA,NA
+"mississippi,tishomingo",1,2017-09-01 HARVEY 30,NA,NA,NA,NA
+"mississippi,tunica",1,1995-08-05 ERIN 20,NA,NA,NA,NA
+"mississippi,washington",1,2017-08-31 HARVEY 25,NA,NA,NA,NA
+"mississippi,winston",1,2002-09-27 ISIDORE 20,NA,NA,NA,NA
+"mississippi,yalobusha",1,2017-09-01 HARVEY 30,NA,NA,NA,NA
+"mississippi,yazoo",1,2007-09-14 HUMBERTO 20,NA,NA,NA,NA
+"missouri,benton",1,2012-09-01 ISAAC 20,NA,NA,NA,NA
+"missouri,bollinger",1,1986-06-28 BONNIE 10,NA,NA,NA,NA
+"missouri,camden",1,1985-09-04 ELENA 20,NA,NA,NA,NA
+"missouri,cedar",1,2012-09-01 ISAAC 20,NA,NA,NA,NA
+"missouri,christian",1,1985-09-04 ELENA 20,NA,NA,NA,NA
+"missouri,iron",1,2008-09-14 IKE 40,NA,NA,NA,NA
+"missouri,newton",1,2012-08-31 ISAAC 20,NA,NA,NA,NA
+"missouri,pemiscot",1,1995-08-05 ERIN 20,NA,NA,NA,NA
+"missouri,polk",1,1988-09-19 GILBERT 25,NA,NA,NA,NA
+"missouri,st louis",1,2008-09-04 GUSTAV 20,NA,NA,NA,NA
+"missouri,warren",1,1985-09-04 ELENA 20,NA,NA,NA,NA
+"nebraska,butler",1,1983-08-21 ALICIA 20,NA,NA,NA,NA
+"new hampshire,grafton",1,2017-10-10 NATE 25,NA,NA,NA,NA
+"new jersey,atlantic",1,2012-10-30 SANDY 70,NA,NA,NA,NA
+"new jersey,cape may",1,2005-07-08 CINDY 25,NA,NA,NA,NA
+"new jersey,ocean",1,2008-09-07 HANNA 45,NA,NA,NA,NA
+"new mexico,dona ana",1,2008-07-26 DOLLY 20,NA,NA,NA,NA
+"new mexico,otero",1,2008-07-27 DOLLY 20,NA,NA,NA,NA
+"new york,kings",1,2011-08-28 IRENE 55,NA,NA,NA,NA
+"new york,monroe",1,2006-09-03 ERNESTO 20,NA,NA,NA,NA
+"new york,onondaga",1,2017-10-09 NATE 25,NA,NA,NA,NA
+"new york,orleans",1,1995-10-06 OPAL 35,NA,NA,NA,NA
+"new york,st lawrence",1,1999-09-08 DENNIS 20,NA,NA,NA,NA
+"north carolina,alamance",1,1999-09-05 DENNIS 25,NA,NA,NA,NA
+"north carolina,bladen",1,1984-09-14 DIANA 45,NA,NA,NA,NA
+"north carolina,burke",1,2005-07-07 CINDY 20,NA,NA,NA,NA
+"north carolina,caldwell",1,1989-09-22 HUGO 55,NA,NA,NA,NA
+"north carolina,carteret",1,1999-09-04 DENNIS 60,NA,NA,NA,NA
+"north carolina,caswell",1,1985-08-18 DANNY 25,NA,NA,NA,NA
+"north carolina,columbus",1,1984-09-13 DIANA 55,NA,NA,NA,NA
+"north carolina,dare",1,1998-08-28 BONNIE 65,NA,NA,NA,NA
+"north carolina,davie",1,1985-08-18 DANNY 25,NA,NA,NA,NA
+"north carolina,duplin",1,1984-09-14 DIANA 40,NA,NA,NA,NA
+"north carolina,edgecombe",1,2006-09-01 ERNESTO 30,NA,NA,NA,NA
+"north carolina,gaston",1,2004-09-28 JEANNE 20,NA,NA,NA,NA
+"north carolina,gates",1,1997-07-24 DANNY 40,NA,NA,NA,NA
+"north carolina,granville",1,1999-09-05 DENNIS 30,NA,NA,NA,NA
+"north carolina,greene",1,1999-09-05 DENNIS 35,NA,NA,NA,NA
+"north carolina,guilford",1,1999-09-06 DENNIS 25,NA,NA,NA,NA
+"north carolina,halifax",1,2004-08-30 GASTON 30,NA,NA,NA,NA
+"north carolina,hoke",1,2004-08-30 GASTON 30,NA,NA,NA,NA
+"north carolina,martin",1,1998-09-04 EARL 50,NA,NA,NA,NA
+"north carolina,mcdowell",1,1985-08-18 DANNY 25,NA,NA,NA,NA
+"north carolina,moore",1,1997-07-24 DANNY 30,NA,NA,NA,NA
+"north carolina,northampton",1,2018-10-12 MICHAEL 50,NA,NA,NA,NA
+"north carolina,onslow",1,1998-08-27 BONNIE 85,NA,NA,NA,NA
+"north carolina,pamlico",1,1999-09-05 DENNIS 50,NA,NA,NA,NA
+"north carolina,randolph",1,2018-10-11 MICHAEL 45,NA,NA,NA,NA
+"north carolina,robeson",1,1998-09-04 EARL 50,NA,NA,NA,NA
+"north carolina,stokes",1,1999-09-06 DENNIS 20,NA,NA,NA,NA
+"north carolina,swain",1,1985-08-18 DANNY 25,NA,NA,NA,NA
+"north carolina,wake",1,2004-08-30 GASTON 25,NA,NA,NA,NA
+"north carolina,washington",1,1999-09-16 FLOYD 70,NA,NA,NA,NA
+"north carolina,wilson",1,2008-09-06 HANNA 45,NA,NA,NA,NA
+"ohio,franklin",1,2005-08-31 KATRINA 25,NA,NA,NA,NA
+"ohio,henry",1,2005-07-17 DENNIS 10,NA,NA,NA,NA
+"ohio,highland",1,2017-10-09 NATE 20,NA,NA,NA,NA
+"ohio,knox",1,1995-10-06 OPAL 40,NA,NA,NA,NA
+"ohio,pike",1,2002-09-27 ISIDORE 20,NA,NA,NA,NA
+"ohio,trumbull",1,2012-10-31 SANDY 30,NA,NA,NA,NA
+"oklahoma,comanche",1,1989-08-03 CHANTAL 20,NA,NA,NA,NA
+"oklahoma,cotton",1,1983-08-19 ALICIA 25,NA,NA,NA,NA
+"oklahoma,kingfisher",1,1988-09-19 GILBERT 25,NA,NA,NA,NA
+"oklahoma,washita",1,1983-08-20 ALICIA 20,NA,NA,NA,NA
+"oklahoma,woodward",1,1983-08-20 ALICIA 20,NA,NA,NA,NA
+"pennsylvania,allegheny",1,2004-09-09 FRANCES 30,NA,NA,NA,NA
+"pennsylvania,armstrong",1,2002-09-27 ISIDORE 20,NA,NA,NA,NA
+"pennsylvania,butler",1,2012-10-31 SANDY 35,NA,NA,NA,NA
+"pennsylvania,cambria",1,2012-10-30 SANDY 40,NA,NA,NA,NA
+"pennsylvania,crawford",1,2017-10-09 NATE 25,NA,NA,NA,NA
+"pennsylvania,erie",1,1996-09-07 FRAN 30,NA,NA,NA,NA
+"pennsylvania,franklin",1,2012-10-30 SANDY 50,NA,NA,NA,NA
+"pennsylvania,lancaster",1,2012-10-30 SANDY 55,NA,NA,NA,NA
+"pennsylvania,mercer",1,1996-09-07 FRAN 30,NA,NA,NA,NA
+"pennsylvania,snyder",1,1999-09-07 DENNIS 20,NA,NA,NA,NA
+"pennsylvania,washington",1,1996-09-07 FRAN 30,NA,NA,NA,NA
+"pennsylvania,york",1,2006-09-03 ERNESTO 35,NA,NA,NA,NA
+"rhode island,providence",1,2008-09-07 HANNA 45,NA,NA,NA,NA
+"south carolina,aiken",1,2018-09-16 FLORENCE 35,NA,NA,NA,NA
+"south carolina,chesterfield",1,1985-07-25 BOB 45,NA,NA,NA,NA
+"south carolina,colleton",1,1985-07-25 BOB 55,NA,NA,NA,NA
+"south carolina,dorchester",1,1998-09-04 EARL 40,NA,NA,NA,NA
+"south carolina,florence",1,1994-11-21 GORDON 20,NA,NA,NA,NA
+"south carolina,greenwood",1,2018-09-16 FLORENCE 30,NA,NA,NA,NA
+"south carolina,horry",1,2018-09-15 FLORENCE 60,NA,NA,NA,NA
+"south carolina,lancaster",1,1997-07-24 DANNY 20,NA,NA,NA,NA
+"south carolina,marion",1,2004-08-30 GASTON 30,NA,NA,NA,NA
+"south carolina,orangeburg",1,2018-09-16 FLORENCE 40,NA,NA,NA,NA
+"south carolina,saluda",1,2018-10-11 MICHAEL 45,NA,NA,NA,NA
+"south carolina,spartanburg",1,2018-09-17 FLORENCE 25,NA,NA,NA,NA
+"tennessee,bradley",1,1985-08-17 DANNY 30,NA,NA,NA,NA
+"tennessee,cocke",1,2004-09-08 FRANCES 25,NA,NA,NA,NA
+"tennessee,franklin",1,1985-08-17 DANNY 30,NA,NA,NA,NA
+"tennessee,grundy",1,1995-10-05 OPAL 30,NA,NA,NA,NA
+"tennessee,hardeman",1,2005-07-11 DENNIS 20,NA,NA,NA,NA
+"tennessee,lake",1,2017-09-13 IRMA 15,NA,NA,NA,NA
+"tennessee,madison",1,2017-09-13 IRMA 15,NA,NA,NA,NA
+"tennessee,obion",1,2005-07-12 DENNIS 20,NA,NA,NA,NA
+"tennessee,perry",1,2005-08-30 KATRINA 30,NA,NA,NA,NA
+"tennessee,putnam",1,2017-10-09 NATE 20,NA,NA,NA,NA
+"tennessee,sumner",1,2017-09-01 HARVEY 20,NA,NA,NA,NA
+"tennessee,tipton",1,1995-08-05 ERIN 20,NA,NA,NA,NA
+"tennessee,unicoi",1,2004-09-17 IVAN 20,NA,NA,NA,NA
+"tennessee,washington",1,2018-09-17 FLORENCE 25,NA,NA,NA,NA
+"tennessee,williamson",1,2017-09-01 HARVEY 25,NA,NA,NA,NA
+"texas,anderson",1,2008-09-13 IKE 50,NA,NA,NA,NA
+"texas,calhoun",1,2003-07-15 CLAUDETTE 70,NA,NA,NA,NA
+"texas,cass",1,1988-09-11 FLORENCE 15,NA,NA,NA,NA
+"texas,galveston",1,1989-08-01 CHANTAL 70,NA,NA,NA,NA
+"texas,goliad",1,2017-08-26 HARVEY 65,NA,NA,NA,NA
+"texas,gonzales",1,2017-08-27 HARVEY 40,NA,NA,NA,NA
+"texas,harris",1,1983-08-18 ALICIA 80,NA,NA,NA,NA
+"texas,harrison",1,1986-06-27 BONNIE 25,NA,NA,NA,NA
+"texas,haskell",1,1988-09-19 GILBERT 25,NA,NA,NA,NA
+"texas,hidalgo",1,2008-07-24 DOLLY 55,NA,NA,NA,NA
+"texas,jasper",1,2005-09-24 RITA 65,NA,NA,NA,NA
+"texas,jim hogg",1,2008-07-24 DOLLY 45,NA,NA,NA,NA
+"texas,kenedy",1,1999-08-23 BRET 80,NA,NA,NA,NA
+"texas,la salle",1,2003-07-16 CLAUDETTE 40,NA,NA,NA,NA
+"texas,liberty",1,1989-10-16 JERRY 35,NA,NA,NA,NA
+"texas,limestone",1,1983-08-19 ALICIA 35,NA,NA,NA,NA
+"texas,live oak",1,2003-07-16 CLAUDETTE 50,NA,NA,NA,NA
+"texas,mclennan",1,1989-08-02 CHANTAL 25,NA,NA,NA,NA
+"texas,nacogdoches",1,1986-06-27 BONNIE 30,NA,NA,NA,NA
+"texas,panola",1,1989-10-16 JERRY 20,NA,NA,NA,NA
+"texas,polk",1,1986-06-26 BONNIE 35,NA,NA,NA,NA
+"texas,presidio",1,2003-07-17 CLAUDETTE 30,NA,NA,NA,NA
+"texas,reagan",1,1988-09-18 GILBERT 25,NA,NA,NA,NA
+"texas,red river",1,2008-09-14 IKE 35,NA,NA,NA,NA
+"texas,refugio",1,2017-08-26 HARVEY 105,NA,NA,NA,NA
+"texas,san augustine",1,2005-09-24 RITA 45,NA,NA,NA,NA
+"texas,victoria",1,2017-08-28 HARVEY 35,NA,NA,NA,NA
+"texas,webb",1,1999-08-24 BRET 30,NA,NA,NA,NA
+"texas,willacy",1,2008-07-24 DOLLY 65,NA,NA,NA,NA
+"vermont,caledonia",1,2011-08-29 IRENE 45,NA,NA,NA,NA
+"virginia,accomack",1,2004-09-18 IVAN 25,NA,NA,NA,NA
+"virginia,buckingham",1,2004-09-18 IVAN 15,NA,NA,NA,NA
+"virginia,fluvanna",1,2005-07-08 CINDY 20,NA,NA,NA,NA
+"virginia,halifax",1,1996-09-06 FRAN 40,NA,NA,NA,NA
+"virginia,highland",1,1985-07-26 BOB 25,NA,NA,NA,NA
+"virginia,james city",1,2004-08-31 GASTON 35,NA,NA,NA,NA
+"virginia,king and queen",1,2006-09-02 ERNESTO 40,NA,NA,NA,NA
+"virginia,lunenburg",1,2000-09-19 GORDON 20,NA,NA,NA,NA
+"virginia,montgomery",1,2004-09-18 IVAN 20,NA,NA,NA,NA
+"virginia,page",1,1999-09-07 DENNIS 20,NA,NA,NA,NA
+"virginia,patrick",1,1985-07-25 BOB 30,NA,NA,NA,NA
+"virginia,prince edward",1,2004-09-28 JEANNE 25,NA,NA,NA,NA
+"virginia,rockingham",1,2003-09-19 ISABEL 50,NA,NA,NA,NA
+"virginia,surry",1,2006-09-02 ERNESTO 40,NA,NA,NA,NA
+"west virginia,barbour",1,1996-09-07 FRAN 30,NA,NA,NA,NA
+"west virginia,logan",1,2004-09-08 FRANCES 25,NA,NA,NA,NA
+"west virginia,putnam",1,1989-09-22 HUGO 40,NA,NA,NA,NA
+"west virginia,roane",1,2004-09-09 FRANCES 25,NA,NA,NA,NA
+"west virginia,wetzel",1,2018-09-18 FLORENCE 25,NA,NA,NA,NA

@@ -318,3 +318,23 @@ for (i in 1:nrow(ranking64)){
 colnames(ranking64) = c("county", "number", "hurricane1", "hurricane2", "hurricane3", "hurricane4", "hurricane5", "hurricane6", "hurricane6", "hurricane8", "hurricane9", "hurricane10", "hurricane11")
 write_csv(ranking64, "ranking_hurricane_added.csv")
 ```
+
+```{r}
+# Include normal storms (all Wind speed)
+# But exclude too old data (Year >= 1980)
+h80 <- subset(h, Year >= 1980)
+ranking80 = aggregate(h80$Key, by=list(h80$County), FUN=length)
+colnames(ranking80) = c("county", "number")
+sortlist <- order(ranking80$number, decreasing=TRUE)
+ranking80 <- ranking80[sortlist,]
+
+for (i in 1:nrow(ranking80)){
+  tmp <- subset(h80, h80$County == ranking80[i,1])
+  tmp$info <- paste(tmp$Date, tmp$Name, tmp$Wind)
+  for (j in 1:nrow(tmp)){
+    ranking80[i,j+2] <- tmp$info[j]
+  }
+}
+colnames(ranking80) = c("county", "number", "storm1", "storm2", "storm3", "storm4", "storm5")
+write_csv(ranking80, "ranking_storm_1980.csv")
+```
