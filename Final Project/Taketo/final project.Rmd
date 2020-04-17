@@ -1,0 +1,338 @@
+---
+title: "Final Project"
+author: "Taketo Muroya"
+output: 
+  html_document:
+    code_folding: hide
+    highlight: textmate
+    toc: yes
+always_allow_html: yes
+---
+
+```{r Setup, include=FALSE, results='hide', warning=FALSE}
+library(knitr)
+opts_chunk$set(fig.path="figures/", cache.path="cache/", 
+               cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+# Setting up
+library(censusapi)
+library(ggplot2)
+library(ggthemes)
+library(lubridate)
+
+## Census Key 
+Sys.setenv(CENSUS_KEY="2d27bc1c2cc9390bfa02d98962e64d2789ca30c3")
+Sys.getenv("CENSUS_KEY")
+
+## All the census data that can be acessed with this package:
+apis <- listCensusApis()
+write.csv(apis, "census_variables.csv")
+```
+
+## 1. Longitudinal Employer-Household Dynamics (LEHD)
+
+```{r}
+LEHD_vars <- listCensusMetadata(name="timeseries/qwi/sa", 
+                                type="variables")
+write.csv(LEHD_vars, "LEHD_veriables.csv")
+
+LEHD_AL <- getCensus(name="timeseries/qwi/sa", 
+                     vars=c("EmpS", "EarnS"),
+                     region="county:*", 
+                     regionin="state:01", 
+                     time="from 2001-Q2 to 2019-Q1")
+
+LEHD_LA <- getCensus(name="timeseries/qwi/sa", 
+                     vars=c("EmpS", "EarnS"),
+                     region="county:*", 
+                     regionin="state:22", 
+                     time="from 2001-Q2 to 2019-Q1")
+
+LEHD_MS <- getCensus(name="timeseries/qwi/sa", 
+                     vars=c("EmpS", "EarnS"),
+                     region="county:*", 
+                     regionin="state:28", 
+                     time="from 2001-Q2 to 2019-Q1")
+
+LEHD_NJ <- getCensus(name="timeseries/qwi/sa", 
+                     vars=c("EmpS", "EarnS"),
+                     region="county:*", 
+                     regionin="state:34", 
+                     time="from 2001-Q2 to 2019-Q1")
+
+LEHD <- rbind(LEHD_AL, LEHD_LA, LEHD_MS, LEHD_NJ)
+LEHD$EmpS <- as.numeric(LEHD$EmpS)
+LEHD$EarnS <- as.numeric(LEHD$EarnS)
+LEHD <- LEHD[,c(4,5,3,1,2)]
+LEHD$time <- parse_date_time(LEHD$time, c('%Y-%q'))
+write.csv(LEHD, "LEHD.csv")
+```
+
+### a) Albama
+
+```{r, fig.width=10, fig.height=5}
+Clarke <- subset(LEHD, state=='01' & county=='025')
+Clarke$county <- "Clarke (T)"
+Marengo <- subset(LEHD, state=='01' & county=='091')
+Marengo$county <- "Marengo (C)"
+Monroe <- subset(LEHD, state=='01' & county=='099')
+Monroe$county <- "Monroe (C)"
+Pike <- subset(LEHD, state=='01' & county=='109')
+Pike$county <- "Pike (C)"
+LEHD_AL2 <- rbind(Clarke, Marengo, Monroe, Pike)
+
+ggplot(LEHD_AL2) + 
+  geom_line(aes(x=time, y=EarnS, group=county, col=county))+
+  ylab("Average Monthly Earnings") + 
+  ggtitle("Albama: Earnings (LEHD, Quarterly)")
+
+ggplot(LEHD_AL2) + 
+  geom_line(aes(x=time, y=EmpS, group=county, col=county))+
+  ylab("Employment Counts") + 
+  ggtitle("Albama: Employment (LEHD, Quarterly)")
+```
+
+### b) Louisiana
+
+```{r, fig.width=10, fig.height=5}
+Washington <- subset(LEHD, state=='22' & county=='117')
+Washington$county <- "Washington (T)"
+Webster <- subset(LEHD, state=='22' & county=='119')
+Webster$county <- "Webster (C)"
+Natchitoches <- subset(LEHD, state=='22' & county=='069')
+Natchitoches$county <- "Natchitoches (C)"
+Lincoln <- subset(LEHD, state=='22' & county=='061')
+Lincoln$county <- "Lincoln (C)"
+LEHD_LA2 <- rbind(Washington, Webster, Natchitoches, Lincoln)
+
+ggplot(LEHD_LA2) + 
+  geom_line(aes(x=time, y=EarnS, group=county, col=county))+
+  ylab("Average Monthly Earnings") + 
+  ggtitle("Louisiana: Earnings (LEHD, Quarterly)")
+
+ggplot(LEHD_LA2) + 
+  geom_line(aes(x=time, y=EmpS, group=county, col=county))+
+  ylab("Employment Counts") + 
+  ggtitle("Louisiana: Employment (LEHD, Quarterly)")
+```
+
+### c) Mississippi
+
+```{r, fig.width=10, fig.height=5}
+Hancock <- subset(LEHD, state=='28' & county=='045')
+Hancock$county <- "Hancock (T)"
+Alcorn <- subset(LEHD, state=='28' & county=='003')
+Alcorn$county <- "Alcorn (C)"
+LEHD_MS2 <- rbind(Hancock, Alcorn)
+
+ggplot(LEHD_MS2) + 
+  geom_line(aes(x=time, y=EarnS, group=county, col=county))+
+  ylab("Average Monthly Earnings") + 
+  ggtitle("Mississippi: Earnings (LEHD, Quarterly)")
+
+ggplot(LEHD_MS2) + 
+  geom_line(aes(x=time, y=EmpS, group=county, col=county))+
+  ylab("Employment Counts") + 
+  ggtitle("Mississippi: Employment (LEHD, Quarterly)")
+```
+
+### d) New jersey 1
+
+```{r, fig.width=10, fig.height=5}
+Hudson <- subset(LEHD, state=='34' & county=='017')
+Hudson$county <- "Hudson (T)"
+Essex <- subset(LEHD, state=='34' & county=='013')
+Essex$county <- "Essex (C)"
+Union <- subset(LEHD, state=='34' & county=='039')
+Union$county <- "Union (C)"
+LEHD_NJ2 <- rbind(Hudson, Essex, Union)
+
+ggplot(LEHD_NJ2) + 
+  geom_line(aes(x=time, y=EarnS, group=county, col=county))+
+  ylab("Average Monthly Earnings") + 
+  ggtitle("New jersey 1: Earnings (LEHD, Quarterly)")
+
+ggplot(LEHD_NJ2) + 
+  geom_line(aes(x=time, y=EmpS, group=county, col=county))+
+  ylab("Employment Counts") + 
+  ggtitle("New jersey 1: Employment (LEHD, Quarterly)")
+```
+
+### e) New jersey 2
+
+```{r, fig.width=10, fig.height=5}
+Monmouth <- subset(LEHD, state=='34' & county=='025')
+Monmouth$county <- "Monmouth (T)"
+Burlington <- subset(LEHD, state=='34' & county=='005')
+Burlington$county <- "Burlington (C)"
+Morris <- subset(LEHD, state=='34' & county=='027')
+Morris$county <- "Morris (C)"
+LEHD_NJ3 <- rbind(Monmouth, Burlington, Morris)
+
+ggplot(LEHD_NJ3) + 
+  geom_line(aes(x=time, y=EarnS, group=county, col=county))+
+  ylab("Average Monthly Earnings") + 
+  ggtitle("New jersey 2: Earnings (LEHD, Quarterly)")
+
+ggplot(LEHD_NJ3) + 
+  geom_line(aes(x=time, y=EmpS, group=county, col=county))+
+  ylab("Employment Counts") + 
+  ggtitle("New jersey 2: Employment (LEHD, Quarterly)")
+```
+
+## 2. Small Area Income and Poverty Estimates (SAIPE)
+
+```{r}
+# the gap between 2004 and 2005 represents a switch from CPS to ACS
+SAIPE_vars <- listCensusMetadata(name="timeseries/poverty/saipe", 
+                                 type="variables")
+write.csv(SAIPE_vars, "SAIPE_variables.csv")
+
+SAIPE_AL <- getCensus(name="timeseries/poverty/saipe", 
+                      vars=c("NAME", "SAEMHI_PT", "SAEPOVRTALL_PT"),
+                      region="county:*", regionin="state:01",
+                      time="from 2000 to 2019")
+SAIPE_LA <- getCensus(name="timeseries/poverty/saipe", 
+                      vars=c("NAME", "SAEMHI_PT", "SAEPOVRTALL_PT"),
+                      region="county:*", regionin="state:22",
+                      time="from 2000 to 2019")
+SAIPE_MS <- getCensus(name="timeseries/poverty/saipe", 
+                      vars=c("NAME", "SAEMHI_PT", "SAEPOVRTALL_PT"),
+                      region="county:*", regionin="state:28",
+                      time="from 2000 to 2019")
+SAIPE_NJ <- getCensus(name="timeseries/poverty/saipe", 
+                      vars=c("NAME", "SAEMHI_PT", "SAEPOVRTALL_PT"),
+                      region="county:*", regionin="state:34",
+                      time="from 2000 to 2019")
+
+SAIPE <- rbind(SAIPE_AL, SAIPE_LA, SAIPE_MS, SAIPE_NJ)
+SAIPE$SAEMHI_PT <- as.numeric(SAIPE$SAEMHI_PT)
+SAIPE$SAEPOVRTALL_PT <- as.numeric(SAIPE$SAEPOVRTALL_PT)
+SAIPE$time <- parse_date_time(SAIPE$time, c('%Y'))
+write.csv(SAIPE, "SAIPE.csv")
+```
+
+### a) Albama
+
+```{r, fig.width=10, fig.height=5}
+Clarke <- subset(SAIPE, state=='01' & county=='025')
+Clarke$county <- "Clarke (T)"
+Marengo <- subset(SAIPE, state=='01' & county=='091')
+Marengo$county <- "Marengo (C)"
+Monroe <- subset(SAIPE, state=='01' & county=='099')
+Monroe$county <- "Monroe (C)"
+Pike <- subset(SAIPE, state=='01' & county=='109')
+Pike$county <- "Pike (C)"
+SAIPE_AL2 <- rbind(Clarke, Marengo, Monroe, Pike)
+
+ggplot(SAIPE_AL2) + 
+  geom_line(aes(x=time, y=SAEMHI_PT, group=county, col=county))+
+  ylab("Median Household Income") + 
+  ggtitle("Albama: Income (SAIPE, Yearly)")
+
+ggplot(SAIPE_AL2) + 
+  geom_line(aes(x=time, y=SAEPOVRTALL_PT, group=county, col=county))+
+  ylab("Poverty Rate (%)") + 
+  ggtitle("Albama: Poverty (SAIPE, Yearly)")
+```
+
+### b) Louisiana
+
+```{r, fig.width=10, fig.height=5}
+Washington <- subset(SAIPE, state=='22' & county=='117')
+Washington$county <- "Washington (T)"
+Webster <- subset(SAIPE, state=='22' & county=='119')
+Webster$county <- "Webster (C)"
+Natchitoches <- subset(SAIPE, state=='22' & county=='069')
+Natchitoches$county <- "Natchitoches (C)"
+Lincoln <- subset(SAIPE, state=='22' & county=='061')
+Lincoln$county <- "Lincoln (C)"
+SAIPE_LA2 <- rbind(Washington, Webster, Natchitoches, Lincoln)
+
+ggplot(SAIPE_LA2) + 
+  geom_line(aes(x=time, y=SAEMHI_PT, group=county, col=county))+
+  ylab("Median Household Income") + 
+  ggtitle("Louisiana: Income (SAIPE, Yearly)")
+
+ggplot(SAIPE_LA2) + 
+  geom_line(aes(x=time, y=SAEPOVRTALL_PT, group=county, col=county))+
+  ylab("Poverty Rate (%)") + 
+  ggtitle("Louisiana: Poverty (SAIPE, Yearly)")
+```
+
+### c) Mississippi
+
+```{r, fig.width=10, fig.height=5}
+Hancock <- subset(SAIPE, state=='28' & county=='045')
+Hancock$county <- "Hancock (T)"
+Alcorn <- subset(SAIPE, state=='28' & county=='003')
+Alcorn$county <- "Alcorn (C)"
+SAIPE_MS2 <- rbind(Hancock, Alcorn)
+
+ggplot(SAIPE_MS2) + 
+  geom_line(aes(x=time, y=SAEMHI_PT, group=county, col=county))+
+  ylab("Median Household Income") + 
+  ggtitle("Mississippi: Income (SAIPE, Yearly)")
+
+ggplot(SAIPE_MS2) + 
+  geom_line(aes(x=time, y=SAEPOVRTALL_PT, group=county, col=county))+
+  ylab("Poverty Rate (%)") + 
+  ggtitle("Mississippi: Poverty (SAIPE, Yearly)")
+```
+
+### d) New jersey 1
+
+```{r, fig.width=10, fig.height=5}
+Hudson <- subset(SAIPE, state=='34' & county=='017')
+Hudson$county <- "Hudson (T)"
+Essex <- subset(SAIPE, state=='34' & county=='013')
+Essex$county <- "Essex (C)"
+Union <- subset(SAIPE, state=='34' & county=='039')
+Union$county <- "Union (C)"
+SAIPE_NJ2 <- rbind(Hudson, Essex, Union)
+
+ggplot(SAIPE_NJ2) + 
+  geom_line(aes(x=time, y=SAEMHI_PT, group=county, col=county))+
+  ylab("Median Household Income") + 
+  ggtitle("New jersey 1: Income (SAIPE, Yearly)")
+
+ggplot(SAIPE_NJ2) + 
+  geom_line(aes(x=time, y=SAEPOVRTALL_PT, group=county, col=county))+
+  ylab("Poverty Rate (%)") + 
+  ggtitle("New jersey 1: Poverty (SAIPE, Yearly)")
+```
+
+### e) New jersey 2
+
+```{r, fig.width=10, fig.height=5}
+Monmouth <- subset(SAIPE, state=='34' & county=='025')
+Monmouth$county <- "Monmouth (T)"
+Burlington <- subset(SAIPE, state=='34' & county=='005')
+Burlington$county <- "Burlington (C)"
+Morris <- subset(SAIPE, state=='34' & county=='027')
+Morris$county <- "Morris (C)"
+SAIPE_NJ3 <- rbind(Monmouth, Burlington, Morris)
+
+ggplot(SAIPE_NJ3) + 
+  geom_line(aes(x=time, y=SAEMHI_PT, group=county, col=county))+
+  ylab("Median Household Income") + 
+  ggtitle("New jersey 2: Income (SAIPE, Yearly)")
+
+ggplot(SAIPE_NJ3) + 
+  geom_line(aes(x=time, y=SAEPOVRTALL_PT, group=county, col=county))+
+  ylab("Poverty Rate (%)") + 
+  ggtitle("New jersey 2: Poverty (SAIPE, Yearly)")
+```
+
+```{r}
+# American Community Survey 
+#ACS_vars <- listCensusMetadata(name="acs/acs1", 
+#                               vintage="2005", type="variables")
+#write.csv(ACS_vars, "ACS_variables.csv")
+
+ACS_AL <- getCensus(name="acs/acs1", vintage="2005",
+                    vars = c("NAME", "B19101_001E"),
+                    region="county:*", regionin="state:01")
+```

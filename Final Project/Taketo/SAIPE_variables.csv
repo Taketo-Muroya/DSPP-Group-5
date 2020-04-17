@@ -1,0 +1,48 @@
+"","name","label","predicateType","group","limit","concept","required"
+"1","SAEMHI_UB90","Median Household Income Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"2","SAEPOVRT5_17R_LB90","Ages 5-17 in Families in Poverty, Rate Lower Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"3","SAEPOVRT0_4_MOE","Ages 0-4 in Poverty, Rate Margin of Error","int","N/A","0",NA,NA
+"4","SAEPOVRT0_4_UB90","Ages 0-4 in Poverty, Rate Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"5","SAEPOVRTALL_LB90","All ages in Poverty, Rate Lower Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"6","SAEPOVALL_UB90","All ages in Poverty, Count Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"7","GEOID","State+County FIPS Code","string","N/A","0",NA,NA
+"8","SAEPOVALL_PT","All ages in Poverty, Count Estimate",NA,"N/A","0",NA,NA
+"9","STATE","FIPS State Code",NA,"N/A","0",NA,NA
+"10","SAEPOV0_17_PT","Ages 0-17 in Poverty, Count Estimate","int","N/A","0",NA,NA
+"11","SAEPOVU_5_17R","Ages 5-17r in Poverty Universe","int","N/A","0",NA,NA
+"12","SAEPOVRT0_17_MOE","Ages 0-17 in Poverty, Rate Margin of Error","int","N/A","0",NA,NA
+"13","SAEPOVRT0_17_UB90","Ages 0-17 in Poverty, Rate Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"14","SAEPOVRT0_4_LB90","Ages 0-4 in Poverty, Rate Lower Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"15","YEAR","Estimate Year","int","N/A","0",NA,NA
+"16","SAEPOVRT0_4_PT","Ages 0-4 in Poverty, Rate Estimate","int","N/A","0",NA,NA
+"17","SAEPOVRTALL_MOE","All ages in Poverty, Rate Margin of Error","int","N/A","0",NA,NA
+"18","SAEPOVU_0_17","Ages 0-17 in Poverty Universe","int","N/A","0",NA,NA
+"19","SAEPOV0_17_UB90","Ages 0-17 in Poverty, Count Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"20","SAEPOV0_4_PT","Ages 0-4 in Poverty, Count Estimate","int","N/A","0",NA,NA
+"21","SAEPOVRT5_17R_PT","Ages 5-17 in Families in Poverty, Rate Estimate","int","N/A","0",NA,NA
+"22","SAEPOVU_0_4","Ages 0-4 in Poverty Universe","int","N/A","0",NA,NA
+"23","SAEPOV5_17R_UB90","Ages 5-17 in Families in Poverty, Count Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"24","COUNTY","County FIPS Code",NA,"N/A","0",NA,NA
+"25","SAEPOVRT0_17_LB90","Ages 0-17 in Poverty, Rate Lower Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"26","SAEPOV0_17_LB90","Ages 0-17 in Poverty, Count Lower Bound 90% Confidence Interval","int","N/A","0",NA,NA
+"27","SAEMHI_PT","Median Household Income Estimate",NA,"N/A","0",NA,NA
+"28","SAEPOVRT0_17_PT","Ages 0-17 in Poverty, Rate Estimate","int","N/A","0",NA,NA
+"29","SAEPOV5_17R_PT","Ages 5-17 in Families in Poverty, Count Estimate","int","N/A","0",NA,NA
+"30","SAEPOV0_4_MOE","Ages 0-4 in Poverty, Count Margin of Error","int","N/A","0",NA,NA
+"31","SAEPOVALL_LB90","All ages in Poverty, Count Lower Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"32","SAEPOV0_4_UB90","Ages 0-4 in Poverty, Count Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"33","STABREV","Two-letter State Postal abbreviation","string","N/A","0",NA,NA
+"34","NAME","State or County Name",NA,"N/A","0",NA,NA
+"35","SAEPOVRT5_17R_UB90","Ages 5-17 in Families in Poverty, Rate Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"36","SAEPOVRTALL_PT","All ages in Poverty, Rate Estimate","int","N/A","0",NA,NA
+"37","SAEPOVALL_MOE","All ages in Poverty, Count Margin of Error","int","N/A","0",NA,NA
+"38","SAEMHI_MOE","Median Household Income Margin of Error","int","N/A","0",NA,NA
+"39","SAEPOVU_ALL","All Ages in Poverty Universe","int","N/A","0",NA,NA
+"40","SAEPOV0_4_LB90","Ages 0-4 in Poverty, Count Lower Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"41","SAEPOVRTALL_UB90","All ages in Poverty, Rate Upper Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"42","SAEPOVRT5_17R_MOE","Ages 5-17 in Families in Poverty, Rate Margin of Error","int","N/A","0",NA,NA
+"43","SAEPOV5_17R_MOE","Ages 5-17 in Families in Poverty, Count Margin of Error","int","N/A","0",NA,NA
+"44","GEOCAT","Summary Level","int","N/A","0",NA,NA
+"45","SAEMHI_LB90","Median Household Income Lower Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"46","SAEPOV5_17R_LB90","Ages 5-17 in Families in Poverty, Count Lower Bound for 90% Confidence Interval","int","N/A","0",NA,NA
+"47","SAEPOV0_17_MOE","Ages 0-17 in Poverty, Count Margin of Error","int","N/A","0",NA,NA

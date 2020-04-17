@@ -1,0 +1,81 @@
+"","name","label","concept","predicateType","group","limit","required"
+"1","sHirAEnd","Flag for End-of-Quarter Hires","QWI Status Flag","int","N/A","0",NA
+"2","sHirR","Flag for Hires Recalls: Counts","QWI Status Flag","int","N/A","0",NA
+"3","education","Group: education","QWI Categorical Variable","string","N/A","6","default displayed"
+"4","EmpSpv","Full-Quarter Employment in the Previous Quarter: Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"5","SepBeg","Beginning-of-Quarter Separations","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"6","year","Time: Year","QWI Categorical Variable","int","N/A","25","true"
+"7","sHirN","Flag for Hires New: Counts","QWI Status Flag","int","N/A","0",NA
+"8","sEmpTotal","Flag for Employment-Reference Quarter: Counts","QWI Status Flag","int","N/A","0",NA
+"9","EmpS","Full-Quarter Employment (Stable): Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"10","FrmJbLsS","Firm Job Loss (Stable): Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"11","sHirA","Flag for Hires All: Counts (Accessions)","QWI Status Flag","int","N/A","0",NA
+"12","sHirAs","Flag for Hires All (Stable): Counts (Flows into Full-QuarterEmployment)","QWI Status Flag","int","N/A","0",NA
+"13","geography","Group: Geography code","QWI Categorical Variable","string","N/A","0",NA
+"14","HirAEndReplr","Replacement Hiring Rate","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"15","sEmpEnd","Flag for End-of-Quarter Employment: Counts","QWI Status Flag","int","N/A","0",NA
+"16","HirAEnd","End-of-Quarter Hires","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"17","FrmJbLs","Firm Job Loss: Counts (Job Destruction)","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"18","EarnS","Full Quarter Employment (Stable): Average Monthly Earnings","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"19","HirR","Hires Recalls: Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"20","sFrmJbC","Flag for Firm Job Change:Net Change","QWI Status Flag","int","N/A","0",NA
+"21","FrmJbC","Firm Job Change:Net Change","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"22","sEarnSepS","Flag for Separations (Stable): Average Monthly Earnings","QWI Status Flag","int","N/A","0",NA
+"23","Emp","Beginning-of-Quarter Employment: Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"24","FrmJbGnS","Firm Job Gains (Stable): Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"25","HirAs","Hires All (Stable): Counts (Flows into Full-QuarterEmployment)","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"26","sEarnBeg","Flag for End-of-Quarter Employment: Average Monthly Earnings","QWI Status Flag","int","N/A","0",NA
+"27","sFrmJbCS","Flag for Job Change (Stable): Net Change","QWI Status Flag","int","N/A","0",NA
+"28","sSepS","Flag for Separations (Stable): Counts (Flow out of Full-Quarter Employment)","QWI Status Flag","int","N/A","0",NA
+"29","ownercode","Group: Ownership group code","QWI Categorical Variable","string","N/A","2","default displayed"
+"30","sSepBegR","Flag for Beginning-of-Quarter Separation Rate","QWI Status Flag","int","N/A","0",NA
+"31","seasonadj","Seasonal Adjustment Indicator","QWI Categorical Variable","string","N/A","2","default displayed"
+"32","SepSnx","Separations (Stable), Next Quarter: Counts (Flow out of Full-Quarter Employment)","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"33","HirNs","Hires New (Stable): Counts (New Hires to Full-Quarter Status)","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"34","Sep","Separations: Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"35","sSepSnx","Flag for Separations (Stable), Next Quarter: Counts (Flow out of Full-Quarter Employment)","QWI Status Flag","int","N/A","0",NA
+"36","ethnicity","Group: ethnicity","QWI Categorical Variable","string","N/A","3","default displayed"
+"37","sHirAEndRepl","Flag for Replacement Hires","QWI Status Flag","int","N/A","0",NA
+"38","industry","Group: Industry code","QWI Categorical Variable","string","N/A","434","default displayed"
+"39","sSepBeg","Flag for Beginning-of-Quarter Separations","QWI Status Flag","int","N/A","0",NA
+"40","sFrmJbGn","Flag for Firm Job Gains: Counts (Job Creation)","QWI Status Flag","int","N/A","0",NA
+"41","EarnHirAS","Hires All (Stable): Average Monthly Earnings","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"42","sPayroll","Flag for Total Quarterly Payroll: Sum","QWI Status Flag","int","N/A","0",NA
+"43","sEarnHirNS","Flag for Hires New (Stable): Average Monthly Earnings","QWI Status Flag","int","N/A","0",NA
+"44","sFrmJbLsS","Flag for Firm Job Loss (Stable): Counts","QWI Status Flag","int","N/A","0",NA
+"45","Payroll","Total Quarterly Payroll: Sum","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"46","HirA","Hires All: Counts (Accessions)","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"47","FrmJbCS","Job Change (Stable): Net Change","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"48","EmpTotal","Employment-Reference Quarter: Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"49","HirAEndRepl","Replacement Hires","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"50","EarnHirNS","Hires New (Stable): Average Monthly Earnings","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"51","firmsize","Group: Firm Size group","QWI Categorical Variable","string","N/A","6","default displayed"
+"52","ind_level","Group: Industry level of aggregation","QWI Categorical Variable","string","N/A","0",NA
+"53","TurnOvrS","Turnover (Stable)","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"54","sSep","Flag for Separations: Counts","QWI Status Flag","int","N/A","0",NA
+"55","HirN","Hires New: Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"56","firmage","Group: Firm Age group","QWI Categorical Variable","string","N/A","6","default displayed"
+"57","sEmp","Flag for Beginning-of-Quarter Employment: Counts","QWI Status Flag","int","N/A","0",NA
+"58","EarnBeg","End-of-Quarter Employment: Average Monthly Earnings","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"59","sHirAEndReplr","Flag for Replacement Hiring Rate","QWI Status Flag","int","N/A","0",NA
+"60","EmpEnd","End-of-Quarter Employment: Counts","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"61","race","Group: race","QWI Categorical Variable","string","N/A","8","default displayed"
+"62","SepBegR","Beginning-of-Quarter Separation Rate","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"63","sHirAEndR","Flag for End-of-Quarter Hiring Rate","QWI Status Flag","int","N/A","0",NA
+"64","EarnSepS","Separations (Stable): Average Monthly Earnings","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"65","sHirNs","Flag for Hires New (Stable): Counts (New Hires to Full-Quarter Status)","QWI Status Flag","int","N/A","0",NA
+"66","geo_level","Group: Geographic level of aggregation","QWI Categorical Variable","string","N/A","0",NA
+"67","sex","Group: Gender code","QWI Categorical Variable","string","N/A","3","default displayed"
+"68","agegrp","Group: Age group code (WIA)","QWI Categorical Variable","string","N/A","9","default displayed"
+"69","HirAEndR","End-of-Quarter Hiring Rate","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"70","sFrmJbLs","Flag for Firm Job Loss: Counts (Job Destruction)","QWI Status Flag","int","N/A","0",NA
+"71","sEmpS","Flag for Full-Quarter Employment (Stable): Counts","QWI Status Flag","int","N/A","0",NA
+"72","sTurnOvrS","Flag for Turnover (Stable)","QWI Status Flag","int","N/A","0",NA
+"73","sFrmJbGnS","Flag for Firm Job Gains (Stable): Counts","QWI Status Flag","int","N/A","0",NA
+"74","SepS","Separations (Stable): Counts (Flow out of Full-Quarter Employment)","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"75","periodicity","Periodicity of report","QWI Categorical Variable","string","N/A","2","default displayed"
+"76","sEmpSpv","Flag for Full-Quarter Employment in the Previous Quarter: Counts","QWI Status Flag","int","N/A","0",NA
+"77","sEarnHirAS","Flag for Hires All (Stable): Average Monthly Earnings","QWI Status Flag","int","N/A","0",NA
+"78","FrmJbGn","Firm Job Gains: Counts (Job Creation)","Quarterly Workforce Indicators (QWI)","int","N/A","0",NA
+"79","quarter","Time: Quarter","QWI Categorical Variable","int","N/A","4","true"
+"80","sEarnS","Flag for Full Quarter Employment (Stable): Average Monthly Earnings","QWI Status Flag","int","N/A","0",NA
