@@ -1,0 +1,184 @@
+---
+title: "Final Project"
+author: "Taketo Muroya"
+output: 
+  html_document:
+    code_folding: hide
+    highlight: textmate
+    toc: yes
+always_allow_html: yes
+---
+
+```{r Setup, include=FALSE, results='hide', warning=FALSE}
+library(knitr)
+opts_chunk$set(fig.path="figures/", cache.path="cache/", 
+               cache=FALSE, echo=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+# Setting up
+library(censusapi)
+library(ggplot2)
+library(ggthemes)
+library(lubridate)
+library(tidyr)
+
+## Census Key 
+Sys.setenv(CENSUS_KEY="2d27bc1c2cc9390bfa02d98962e64d2789ca30c3")
+Sys.getenv("CENSUS_KEY")
+
+## All the census data that can be acessed with this package:
+apis <- listCensusApis()
+write.csv(apis, "census_variables.csv")
+```
+
+## American Community Survey (ACS)
+
+```{r}
+#ACS_vars <- listCensusMetadata(name="acs/acs1", vintage="2018", type="variables")
+#write.csv(ACS_vars, "ACS_variables.csv")
+```
+
+### Orleans Parish, Louisiana
+
+```{r}
+# download the ACS data
+ACS_LA <- data.frame()
+for (t in 2005:2018){
+ACS_LA <- 
+  rbind(ACS_LA, 
+  getCensus(name="acs/acs1", vintage=t, 
+            region="county:071", regionin="state:22",
+            vars = c("NAME", 
+            "B07004H_001E", "B07004B_001E", "B07004I_001E", "C07204_001E",
+            "B19101H_001E", "B19101B_001E", "B19101I_001E", "B19101_001E",
+            "B25081_001E", "B25081_002E", "B25081_008E",
+            "B992518_001E", "B992516_001E", "B25065_001E",  "B25062_001E",
+            "B25064_001E", "B25105_001E",
+            "B19037B_002E", "B19037B_019E", "B19037B_036E", "B19037B_053E", 
+            "B19037H_002E", "B19037H_019E", "B19037H_036E", "B19037H_053E",
+            # family income for black people
+            "B19101B_002E", "B19101B_003E", "B19101B_004E", "B19101B_005E", 
+            "B19101B_006E", "B19101B_007E", "B19101B_008E", "B19101B_009E", 
+            "B19101B_010E", "B19101B_011E", "B19101B_012E", "B19101B_013E", 
+            "B19101B_014E", "B19101B_015E", "B19101B_016E", "B19101B_017E",
+            # family income for white people
+            "B19101H_002E", "B19101H_003E", "B19101H_004E", "B19101H_005E", 
+            "B19101H_006E", "B19101H_007E", "B19101H_008E", "B19101H_009E", 
+            "B19101H_010E", "B19101H_011E", "B19101H_012E", "B19101H_013E", 
+            "B19101H_014E", "B19101H_015E", "B19101H_016E", "B19101H_017E")))
+}
+
+colnames(ACS_LA) <- 
+  c("state", "county", "name", 
+    "white", "black", "hispanic", "pop",
+    "income_white", "income_black", "income_h", "income",
+    "mort_t", "mort_with", "mort_out",
+    "g_rent", "rent_a", "agg_g_rent", "agg_rent_a",
+    "median_gross_rent", "median_housing_cost",
+    "black_25", "black_25_44", "black_45_64", "black_65over", 
+    "white_25", "white_25_44", "white_45_64", "white_65over",
+    "B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", 
+    "B09", "B10", "B11", "B12", "B13", "B14", "B15", "B16",
+    "W01", "W02", "W03", "W04", "W05", "W06", "W07", "W08", 
+    "W09", "W10", "W11", "W12", "W13", "W14", "W15", "W16")
+
+# calculate gross rent
+ACS_LA$gross_rent <- ACS_LA$agg_g_rent/ACS_LA$g_rent
+ACS_LA$rent_asked <- ACS_LA$agg_rent_a/ACS_LA$rent_a
+ACS_LA$mortgage_rate <- 100*ACS_LA$mort_with/ACS_LA$mort_t
+
+# income division
+ACS_LA$b_income1 <- ACS_LA$B01+ACS_LA$B02+ACS_LA$B03+ACS_LA$B04
+ACS_LA$b_income2 <- ACS_LA$B05+ACS_LA$B06+ACS_LA$B07+ACS_LA$B08
+ACS_LA$b_income3 <- ACS_LA$B09+ACS_LA$B10+ACS_LA$B11+ACS_LA$B12
+ACS_LA$b_income4 <- ACS_LA$B13+ACS_LA$B14+ACS_LA$B15+ACS_LA$B16
+
+ACS_LA$w_income1 <- ACS_LA$W01+ACS_LA$W02+ACS_LA$W03+ACS_LA$W04
+ACS_LA$w_income2 <- ACS_LA$W05+ACS_LA$W06+ACS_LA$W07+ACS_LA$W08
+ACS_LA$w_income3 <- ACS_LA$W09+ACS_LA$W10+ACS_LA$W11+ACS_LA$W12
+ACS_LA$w_income4 <- ACS_LA$W13+ACS_LA$W14+ACS_LA$W15+ACS_LA$W16
+
+# setting time
+ACS_LA$time <- 2005:2018
+
+# arranging data
+ACS_LA_race <- 
+  gather(ACS_LA, key=race, value=amount, white, black, hispanic)
+ACS_LA_inc <- 
+  gather(ACS_LA, key=group, value=amount, income_white, income_black)
+ACS_LA_black <- 
+  gather(ACS_LA, age, amount, black_25, black_25_44, black_45_64, black_65over)
+ACS_LA_white <- 
+  gather(ACS_LA, age, amount, white_25, white_25_44, white_45_64, white_65over)
+ACS_LA_b_inc <- 
+  gather(ACS_LA, income, amount, b_income1, b_income2, b_income3, b_income4)
+ACS_LA_w_inc <- 
+  gather(ACS_LA, income, amount, w_income1, w_income2, w_income3, w_income4)
+```
+
+```{r, fig.width=8}
+ggplot(ACS_LA_race, aes(x=time, y=amount/1000, fill=race))+
+  geom_area(alpha=0.8)+theme_classic()+ylab("number of people (thousand)")+
+  ggtitle("Population by Race")+scale_x_continuous(breaks=seq(2005,2018,length=14))
+```
+
+New Orleans has more black people than white people. After Katrina, the number of black population decreased to almost half size and has not recoverd yet to the pre-Katrina level. On the other hand, white population has almost recovered.
+
+```{r, fig.width=8}
+ggplot(ACS_LA_white, aes(x=time, y=amount, col=age))+
+  geom_line(size=1)+theme_classic()+ylab("number of households")+
+  ggtitle("White Households by Age")+scale_color_discrete(name="householder age", 
+  labels=c("under 25", "25 - 44", "45 - 64", "65 and over"))+
+  scale_x_continuous(breaks=seq(2005,2018,length=14))
+```
+
+For white households, the relatively youger household (25-44 years old) has increased after Katrina. Besides, the other age households have recovered to the pre-Katrina level.
+
+```{r, fig.width=8}
+ggplot(ACS_LA_black, aes(x=time, y=amount, col=age))+
+  geom_line(size=1)+theme_classic()+ylab("number of households")+
+  ggtitle("Black Households by Age")+scale_color_discrete(name="householder age", 
+  labels=c("under 25", "25 - 44", "45 - 64", "65 and over"))+
+  scale_x_continuous(breaks=seq(2005,2018,length=14))
+```
+
+For black households, most of the age groups have not recovered, but the older (65+ years old) household has increased after Katrina.
+
+```{r, fig.width=8}
+ggplot(ACS_LA_w_inc, aes(x=time, y=amount, col=income))+
+  geom_line(size=1)+theme_classic()+ylab("number of families")+
+  ggtitle("White Households by Income")+scale_color_discrete(name="annual income", 
+  labels=c("under $25K", "$25K - $44K", "$45K - $99K", "$100K and over"))+
+  scale_x_continuous(breaks=seq(2005,2018,length=14))
+```
+
+The rich white households have increased after Katrina.
+
+```{r, fig.width=8}
+ggplot(ACS_LA_b_inc, aes(x=time, y=amount, col=income))+
+  geom_line(size=1)+theme_classic()+ylab("number of families")+
+  ggtitle("Black Households by Income")+scale_color_discrete(name="annual income", 
+  labels=c("under $25K", "$25K - $44K", "$45K - $99K", "$100K and over"))+
+  scale_x_continuous(breaks=seq(2005,2018,length=14))
+```
+
+The low and middle income households of black people have not recovered yet to the pre-Katrina level. Therefore, while relatively younger and richer white people come in New Orleans, relatively poorer black people might be pushed out and older households remain after Katrina.
+
+```{r, fig.width=6}
+ggplot(ACS_LA, aes(x=time, y=median_gross_rent))+geom_line(size=1)+
+  theme_classic()+ylab("median gross rent ($)")+ggtitle("Monthly Housing Cost")+
+  scale_x_continuous(breaks=seq(2005,2018,length=14))
+```
+
+The housing cost (rent fee) has increased after Katrina.
+
+```{r, fig.width=6}
+housing <- read.csv("new_housing.csv")
+
+ggplot(housing, aes(x=time, y=housing))+geom_line(size=1)+theme_classic()+
+  ylab("units")+ggtitle("New Housings Authorized by Building Permits")+
+  scale_x_continuous(breaks=seq(2005,2018,length=14))
+```
+
+The new housings authorized by building permits has increased after Katrina.
